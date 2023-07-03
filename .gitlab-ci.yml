@@ -1,0 +1,256 @@
+# 官方文档：https://docs.gitlab.com/ee/ci/yaml/
+stages:
+  - build
+  - docker_build
+  - deploy_dev_vue_admin
+  - deploy_test_vue_admin
+  - deploy_gray_vue_admin
+  - deploy_vue_admin
+  - rdeploy_vue_admin
+
+variables:
+  MSHK_RELEASE_NAME: vue_admin
+  DEPLOY_VERSION: latest
+  MSHK_REGISTRY_PROD: registry-vpc.cn-beijing.aliyuncs.com
+  COM_USER: docker-images@deemob
+  COM_PASSWORD: docker-images
+  IMAGE_PROD: ${MSHK_REGISTRY_PROD}/deemob/${CI_PROJECT_NAME}
+
+##############################
+#   before_script
+##############################
+before_script:
+  - IMAGE_TAG=${CI_BUILD_TAG}
+  - echo ${IMAGE_TAG}
+  - echo ${IMAGE_TEST}
+
+##############################
+# build Build_mozi
+##############################
+build:BuildNpmRun-dev:
+  stage: build
+  image: docker.io/idoall/node:10.15.3-alpine
+  cache:
+    paths:
+      - node_modules
+    key: $CI_PROJECT_ID
+  only:
+    - /^dev_.*$/
+  except:
+    - branches
+  tags:
+    - build
+  script:
+    - rm -r -f ./dist/
+    - npm set registry http://nexus.deemob.com/repository/npm-taobao-group/
+    - npm install
+    - npm run build:dev
+    - ls
+  artifacts:
+    paths: [ './dist' ]
+
+##############################
+# build Build_mozi
+##############################
+build:BuildNpmRun-test:
+  stage: build
+  image: docker.io/idoall/node:10.15.3-alpine
+  cache:
+    paths:
+      - node_modules
+    key: $CI_PROJECT_ID
+  only:
+    - /^test_.*$/
+  except:
+    - branches
+  tags:
+    - build
+  script:
+    - rm -r -f ./dist/
+    - npm set registry http://nexus.deemob.com/repository/npm-taobao-group/
+    - npm install
+    - npm run build:test
+    - ls
+  artifacts:
+    paths: [ './dist' ]
+
+##############################
+# build Build_mozi
+##############################
+build:BuildNpmRun-gray:
+  stage: build
+  image: docker.io/idoall/node:10.15.3-alpine
+  cache:
+    paths:
+      - node_modules
+    key: $CI_PROJECT_ID
+  only:
+    - /^gray_.*$/
+  except:
+    - branches
+  tags:
+    - build
+  script:
+    - rm -r -f ./dist/
+    - npm set registry http://nexus.deemob.com/repository/npm-taobao-group/
+    - npm install
+    - npm run build:gray
+    - ls
+  artifacts:
+    paths: [ './dist' ]
+
+##############################
+# build Build_mozi
+##############################
+build:BuildNpmRun-prod:
+  stage: build
+  image: docker.io/idoall/node:10.15.3-alpine
+  cache:
+    paths:
+      - node_modules
+    key: $CI_PROJECT_ID
+  only:
+    - /^release_.*$/
+  except:
+    - branches
+  tags:
+    - build
+  script:
+    - rm -r -f ./dist/
+    - npm set registry http://nexus.deemob.com/repository/npm-taobao-group/
+    - npm install
+    - npm run build:pro
+    - ls
+  artifacts:
+    paths: [ './dist' ]
+
+##############################
+# build gofile && build image & push image
+##############################
+build:BuildDocker:
+  stage: docker_build
+  tags:
+    - build
+  only:
+    - /^dev_.*$/
+    - /^test_.*$/
+    - /^gray_.*$/
+    - /^release_.*$/
+  except:
+    - branches
+  dependencies: [ 'build:BuildNpmRun-dev', 'build:BuildNpmRun-test', 'build:BuildNpmRun-gray', 'build:BuildNpmRun-prod' ]
+  services:
+    - name: docker:dind
+      #command: ["--insecure-registry=registry.cn-beijing.aliyuncs.com"]
+  variables:
+    DOCKER_DRIVER: overlay
+    DOCKER_TLS_CERTDIR: ''
+    DOCKER_HOST: tcp://172.16.6.183:2375
+  script:
+    - sh ./bin/ci.build.image.sh ${IMAGE_PROD} ${IMAGE_TAG} ${MSHK_RELEASE_NAME}
+    - docker images
+    - docker login -u ${COM_USER} -p ${COM_PASSWORD} ${MSHK_REGISTRY_PROD}
+    - sh ./bin/ci.push.image.sh ${IMAGE_PROD} ${IMAGE_TAG}
+    - sh ./bin/ci.rm.image.sh ${IMAGE_PROD} ${IMAGE_TAG}
+##############################
+#   发布 -  开发环境
+##############################
+DeployProd:dev_vue_admin:
+  stage: deploy_dev_vue_admin
+  image: hsh47/k8s-kubectl:staging
+  only:
+    - /^dev_.*$/
+  #when: manual
+  tags:
+    - deploy-test
+  script:
+    - echo $KUBE_CONFIG |base64 -d > /root/.kube/config
+    - kubectl get pods
+    - kubectl set image deployment/dev-vue-admin dev-vue-admin=${IMAGE_PROD}:${IMAGE_TAG}
+    - kubectl rollout history deployment dev-vue-admin
+
+##############################
+#   发布 -  测试环境
+##############################
+DeployProd:test_vue_admin:
+  stage: deploy_test_vue_admin
+  image: hsh47/k8s-kubectl:staging
+  only:
+    - /^test_.*$/
+  #when: manual
+  tags:
+    - deploy-test
+  script:
+    - echo $KUBE_CONFIG |base64 -d > /root/.kube/config
+    - kubectl get pods -n test-env
+    - kubectl set image deployment/test-vue-admin test-vue-admin=${IMAGE_PROD}:${IMAGE_TAG} -n test-env
+    - kubectl rollout history deployment test-vue-admin -n test-env
+    - wget -O /tmp/git_ci_ding  http://file.deemob.com/shell/git_ci_ding && chmod a+x /tmp/git_ci_ding &&/tmp/git_ci_ding -p ${MSHK_RELEASE_NAME} -e 测试环境 -d "${CI_COMMIT_MESSAGE}" -u ${GITLAB_USER_NAME} -v ${CI_BUILD_TAG}
+
+##############################
+#   发布 -  灰度环境
+##############################
+DeployProd:gray_vue_admin:
+  stage: deploy_gray_vue_admin
+  image: hsh47/k8s-kubectl:staging
+  only:
+    - /^gray_.*$/
+  #when: manual
+  tags:
+    - deploy-test
+  script:
+    - echo $KUBE_CONFIG |base64 -d > /root/.kube/config
+    - kubectl get pods -n gray-env
+    - kubectl set image deployment/gray-vue-admin gray-vue-admin=${IMAGE_PROD}:${IMAGE_TAG} -n gray-env
+    - kubectl rollout history deployment gray-vue-admin -n gray-env
+    - wget -O /tmp/git_ci_ding  http://file.deemob.com/shell/git_ci_ding && chmod a+x /tmp/git_ci_ding &&/tmp/git_ci_ding -p ${MSHK_RELEASE_NAME} -e 灰度环境 -d "${CI_COMMIT_MESSAGE}" -u ${GITLAB_USER_NAME} -v ${CI_BUILD_TAG}
+
+
+##############################
+#   发布 -  生产环境
+##############################
+DeployProd:k8s-prod_vue_admin:
+  stage: deploy_gray_vue_admin
+  image: hsh47/k8s-kubectl:staging
+  only:
+    - /^release_.*$/
+  when: manual
+  tags:
+    - deploy-test
+  script:
+    - echo $KUBE_CONFIG |base64 -d > /root/.kube/config
+    - kubectl get pods -n prod-env
+    - kubectl set image deployment/vue-admin vue-admin=${IMAGE_PROD}:${IMAGE_TAG} -n prod-env
+    - kubectl rollout history deployment vue-admin -n prod-env
+    - wget -O /tmp/git_ci_ding  http://file.deemob.com/shell/git_ci_ding && chmod a+x /tmp/git_ci_ding &&/tmp/git_ci_ding -p ${MSHK_RELEASE_NAME} -e 生产环境 -d "${CI_COMMIT_MESSAGE}" -u ${GITLAB_USER_NAME} -v ${CI_BUILD_TAG}
+
+
+##############################
+#   回滚 -  测试环境
+##############################
+RollBackDeployProd:vue_admin_test:
+  stage: rdeploy_vue_admin
+  image: registry-vpc.cn-beijing.aliyuncs.com/deemob/ansible:centos7
+  only:
+    - /^test_.*$/
+  when: manual
+  tags:
+    - deploy-test
+  script:
+    - ansible test_cms -m shell -a 'LodVersion=`cat /data/wwwapps/HistoryPackage/version.log|grep vue_admin|tail -n 2|head -n 1` && rm -f /data/wwwapps/vue_admin \
+      && cd /data/wwwapps/ && ln -s ./HistoryPackage/${LodVersion}  vue_admin'
+
+##############################
+#   回滚 -  正式环境
+##############################
+RollBackDeployProd:vue_admin_prod:
+  stage: rdeploy_vue_admin
+  image: registry-vpc.cn-beijing.aliyuncs.com/deemob/ansible:centos7
+  only:
+    - /^release_.*$/
+  when: manual
+  tags:
+    - deploy-test
+  script:
+    - ansible prod_cms -m shell -a 'LodVersion=`cat /data/wwwapps/HistoryPackage/version.log|grep vue_admin|tail -n 2|head -n 1` && rm -f /data/wwwapps/vue_admin \
+      && cd /data/wwwapps/ && ln -s ./HistoryPackage/${LodVersion}  vue_admin'

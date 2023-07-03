@@ -1,0 +1,231 @@
+/deep/ .ivu-drawer-header{
+  padding-left 38px
+}
+/deep/ .ivu-select-default.ivu-select-multiple .ivu-select-selection {
+	max-height 32px
+	overflow auto
+}
+/deep/ .group_radio{
+	.ivu-radio-group-button .ivu-radio-wrapper{
+		height: 28px;
+		font-size 13px
+		line-height 28px
+	}
+	.ivu-radio-group-button .ivu-radio-wrapper-checked{
+		background #0d3cab
+		border-color #0d3cab
+		font-size 13px
+		box-shadow -1px 0 0 0 #0d3cab
+		font-weight bold
+		color #FFFFff
+	}
+}
+
+// 父表的样式
+/deep/.data-table{
+  .ivu-table .ivu-table-cell{
+    padding-right 2px
+    padding-left 2px
+  }
+  .ivu-table th{
+    background-color #F5F9FF
+    height 36px
+    padding 4px 0
+    color #333333
+    font-size 14px
+  }
+  .ivu-table .name-row-ellipsis, .el-table__body .name-row-ellipsis{
+    font-size 12px
+    line-height: 15px;
+    height: 15px;
+  }
+  .ivu-table .tip-row-line, .el-table__body .tip-row-line{
+    font-size 10px
+    line-height: 15px;
+    height: 15px;
+    margin-top 0px
+  }
+  .ivu-table .table_text, .el-table__body .table_text{
+      font-size 12px
+    &.colorRed{
+      color #D72E1B
+    }
+   }
+  .ivu-table .ivu-table-row td{
+    padding 0px 0
+  }
+  .control-flex{
+    position relative
+    display flex
+    justify-content space-between
+    .control-left {
+      width: 80%
+    }
+    .name-row-ellipsis {
+      margin-top 5px
+    }
+    .control-right{
+      line-height 30px
+      padding-right 12px
+      color #4083F8
+      font-size 16px
+      cursor pointer
+      .control-img{
+        width 20px
+        height 20px
+        text-align center
+        line-height 20px
+        color #FFFFff
+        position absolute
+        top:0px
+        right 0px
+        img{
+          width 100%
+        }
+      }
+    }
+  }
+  .data_value{
+    font-size 14px
+    color #333333
+    line-height: 15px;
+  }
+  .data_scale{
+    font-size 10px
+    color #999999
+    &.up_scale{
+      color #D72E1B
+    }
+    &.down_scale{
+      color #339900
+    }
+  }
+}
+/deep/.sublist{
+  position: relative
+  .ivu-table th{
+    background-color #F9F1E4
+    height 36px
+    font-size 13px
+    padding 4px 0
+    color #333333
+  }
+  .ivu-table .name-row-ellipsis{
+    font-size 12px
+    line-height: 15px;
+    height: 15px;
+  }
+  .ivu-table .tip-row-line{
+    font-size 10px
+    line-height: 15px;
+    height: 15px;
+    margin-top 0px
+  }
+  .ivu-table .table_text{
+    font-size 12px
+    &.colorRed{
+      color #D72E1B
+    }
+  }
+  .ivu-table .ivu-table-row td{
+    padding 0px 0
+  }
+  .ivu-table-row-highlight td, .ivu-table-stripe .ivu-table-body tr.ivu-table-row-highlight:nth-child(2n) td, .ivu-table-stripe .ivu-table-fixed-body tr.ivu-table-row-highlight:nth-child(2n) td, tr.ivu-table-row-highlight.ivu-table-row-hover td{
+    background-color #FFF0D6 !important
+  }
+  .ivu-table-stripe .ivu-table-body tr:nth-child(2n) td, .ivu-table-stripe .ivu-table-fixed-body tr:nth-child(2n) td{
+    background-color #FFFFff
+  }
+  tr.ivu-table-row-hover td{
+    background-color #FFF0D6 !important
+  }
+  .data_value{
+    font-size 14px
+    color #333333
+    line-height: 15px;
+  }
+  .data_scale{
+    font-size 10px
+    color #999999
+    &.up_scale{
+      color #D72E1B
+    }
+    &.down_scale{
+      color #339900
+    }
+  }
+  i.pos{
+    position: absolute
+    left: -30px
+    top: 0px
+    width: 30px
+    height: 32px
+    line-height: 32px
+    text-align: center
+    color: #666
+    font-size: 14px
+    cursor: pointer
+    &:hover {
+      color: #4083F8
+    }
+  }
+}
+/deep/ .u-table-center{
+  .plTableBox .el-table td{
+    padding 4px 0
+  }
+  .plTableBox .el-table th{
+    padding 4px 0
+  }
+  .plTableBox .el-table th {
+    background-color: #e3ecf9!important;
+  }
+  .plTableBox .el-table--border td, .plTableBox .el-table--border th, .plTableBox .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed {
+    border-right: 1px solid #d7dade;
+  }
+  .plTableBox .el-table--border th, .plTableBox .el-table--border th.gutter:last-of-type {
+    border-bottom: 1px solid #d7dade;
+  }
+}
+.filter-card
+  margin-bottom: 10px
+  .filter-select
+    width: 152px
+    margin-right: 10px
+.source-handler
+  position: relative
+  padding-right: 30px
+  .label-status
+    position: absolute
+    right: 0px
+    top: 0px
+    height: 100%
+    width: 30px
+    .delete
+      display: block
+      height: 30px
+      line-height: 30px
+      text-align: center
+      font-size: 18px
+      cursor: pointer
+      color: #4083F8
+    .deleted
+      position:absolute
+      right: -2px
+      top: -8px
+      width: 40px
+/deep/.source-table
+  .ivu-table-cell
+    overflow: inherit
+
+.filter-card
+  .copy-content
+    margin-left: 11px
+
+.data-table
+  /deep/ .plTableBox .el-table
+    td
+      .cell
+        font-size: 12px
+      .text-row-ellipsis
+        white-space: normal !important

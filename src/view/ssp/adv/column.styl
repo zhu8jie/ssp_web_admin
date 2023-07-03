@@ -1,0 +1,50 @@
+// 自定义列的样式
+.column_content{
+  padding-left 22px
+  .col_detail{
+    .col_title{
+      font-size 14px
+      color #333333
+    }
+    .optional_detail{
+      padding-right 10px
+      .check_title{
+        padding 15px 0px 8px
+        border-bottom 1px solid #cccccc
+      }
+      .option_check{
+        margin-top 10px
+        color #999999
+        /deep/  .ivu-checkbox-checked .ivu-checkbox-inner{
+          border-color #3F83F7
+          background #FFFFff
+        }
+        /deep/   .ivu-checkbox-checked .ivu-checkbox-inner:after{
+          border-color #3F83F7
+        }
+        /deep/   &.ivu-checkbox-wrapper-checked{
+          color#3F83F7
+        }
+      }
+    }
+    .select_con{
+      max-height  450px
+      overflow auto
+      .ivu-tag{
+        width 155px
+        display: flex;
+        justify-content: space-between;
+        height: 30px;
+        line-height: 30px;
+        background #F5F7FF
+        border 0px
+        color #333333
+        margin-top 10px
+        /deep/ .ivu-icon-ios-close{
+          top:10px
+        }
+      }
+    }
+
+  }
+}

@@ -43,13 +43,13 @@
                 </upload-image>
                 <p class="upload-img-format-tips">营业执照照片或彩色扫描件,格式：jpg，大小不大于2M</p>
               </FormItem>
-              <FormItem label="公司法人姓名" prop="legal_person_name">
+              <!-- <FormItem label="公司法人姓名" prop="legal_person_name">
                 <Input v-model.trim="ruleForm.legal_person_name" :maxlength="30" placeholder="请输入公司法人姓名" autocomplete="off"/>
-              </FormItem>
-              <FormItem label="公司法人身份证号" prop="legal_person_code">
+              </FormItem> -->
+              <!-- <FormItem label="公司法人身份证号" prop="legal_person_code">
                 <Input v-model.trim="ruleForm.legal_person_code" placeholder="请输入公司法人身份证号" autocomplete="off"/>
-              </FormItem>
-              <FormItem label="公司法人身份证正反面照片" prop="legal_person_card_p">
+              </FormItem> -->
+              <!-- <FormItem label="公司法人身份证正反面照片" prop="legal_person_card_p">
                 <div style="display: flex;justify-content: space-between">
                   <upload-image v-model="ruleForm.legal_person_card_p" :widthVal="215" :heightVal="150" :idVal="2" refName="card1">
                     <div class="upload_text">
@@ -71,10 +71,10 @@
                   </upload-image>
                 </div>
                 <p class="upload-img-format-tips">照片或彩色扫描件，格式：jpg，大小：不大于2M</p>
-              </FormItem>
-              <FormItem label="产品名单" prop="product_list">
+              </FormItem> -->
+              <!-- <FormItem label="产品名单" prop="product_list">
                 <Input v-model.trim="ruleForm.product_list" :maxlength="50" placeholder="填写多个产品名单时用英文逗号隔开"/>
-              </FormItem>
+              </FormItem> -->
               <FormItem label="联系地址" prop="address">
                 <Row>
                   <Col :span="5">

@@ -629,3 +629,12 @@ export function int24ToTime(num) {
     return [pre, next]
 
 }
+
+/**
+ * [deepClone 深拷贝]
+ * @param  {[type]} data [description]
+ * @return {[type]}      [description]
+ */
+export function deepClone (data) {
+    return JSON.parse(JSON.stringify(data))
+}

@@ -60,6 +60,10 @@
 				<FormItem label="产品名称" prop="name">
 					<Input :maxlength="30" show-word-limit v-model.trim="modalForm.name" placeholder="请输入公司简称全拼"/>
 				</FormItem>
+
+				<FormItem label="应用版本号" prop="app_version">
+					<Input :maxlength="255" show-word-limit v-model.trim="modalForm.app_version" placeholder="多个英文逗号分隔"/>
+				</FormItem>
 			</Form>
 			<div class="drawer-footer">
 				<Button @click="drawerFlag = false">取消</Button>
@@ -104,8 +108,9 @@ export default {
 
 			drawerFlag: false, // 抽屉开关
 			modalForm: { // 提交表单
-				dsp_company_id: '',
-				name: ''
+				dsp_company_id: '', // 公司ID
+				name: '', // 产品名称
+				app_version: '' // 应用版本号
 			},
 			ruleBase: { // form表单正则
 				dsp_company_id: [{required: true, message: '请选择公司'}],
@@ -269,13 +274,15 @@ export default {
 				// 编辑
 				this.modalForm = {
 					id: row.id,
-					dsp_company_id: row.dsp_company_id,
-					name: row.name
+					dsp_company_id: row.dsp_company_id, // 公司ID
+					name: row.name, // 产品名称
+					app_version: row.app_version // 应用版本号
 				}
 			} else {
 				this.modalForm = {
-					dsp_company_id: '',
-					name: ''
+					dsp_company_id: '', // 公司ID
+					name: '', // 产品名称
+					app_version: '' // 应用版本号
 				}
 			}
 

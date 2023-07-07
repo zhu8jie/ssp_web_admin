@@ -483,17 +483,17 @@ export const formRules = {
         callback()
       }
     }
-    const settlement = (rule, value, callback) => {
+    const payTypeValidFn = (rule, value, callback) => {
       let _form = this.deployData
-      if (!_form.settlement) {
+      if (!_form.pay_type) {
         callback(new Error('请选择结算方式'))
-      } else if (_form.settlement === 1) {
+      } else if (_form.pay_type === 1) {
         if (_form.valuation_price <= 0 || !/^\d+(\.\d{1,2})?$/.test(_form.valuation_price)) {
           callback(new Error('CPM价格大于0,最多可填2位小数'))
         } else {
           callback()
         }
-      } else if (_form.settlement === 2) {
+      } else if (_form.pay_type === 2) {
         if (_form.divide_price <= 0 || !/^\d+(\.\d{1,2})?$/.test(_form.divide_price)) {
           callback(new Error('分成系数大于0,最多可填2位小数'))
         } else {
@@ -681,9 +681,9 @@ export const formRules = {
       deployRule: { // 正则
         discount_show: [{validator: discountShow}],
         discount_click: [{validator: discountClick}],
-        cpm_price: [{validator: cmPrice}],
-        billingMode: [{required: true, validator: billingMode}],
-        settlement: [{required: true, validator: settlement}],
+        // cpm_price: [{validator: cmPrice}], // cpm出价
+        // billingMode: [{required: true, validator: billingMode}], // 计费方式及底价
+        pay_type: [{required: true, validator: payTypeValidFn}],
         self_dsp: [{required: true, validator: selfDsp}],
         flow_split: [{required: true, validator: flowSplit}],
         size_ratio: [{required: true, validator: sizeRatio}],
@@ -813,5 +813,17 @@ export const adStatusList = (self) => {
     {value: 2, label: '修改审核中'},
     {value: 4, label: '已拒绝'},
     {value: 5, label: '封禁'}
+  ]
+}
+
+/**
+ * [广告位状态]
+ * @param  {[type]} self [description]
+ * @return {[type]}      [description]
+ */
+export const sspSlotStatus = (self) => {
+  return [
+    {value: 1, label: '启用'},
+    {value: 2, label: '暂停'}
   ]
 }

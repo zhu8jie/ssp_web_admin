@@ -31,13 +31,13 @@
               </div>
               <p class="text" v-else>无</p>
             </FormItem>
-            <FormItem class="appForm" label="公司法人姓名">
+            <!-- <FormItem class="appForm" label="公司法人姓名">
               <p class="text">{{ ruleForm.legal_person_name || '无'}} </p>
-            </FormItem>
-            <FormItem class="appForm" label="公司法人身份证号">
+            </FormItem> -->
+            <!-- <FormItem class="appForm" label="公司法人身份证号">
               <p class="text">{{ ruleForm.legal_person_code || '无'}} </p>
-            </FormItem>
-            <FormItem class="appForm"  label="公司法人身份证正反面照片" style="margin-bottom: 20px">
+            </FormItem> -->
+            <!-- <FormItem class="appForm"  label="公司法人身份证正反面照片" style="margin-bottom: 20px">
               <div v-if="ruleForm.legal_person_card_p || ruleForm.legal_person_card_b" class="">
                 <div v-if="ruleForm.legal_person_card_p" class="account_img" style="width: 215px;height: 150px;line-height: 150px" @mouseenter="enter(2)"
                      @mouseleave="leave">
@@ -57,10 +57,10 @@
                 </div>
               </div>
               <p class="text" v-else>无</p>
-            </FormItem>
-            <FormItem class="appForm" label="产品名单">
+            </FormItem> -->
+            <!-- <FormItem class="appForm" label="产品名单">
               <p class="text">{{ ruleForm.product_list || '无'}} </p>
-            </FormItem>
+            </FormItem> -->
             <FormItem class="appForm" label="联系地址">
               <p class="text">
                 <span v-for="(value,index) in provinceList" :key="'provinceList'+index" v-if="value.id === ruleForm.province_id">{{ value.name }}</span>

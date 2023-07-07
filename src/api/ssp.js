@@ -95,8 +95,9 @@ export const getAppList = (data) => {
 		url: `/api/v1/app/list?${qs.stringify(data, {arrayFormat: 'repeat'})}`
 	})
 }
+
 /**
- * [爆出下载广告位列表url]
+ * [下载广告位列表url]
  * @param  {[type]} data [description]
  * @return {[type]}      [description]
  */

@@ -43,7 +43,7 @@
             (ID:{{item.id}})
           </Option>
         </Select>
-        <!-- 预算位名称 -->
+        <!-- 产品名称/ID -->
         <Select
           class="i-margin-right-11 i-width-select i-select-remote"
           v-model="filterSearch.product_id_arr"
@@ -62,6 +62,7 @@
           <Option v-for="item in productList" :value="item.id" :key="item.id">{{item.name}} (ID:{{item.id}})</Option>
         </Select>
 
+        <!-- 广告场景 -->
         <Select
           class="i-margin-right-11 i-width-select mar-bot-10"
           v-model="filterSearch.ad_type_id"
@@ -72,6 +73,8 @@
         >
           <Option v-for="item in adTypeList" :value="item.id" :key="item.id">{{ item.name }}</Option>
         </Select>
+
+        <!-- 广告样式 -->
         <Select
           class="i-margin-right-11 i-width-select mar-bot-10"
           v-model="filterSearch.creative_type"
@@ -84,19 +87,22 @@
           styleDataArr
         </Select>
 
-        <Select class="i-margin-right-11 i-width-status mar-bot-10" v-model="filterSearch.status" clearable
-                placeholder="业务状态">
+        <!-- 业务状态 -->
+        <!-- <Select class="i-margin-right-11 i-width-status mar-bot-10" v-model="filterSearch.status" clearable placeholder="业务状态">
           <Option :value="1">正常</Option>
           <Option :value="2">停用</Option>
           <Option :value="3">封禁</Option>
           <Option :value="4">测试锁定</Option>
-        </Select>
+        </Select> -->
+
+        <!-- 采买类型 -->
         <Select class="i-margin-right-11 i-width-status mar-bot-10" v-model="filterSearch.pickup_status" clearable
                 placeholder="采买类型">
           <Option :value="1">联调</Option>
           <Option :value="2">测试</Option>
           <Option :value="3">正式</Option>
         </Select>
+
         <!-- 预算位名称 -->
         <Select
           class="i-margin-right-11 i-width-select i-select-remote"
@@ -136,6 +142,17 @@
                      v-model.trim="filterSearch.related_ssp_slot_num" placeholder="关联的广告位个数"/>
         <Button type="primary" @click="doFilterList">查询</Button>
       </div>
+
+      <!-- 业务状态 -->
+      <div style="display: flex;justify-content: space-between">
+        <div class="nav-handle-group" style="margin-top: 0px;">
+          <RadioGroup v-model="filterSearch.status" type="button" @on-change="doFilterList">
+            <Radio :label="0">全部<span>({{count}})</span></Radio>
+            <Radio v-for="(it,index) in dspCountStatusList" :key="'状态' + index " :label="it.value">{{it.label}}<span :style="it.value===2 || it.value ===3 ? 'color:#F72D17':''">({{it.number}})</span></Radio>
+          </RadioGroup>
+        </div>
+      </div>
+
       <div class="batch-line" v-show="batchStatus">
         <div class="batch-handle ">
           <div @click="changePickup()" class="batch-item">
@@ -159,6 +176,8 @@
           <Icon type="md-close"/>
         </div>
       </div>
+
+
       <div class="console-table">
         <Table highlight-row stripe border :columns="tableColList" :data="colDatList" :loading="tableLoadFlag"
                :height="tableHeight" :no-data-text="noDataText" @on-selection-change="selectChange">
@@ -395,7 +414,7 @@
   import {showTitle, regNumPositiveInteger, inputMaxNumber, filterBatchQuery} from '@/libs/util'
   import {debounce, number2Thousand, createObjectURL, formatDate} from '@/libs/tools'
   import {commonMixin} from '@/mixin/basic-common-class.js'
-  import {getBitColumn} from './data/data'
+  import {getBitColumn, dspSlotStatusEnum} from './data/data.js'
   import {pickupDspSlotStatus, bannedDspSlotStatus, getDspProductList, getDspSlotList, getDspSlotListAPI, saveDspSlot, updateDspSlotStatus, getErrSspSlot, importDspSlot, importDspSlotApi, getSspByDspList, deleteSspByDsp, dspImportAddUrl, dspImportAdd, dspImportUpdate, dspImportUpdateUrl} from '@/api/dsp'
   import {getDownLoadXls} from '@/api/common'
   import {tableHeight} from '@/mixin/calc-table-height.js'
@@ -451,6 +470,9 @@
         catchDspSlotList: [], // 缓存预算位名称
         dspSlotList: [], // 预算位名称
         dspSlotLoad: false, // 预算位加载中
+
+        count: 0, // 全部
+        dspCountStatusList: [], // 广告位的状态的列表
 
         // 搜索条件
         filterSearch: {
@@ -555,7 +577,14 @@
       }
     },
     mounted() {
-      this.initTableHeight({'search-line': {isAutoCalc: true, isInclude: true}, 'nav-handle-group': false}) // search-line的高度
+      this.initTableHeight( // search-line的高度
+        {
+          'search-line': {isAutoCalc: true, isInclude: true}, 
+          'nav-handle-group': true,
+          'randomNum': -15
+        }
+      )
+
     },
     activated() {
       this.$Bus.$off('dspSlotEmitEvent')
@@ -728,7 +757,10 @@
         getDspSlotList(params).then(res => {
           this.tableLoadFlag = false
           if (res.code === 200) {
+            // a. 总数
             this.total_count = res.data.total_count
+
+            // b. 表格数据
             let dspList = []
             if (res.data.list) {
               dspList = res.data.list.map(item => {
@@ -739,6 +771,25 @@
               })
             }
             this.colDatList = dspList
+
+            // c. 业务状态
+            const status_count = res.data.status_count || []
+            let count = 0 // 总数
+            const status_count_map = {} // 生成[状态 和 值]映射关系
+            status_count.forEach(item => {
+              status_count_map[item.status] = item.count
+
+              count += Number(item.count) // 统计全部
+            })
+
+            this.dspCountStatusList = dspSlotStatusEnum(this).map(item => {
+              item['number'] = status_count_map[item.value] || 0
+
+              return item
+            })
+            this.count = count
+
+            console.log(this.dspCountStatusList)
           }
         }, err => {
           if (err.code === 403) {

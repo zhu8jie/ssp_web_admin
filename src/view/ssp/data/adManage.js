@@ -155,3 +155,17 @@ export const getManageCols = (self) => {
 		}
 	]
 }
+
+/**
+ * [广告位 结算方式]
+ * 1=固价 2=分成 3=RTB
+ * @param  {[type]} self [description]
+ * @return {[type]}      [description]
+ */
+export const adPayType = (self) => {
+  return [
+  	{value: 1, label: '固价'},
+  	{value: 2, label: '分成'},
+  	{value: 3, label: 'RTB'}
+  ]
+}

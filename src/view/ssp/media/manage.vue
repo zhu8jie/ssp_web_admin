@@ -92,6 +92,7 @@
 		</Card>
 		<!--配置弹窗-->
 		<Drawer class="setModal" title="配置" v-model="setModalFlag" :mask-closable="false" :closable="false" class-name="vertical-center-modal" width="700" :styles="drawStyles">
+			<!-- {{setModalForm}} -->
 			<Form :label-width="120" ref="setModalForm" :label-colon="true" :model="setModalForm" :rules="setRuls">
 				<FormItem label="账户名称(ID)">
 					<Input disabled :value="`${setModalForm.dev_account}(${setModalForm.ud_id})`" placeholder="账户名称（ID）"></Input>
@@ -146,12 +147,12 @@
 					</div>
 				</FormItem>
 
-				<FormItem label="合作主体" prop="cooperation_company">
+				<!-- <FormItem label="合作主体" prop="cooperation_company">
 					<RadioGroup v-model="setModalForm.cooperation_company">
 						<Radio :label="1">聚量</Radio>
 						<Radio :label="2">鼎广</Radio>
 					</RadioGroup>
-				</FormItem>
+				</FormItem> -->
 
 				<FormItem label="合同有效期" prop="cooperation_time">
 					<DatePicker type="daterange" format="yyyy-MM-dd" v-model="setModalForm.cooperation_time" placeholder="请选择合同有效期" style="width: 240px"></DatePicker>
@@ -159,7 +160,7 @@
 
 				<!-- 发票类型-{{setModalForm.invoice_type}}, 发票项目-{{setModalForm.invoice_project}},
 				是否补扣其他税税率-{{setModalForm.is_cut_other_tax}}, 结算周期-{{setModalForm.settlement_period}} -->
-				<FormItem label="财务信息" prop="invoice_type">
+				<!-- <FormItem label="财务信息" prop="invoice_type">
 					<div class="permiss-box">
 						<div class="per-item">
 							<p>发票类型（发票税率）</p>
@@ -192,7 +193,7 @@
 							</RadioGroup>
 						</div>
 					</div>
-				</FormItem>
+				</FormItem> -->
 
 			</Form>
 			<div class="drawer-footer">
@@ -434,9 +435,9 @@ export default {
 				status: [{required: true, message: '请选择账户状态', trigger: 'change'}],
 				type: [{type: 'number', required: true, message: '请选择媒体类型', trigger: 'change'}],
 				business: [{required: true, validator: validateBusCheck, trigger: 'blur'}],
-				cooperation_company: [{required: true, message: '请选择合作主体'}],
+				// cooperation_company: [{required: true, message: '请选择合作主体'}],
 				cooperation_time: [{required: true, message: '请选择合同有效期'}],
-				invoice_type: [{required: true, validator: invoiceCheck, trigger: 'change'}],
+				// invoice_type: [{required: true, validator: invoiceCheck, trigger: 'change'}],
 			},
 
 			bannedModalFlag: false,
@@ -681,12 +682,12 @@ export default {
 					company_name: row.company_name,
 					type: row.type ? row.type : 1,
 					status: status === 2 ? 0 : String(status), // 此处特殊处理: 初始化创建的媒体，默认状态是待审核，而实际保存时需要选择
-					cooperation_company: row.cooperation_company || null, // 合作主体，1=聚量，2=鼎广
+					// cooperation_company: row.cooperation_company || null, // 合作主体，1=聚量，2=鼎广
 					cooperation_time: (row.cooperation_since && row.cooperation_until) ? [row.cooperation_since, row.cooperation_until] : [],
-					invoice_type: row.invoice_type, // 发票类型，1=增值税普通发票，2=增值税专用发票（3%），3=增值税专用发票（6%）
-					invoice_project: row.invoice_project, // 发票项目，1=广告发布费，2=非广告发布费的其他项目
-					is_cut_other_tax: row.is_cut_other_tax === 1 ? 1 : 2, // 是否补扣其他税额，1=补扣，2=不扣
-					settlement_period: row.settlement_period // 结算周期，1=预付，2=次月月底，3=次次25日前，4=次次月底
+					// invoice_type: row.invoice_type, // 发票类型，1=增值税普通发票，2=增值税专用发票（3%），3=增值税专用发票（6%）
+					// invoice_project: row.invoice_project, // 发票项目，1=广告发布费，2=非广告发布费的其他项目
+					// is_cut_other_tax: row.is_cut_other_tax === 1 ? 1 : 2, // 是否补扣其他税额，1=补扣，2=不扣
+					// settlement_period: row.settlement_period // 结算周期，1=预付，2=次月月底，3=次次25日前，4=次次月底
 				}
 
 				this.setModalFlag = true
@@ -785,14 +786,14 @@ export default {
 						del_platform: _del,
 						ad_type_support,
 						render_type,
-						cooperation_company: _form.cooperation_company, // 合作主体，1=聚量，2=鼎广
+						// cooperation_company: _form.cooperation_company, // 合作主体，1=聚量，2=鼎广
 						cooperation_since: startTime,
 						cooperation_until: endTime,
-						invoice_type: _form.invoice_type,
-						invoice_project: _form.invoice_project,
-						is_cut_other_tax: _form.is_cut_other_tax === 1 ? 1 : 2,
+						// invoice_type: _form.invoice_type,
+						// invoice_project: _form.invoice_project,
+						// is_cut_other_tax: _form.is_cut_other_tax === 1 ? 1 : 2,
 						other_tax_rate: _form.is_cut_other_tax === 1 ? parseFloat(this.otherTax) : null,
-						settlement_period: _form.settlement_period
+						// settlement_period: _form.settlement_period
 					}
 
 					console.log(params)

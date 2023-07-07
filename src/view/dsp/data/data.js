@@ -382,3 +382,17 @@ export const getProductColumn = (self) => {
 		}
 	]
 }
+
+/**
+ * [dspSlotStatusEnum 预算位 业务状态]
+ * @type {Array}
+ */
+
+export const dspSlotStatusEnum = (self) => {
+  return [
+    {value: 1, label: '正常'},
+    {value: 2, label: '停用'},
+    {value: 3, label: '封禁'},
+    {value: 4, label: '测试锁定'}
+  ]
+}

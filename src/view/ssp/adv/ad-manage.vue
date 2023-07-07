@@ -78,7 +78,7 @@
           <Option v-for="item in adTypeList" :value="item.id" :key="item.id">{{ item.name }}</Option>
         </Select>
 
-        <Select
+        <!-- <Select
           class="i-margin-right-11 i-width-select mar-bot-10"
           multiple
           v-model="filterSearch.creative_type_arr"
@@ -87,7 +87,7 @@
           placeholder="广告样式"
         >
           <Option v-for="item in filterSearch.styleDataArr" :value="item.id" :key="item.id">{{ item.title }}</Option>
-        </Select>
+        </Select> -->
 
         <!-- 广告位名称 -->
         <Select
@@ -109,6 +109,21 @@
             (ID:{{item.ssp_slot_id}})
           </Option>
         </Select>
+
+        <!-- 结算方式 -->
+        <Select
+          class="i-margin-right-11 i-width-select mar-bot-10"
+          clearable
+          v-model="filterSearch.pay_type"
+          placeholder="结算方式"
+        >
+          <Option
+            v-for="item in adPayType"
+            :value="item.value"
+            :key="item.value +'结算方式'"
+          >{{item.label}}</Option>
+        </Select>
+
         <!-- 产品名称 -->
         <Select
           class="i-margin-right-11 i-width-select"
@@ -181,10 +196,10 @@
             <Icon type="ios-settings"/>
             <span>批量恢复采买</span>
           </div>
-			<div @click="batchSet(5)" class="batch-item">
-				<Icon type="ios-settings"/>
-				<span>批量重新测试</span>
-			</div>
+      <div @click="batchSet(5)" class="batch-item">
+        <Icon type="ios-settings"/>
+        <span>批量重新测试</span>
+      </div>
           <div @click="batchSet(2)" class="batch-item">
             <Icon type="ios-settings"/>
             <span>批量填写有量未采买原因</span>
@@ -218,11 +233,11 @@
               <span style="display: inline-block">(2) 取广告位【今天零点到此刻】的数据做判断依据，每10分钟更新一次 <br>(3) 聚合状态的优先级是：<br>     已采买>采买失败>有量未采买>测试中>测试待开始>待测试 </span>
               <span style="display: inline-block">(4) 举例说明：如果广告位与各产品的状态中既有已采买又有采买失败，那广告位的运营状态为“已采买” ；</span>
               <span style="display: inline-block">①待测试：审核通过\恢复采买\重新测试后的运营状态<br>②测试待开始：在测试计划中，未到测试开始时间</span>
-			  <span style="display: inline-block">③测试中：在测试计划中，处于测试中或暂停中的状态<br>④测试不通过：手动操作测试不通过</span>
-			  <span style="display: inline-block">⑤已采买：广告位关联预算位的有效广告请求pv、广告返回pv、广告展现pv>0 </span>
-			  <span style="display: inline-block">⑥采买失败：广告位关联预算位的有效广告请求pv=0或广告位关联预算位的有效广告请求pv、广告返回pv>0，广告展现pv=0 </span>
-			  <span style="display: inline-block">⑦有量未采买：广告位的总广告请求pv>0，广告返回pv=0；广告位关联了预算位的广告返回pv=0 </span>
-			  <span style="display: inline-block">⑧无量：广告位总广告请求pv=0  <br>⑨拒绝采买：手动操作拒绝采买</span>
+              <span style="display: inline-block">③测试中：在测试计划中，处于测试中或暂停中的状态<br>④测试不通过：手动操作测试不通过</span>
+              <span style="display: inline-block">⑤已采买：广告位关联预算位的有效广告请求pv、广告返回pv、广告展现pv>0 </span>
+              <span style="display: inline-block">⑥采买失败：广告位关联预算位的有效广告请求pv=0或广告位关联预算位的有效广告请求pv、广告返回pv>0，广告展现pv=0 </span>
+              <span style="display: inline-block">⑦有量未采买：广告位的总广告请求pv>0，广告返回pv=0；广告位关联了预算位的广告返回pv=0 </span>
+              <span style="display: inline-block">⑧无量：广告位总广告请求pv=0  <br>⑨拒绝采买：手动操作拒绝采买</span>
             </div>
           </Tooltip>
           <RadioGroup v-model="filterSearch.operate_status" type="button" @on-change="doFilterList">
@@ -351,8 +366,8 @@
                 <p style="display: flex;justify-content: space-between;line-height: 20px">
                   <span style="vertical-align: middle">{{scope.row.traffic_control_list ? scope.row.traffic_control_list.length :  0 }}</span>
                   <span @click="configShow(scope.row)" style="cursor: pointer;vertical-align: middle">
-              								<img style="width: 15px;vertical-align: middle" src="~@/assets/image/edit.png" alt="">
-              							</span>
+                              <img style="width: 15px;vertical-align: middle" src="~@/assets/image/edit.png" alt="">
+                            </span>
                 </p>
               </template>
               <!--第三方SDK接入-->
@@ -411,7 +426,7 @@
               <!--广告位状态-->
               <template v-if="item.prop ==='status_dev'">
                 <Badge v-if="scope.row.status_dev == 1" color="#339900" text="启用"/>
-                <!-- 2暂停，0默认暂停 -->
+                <!-- 1=启用 2暂停，0默认暂停 -->
                 <Badge v-else color="#F72D17" text="暂停"/>
               </template>
               <!--请求量控制-->
@@ -434,18 +449,18 @@
               </template>
               <!--运营状态-->
               <template v-if="item.prop ==='operate_status'">
-				  <div class="divide">
-					  <div class="divide_left">
-						  <p v-if="scope.row.operate_status===-4">-</p>
-						  <p v-else>
+          <div class="divide">
+            <div class="divide_left">
+              <p v-if="scope.row.operate_status===-4">-</p>
+              <p v-else>
                       <span v-for="item in productStatus" v-if="item.value===scope.row.operate_status" :value="item.value"
-							:key="item.label +'运营状态' + scope.row.id">{{item.label}}</span>
-						  </p>
-					  </div>
-					<div class="divide_right" @click="logShow(scope.row)">
-						<i class="iconfont icon-rizhi"/>
-					</div>
-				  </div>
+              :key="item.label +'运营状态' + scope.row.id">{{item.label}}</span>
+              </p>
+            </div>
+          <div class="divide_right" @click="logShow(scope.row)">
+            <i class="iconfont icon-rizhi"/>
+          </div>
+          </div>
 
               </template>
               <!--运营状态原因-->
@@ -489,10 +504,10 @@
                   <div v-if="scope.row.product_text.length && scope.row.product_text.includes(item.label)">
                     <p v-for="its in scope.row.ssp_slot_dsp_product_list"
                        v-if="item.label === its.dsp_product.name">
-					  <span v-if="its.status=== -4">-</span>
-						<span v-else>
-						<span v-for="it in productStatus" v-if="it.value=== its.status">{{it.label}}</span>
-						</span>
+                      <span v-if="its.status=== -4">-</span>
+                      <span v-else>
+                      <span v-for="it in productStatus" v-if="it.value=== its.status">{{it.label}}</span>
+                      </span>
                     </p>
                   </div>
                   <div v-else>-</div>
@@ -634,18 +649,18 @@
             <p style="color: red">只有广告位的运营状态为有量未采买状态时，才可以录入对应的原因；</p>
             <p>请输入广告位有量未采买的原因：</p>
           </div>
-			<div v-else>
-				<p v-if="batchHandle === 3 || batchHandle === 4" style="color: red">注意：仅没有配置预算位且此刻没有创建测试计划的广告位，可执行此操作，请提前确认，否则无法修改</p>
-				<p v-else-if="batchHandle === 1" style="color: red">注意：仅运营状态为拒绝采买时，才可以恢复采买</p>
-				<p v-else style="color: red">注意：仅运营状态为测试不通过时，才可以重新测试</p>
-				<p>广告位【运营状态】将改为
-					<span v-if="batchHandle === 1">恢复采买</span>
-					<span v-if="batchHandle === 3">拒绝采买</span>
-					<span v-if="batchHandle === 4">测试不通过</span>
-					<span v-if="batchHandle === 5">重新测试</span>
-				</p>
-				<p>如果确认操作，请输入原因：</p>
-			</div>
+      <div v-else>
+        <p v-if="batchHandle === 3 || batchHandle === 4" style="color: red">注意：仅没有配置预算位且此刻没有创建测试计划的广告位，可执行此操作，请提前确认，否则无法修改</p>
+        <p v-else-if="batchHandle === 1" style="color: red">注意：仅运营状态为拒绝采买时，才可以恢复采买</p>
+        <p v-else style="color: red">注意：仅运营状态为测试不通过时，才可以重新测试</p>
+        <p>广告位【运营状态】将改为
+          <span v-if="batchHandle === 1">恢复采买</span>
+          <span v-if="batchHandle === 3">拒绝采买</span>
+          <span v-if="batchHandle === 4">测试不通过</span>
+          <span v-if="batchHandle === 5">重新测试</span>
+        </p>
+        <p>如果确认操作，请输入原因：</p>
+      </div>
         </div>
         <FormItem label="" prop="reason">
           <Input v-model.trim="batchForm.reason" show-word-limit maxlength="50" type="textarea" :rows="6"
@@ -662,18 +677,20 @@
     </Drawer>
     <!-- 备注弹窗 -->
     <note-table ref="noteTable" @on-change="changeNoteTable"></note-table>
-	 <!-- 操作日志 -->
-	<operationLog v-model="logModal" :ids="log_id"></operationLog>
+   <!-- 操作日志 -->
+  <operationLog v-model="logModal" :ids="log_id"></operationLog>
   </div>
 </template>
 
 <script>
   import {showTitle, filterBatchQuery, localRead} from '@/libs/util'
   import {productStatus, productMark, adStatusList} from '../data/adConfig'
+  import { adPayType } from '@/view/ssp/data/adManage.js'
+
   import {getMediaSspSlotAdList, submitOperateStatus, submitProductRemark, getSspSlotAdList, getAppList, setSspSlotStatus, getSspSlotAdListUrl, sspSlotImport, sspSlotImportUrl, sspSlotImportMap, sspSlotImportMapUrl, sspSlotImportUpdate, sspSlotImportUpdateUrl} from '@/api/ssp'
   import {getDspProductList} from '@/api/dsp'
   import {commonMixin} from '@/mixin/basic-common-class.js'
-  import {debounce, throttle, createObjectURL, formatDate} from '@/libs/tools'
+  import {debounce, throttle, createObjectURL, formatDate, deepClone} from '@/libs/tools'
   import {tableHeight} from '@/mixin/calc-table-height.js'
   import {getDownLoadXls} from '@/api/common'
   import {inPageAccess} from '@/mixin/in-page-access.js'
@@ -690,8 +707,8 @@
     mixins: [commonMixin, tableHeight, inPageAccess, commonConfig],
     data() {
       return {
-		logModal: false, // 操作日志的弹框
-		log_id: 0, // 操作日志的id
+        logModal: false, // 操作日志的弹框
+        log_id: 0, // 操作日志的id
         batchForm: {
           reason: '' // 批量的原因
         },
@@ -715,6 +732,8 @@
         productStatus: productStatus(this), // 产品状态以及运营状态
         productMark: productMark(this), // 产品标记
         adStatusList: adStatusList(this), // 广告位的状态
+        adPayType: adPayType(this), // 广告位-结算方式
+
         configStatus: true,
         configData: null,
         active: 1, // 1=> 导入广告位，2=> 配置预算位
@@ -743,6 +762,8 @@
           ssp_slot_id_arr_textarea: null, // 广告位ID数组textarea(多个)
           ssp_slot_name_arr_textarea: null, // 广告位名称数组textarea
           ratio_arr_textarea: null, // 素材尺寸比例textarea
+
+          pay_type: 1, // 结算方式 1=固价 2=分成 3=RTB
 
           // 备用数组
           styleDataArr: [], // 广告样式列表 和 广告场景联动
@@ -830,13 +851,13 @@
       }
     },
     created() {
-    	if (this.$route.query.sspSlotId) {
-			this.filterSearch.ssp_slot_id_arr_textarea = this.$route.query.sspSlotId
-			let _filter = this.filterSearch
-			let textSplitArr = filterBatchQuery({value: _filter.ssp_slot_id_arr_textarea, type: 'number'})
-			_filter.ssp_slot_id_arr = Array.from(new Set([...textSplitArr, ..._filter.ssp_slot_id_arr_select]))
+      if (this.$route.query.sspSlotId) {
+      this.filterSearch.ssp_slot_id_arr_textarea = this.$route.query.sspSlotId
+      let _filter = this.filterSearch
+      let textSplitArr = filterBatchQuery({value: _filter.ssp_slot_id_arr_textarea, type: 'number'})
+      _filter.ssp_slot_id_arr = Array.from(new Set([...textSplitArr, ..._filter.ssp_slot_id_arr_select]))
 
-		}
+    }
       this.initLinkage() // 初始化联动
     },
     mounted() {
@@ -849,19 +870,19 @@
       })
     },
     methods: {
-		/**
-		 * [logShow 点击显示操作日志]
-		 * @return {[type]} [description]
-		 */
-		logShow(row) {
+    /**
+     * [logShow 点击显示操作日志]
+     * @return {[type]} [description]
+     */
+    logShow(row) {
           this.logModal = true
           this.log_id = row.id
-		},
+    },
 
-		/**
-		 * [renderHeader 列的提示]
-		 * @return {[type]} [description]
-		 */
+    /**
+     * [renderHeader 列的提示]
+     * @return {[type]} [description]
+     */
       renderHeader(h, { column, $index }) {
         if (column.label === '今日状态') {
            return h('div', [
@@ -879,9 +900,9 @@
               h('div', {
                 slot: 'content', style: {display: 'flex'}
               }, [h('span', '测试待开始：在测试计划中，未到测试开始时间')]),
-			  h('div', {
-					slot: 'content', style: {display: 'flex'}
-			  }, [h('span', '测试中：关联测试计划的测试中或暂停中状态')]),
+              h('div', {
+                slot: 'content', style: {display: 'flex'}
+              }, [h('span', '测试中：关联测试计划的测试中或暂停中状态')]),
               h('div', {
                 slot: 'content', style: {display: 'flex'}
               }, [h('span', '已采买：广告位关联预算位的有效广告请求pv、广告返回pv、广告展现pv>0 ')]),
@@ -1139,10 +1160,10 @@
           this.$Message.warning('请选择对应的设置的广告位')
           return
         }
-		  this.batchHandle = type
-		  this.batchModalFlag = true
-		  this.$refs['batchForm'].resetFields()
-		  this.batchForm.reason = ''
+      this.batchHandle = type
+      this.batchModalFlag = true
+      this.$refs['batchForm'].resetFields()
+      this.batchForm.reason = ''
       },
       /**
        * [copySspSlotID 复制全部广告位ID]
@@ -1342,6 +1363,8 @@
         params.page_num = this.currentPage
         params.page_size = this.pageSize
 
+        console.log(params)
+
         this.tableLoadFlag = true
 
         getMediaSspSlotAdList(params).then(res => {
@@ -1403,11 +1426,11 @@
                    product_text.push(it.dsp_product.name)
                   }) : ''
                 item.product_text = product_text
-				  let ssp_product_name = [] // 关联产品的名称
-				  item.related_dsp_products ? item.related_dsp_products.map(it => {
-					  ssp_product_name.push(it.name)
-				  }) : ''
-				  item.ssp_product_name = ssp_product_name
+          let ssp_product_name = [] // 关联产品的名称
+          item.related_dsp_products ? item.related_dsp_products.map(it => {
+            ssp_product_name.push(it.name)
+          }) : ''
+          item.ssp_product_name = ssp_product_name
                 return item
               })
             }
@@ -1434,12 +1457,12 @@
        */
       datePickerChange(e) {
          if (e[0]) {
-			 this.filterSearch.created_since = e[0]
-			 this.filterSearch.created_until = e[1] + ` 23:59:59`
-		 } else {
-			 this.filterSearch.created_since = null
-			 this.filterSearch.created_until = null
-		 }
+       this.filterSearch.created_since = e[0]
+       this.filterSearch.created_until = e[1] + ` 23:59:59`
+     } else {
+       this.filterSearch.created_since = null
+       this.filterSearch.created_until = null
+     }
       },
       /**
        * [getAxiosParams 获取下载和列表的url参数]
@@ -1447,7 +1470,8 @@
        */
       getAxiosParams() {
 
-        let _filter = this.filterSearch
+        let _filter = deepClone(this.filterSearch)
+
         let params = {
           ud_id_arr: _filter.ud_id_arr, // 媒体ID数组
           app_id_arr: _filter.app_id_arr, // 应用ID数组
@@ -1457,6 +1481,11 @@
           dsp_product_status_arr: _filter.dsp_product_status_arr, // 产品状态
           dsp_product_mark_arr: _filter.dsp_product_mark_arr // 产品标记
         }
+
+        // 结算方式
+        _filter.pay_type > 0 && (params.pay_type = _filter.pay_type)
+
+
         _filter.created_since ? params.created_since = Date.parse(new Date(_filter.created_since)) / 1000 : '' // 创建时间的开始
         _filter.created_until ? params.created_until = Date.parse(new Date(_filter.created_until)) / 1000 : '' // 创建时间的结束
         _filter.operate_status !== '全部' ? params.operate_status = _filter.operate_status : '' // 运营状态
@@ -1904,32 +1933,32 @@
     font-size 12px
   }
   .divide{
-	  height 100%
-	  display:flex
-	  justify-content space-between
-	  .divide_left{
-		  min-height: 48px;
-		  line-height 48px
-		  flex:1
-		  position relative
-	  }
+    height 100%
+    display:flex
+    justify-content space-between
+    .divide_left{
+      min-height: 48px;
+      line-height 48px
+      flex:1
+      position relative
+    }
 
-	  .divide_right{
-		  width 20px
-		  min-height: 48px;
-		  line-height 48px
-		  font-size: 16px;
-		  text-align: center;
-		  color: #3F83F7;
-		  cursor pointer
-	  }
+    .divide_right{
+      width 20px
+      min-height: 48px;
+      line-height 48px
+      font-size: 16px;
+      text-align: center;
+      color: #3F83F7;
+      cursor pointer
+    }
   }
 
   .tooltip p {
     margin 0px
   }
   .batch_title p{
-	 margin-bottom 5px
+   margin-bottom 5px
   }
 
   .select-tree

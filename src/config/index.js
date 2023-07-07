@@ -34,33 +34,23 @@ export default {
 	 */
 	APIUrl: {
 		dev: { // 开发环境 - 切换到灰度环境
-			baseUrl: 'http://192.168.3.36:8899', // 基础请求接口
-			userBaseUrl: 'http://user.dev.deemob.com', // dsp用户中心 - 开发环境
-			mediaComUrl: 'http://192.168.3.36:8877' // 平台公告（公用接口）-从-->媒体平台 --获取
+			baseUrl: 'http://apia.gladdigit.com', // 基础请求接口
+			mediaComUrl: 'http://apim.gladdigit.com' // 平台公告（公用接口）-从-->媒体平台 --获取
 		},
-		// dev: { // 开发环境 - 切换到灰度环境
-		// 	baseUrl: 'https://admin.gray.deemob.com', // 基础请求接口
-		// 	userBaseUrl: 'https://user.gray.deemob.com', // dsp用户中心 - 开发环境
-		// 	mediaComUrl: 'https://media.gray.deemob.com' // 平台公告（公用接口）-从-->媒体平台 --获取
-		// },
 		deving: { // 开发环境
-			baseUrl: 'http://admin.dev.deemob.com', // 基础请求接口
-			userBaseUrl: 'http://user.dev.deemob.com', // dsp用户中心 - 开发环境
-			mediaComUrl: 'http://media.dev.deemob.com' // 平台公告（公用接口）-从-->媒体平台 --获取
+			baseUrl: 'http://grayapia.gladdigit.com', // 基础请求接口
+			mediaComUrl: 'http://grayapim.gladdigit.com' // 平台公告（公用接口）-从-->媒体平台 --获取
 		},
 		testing: { // 测试服务器
-			baseUrl: 'http://admin.test.deemob.com', // 基础请求接口
-			userBaseUrl: 'http://user.test.deemob.com', // dsp用户中心 - 测试环境
-			mediaComUrl: 'http://media.test.deemob.com' // 平台公告（公用接口）-从-->媒体平台 --获取
+			baseUrl: 'http://grayapia.gladdigit.com', // 基础请求接口
+			mediaComUrl: 'http://grayapim.gladdigit.com' // 平台公告（公用接口）-从-->媒体平台 --获取
 		},
 		gray: { // 灰度
-			baseUrl: 'https://admin.gray.deemob.com', // 基础请求接口
-			userBaseUrl: 'https://user.gray.deemob.com', // dsp用户中心 - 测试环境
-			mediaComUrl: 'https://media.gray.deemob.com' // 平台公告（公用接口）-从-->媒体平台 --获取
+			baseUrl: 'http://grayapia.gladdigit.com', // 基础请求接口
+			mediaComUrl: 'http://grayapim.gladdigit.com' // 平台公告（公用接口）-从-->媒体平台 --获取
 		},
 		pro: { // 正式服务器
 			baseUrl: 'http://apia.gladdigit.com', // 基础请求接口
-			userBaseUrl: 'http://apia.gladdigit.com', // dsp用户中心 - 测试环境
 			mediaComUrl: 'http://apim.gladdigit.com' // 平台公告（公用接口）-从-->媒体平台 --获取
 		}
 	},

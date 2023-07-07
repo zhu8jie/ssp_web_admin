@@ -45,6 +45,7 @@ export const tableHeight = {
                     + (!!includeNodes['table-has-amount'] ? 49 : 0)
                     + 15 // console-table的margin-top15
                     + 42 // page-center的高度32 + margin-top10
+                    + (includeNodes['randomNum'] ? includeNodes['randomNum'] : 0) // 任意加减
 
             return _height
         },

@@ -12,6 +12,7 @@
 			<br>
 			接入方式： {{formBase.access_type}} (1=API，2=SDK) -->
 
+			<!-- {{formBase}} -->
 			<div v-if="formBase.app_name"  class="edit-content-card">
 
 				<div class="app-edit-tab">
@@ -23,20 +24,20 @@
 					<Form :model="formBase" :label-colon="true" label-position="right" :label-width="300" :rules="ruleBase" ref="formBase">
 						<div class="basic-part">
 							<FormItem label="选择应用平台和应用商店" class="ivu-form-item-required">
-								<FormItem prop="os_type" style="display: inline-block; width: 120px">
+								<FormItem prop="os_type" style="display: inline-block; width: 508px">
 									<Select :disabled="resolveNoEdit" v-model="formBase.os_type" placeholder="应用平台" @on-change="_getStore" data-tag="resetAccessType">
 										<!-- 如果该媒体的账号权限只给了sdk，那么在选择应用平台时，不可以选择ios平台 -->
 										<Option :disabled="hasSdkPer && !hasApiPer && item.id === 2" v-for="item in osTypeList" :value="item.id" :key="item.id">{{ item.name }}</Option>
 									</Select>
 								</FormItem>
-								<FormItem prop="app_store_id" style="display: inline-block; width: 120px">
+								<!-- <FormItem prop="app_store_id" style="display: inline-block; width: 120px">
 									<Select v-model="formBase.app_store_id" placeholder="应用商店">
 										<Option v-for="item in appStoreList" :value="item.id" :key="item.id">{{ item.name }}</Option>
 									</Select>
-								</FormItem>
-								<FormItem prop="store_detail_url" style="display: inline-block; width: 260px">
+								</FormItem> -->
+								<!-- <FormItem prop="store_detail_url" style="display: inline-block; width: 260px">
 									<Input style="width: 260px" maxlength="200" placeholder="应用商店详情页地址" v-model.trim="formBase.store_detail_url"></Input>
-								</FormItem>
+								</FormItem> -->
 							</FormItem>
 							<FormItem label="填写应用商店下载地址">
 								<Input style="width: 508px" maxlength="200" placeholder="可直接下载app的地址" v-model.trim="formBase.store_download_url"></Input>
@@ -44,14 +45,14 @@
 							<FormItem label="填写应用名称" prop="app_name">
 								<Input style="width: 508px" maxlength="30" show-word-limit placeholder="请填写与应用商店一致的应用名称" v-model.trim="formBase.app_name"></Input>
 							</FormItem>
-							<FormItem label="选择应用类型" prop="app_type_one">
+							<!-- <FormItem label="选择应用类型" prop="app_type_one">
 								<Select style="width: 251px" v-model="formBase.app_type_one" placeholder="应用类型" @on-change="appTypeOneChange">
 									<Option v-for="item in industryList" :value="item.id" :key="item.id">{{ item.name }}</Option>
 								</Select>
 								<Select style="width: 251px" v-model="formBase.app_type_two" placeholder="应用类别">
 									<Option v-for="item in categoryList" :value="item.id" :key="item.id">{{ item.name }}</Option>
 								</Select>
-							</FormItem>
+							</FormItem> -->
 							<FormItem label="填写应用关键字" prop="keyword">
 								<Input style="width: 508px" maxlength="60" show-word-limit placeholder="多个关键词请用英文逗号隔开" v-model.trim="formBase.keyword"></Input>
 							</FormItem>
@@ -62,6 +63,12 @@
 								<Input style="width: 508px" placeholder="填写包名必须与广告请求的包名一致，否则影响收益" maxlength="50" v-model.trim="formBase.package_name"></Input>
 								<p class="upload-img-format-tips">我们验证包名的唯一性，请求时只验证主包名</p>
 							</FormItem>
+
+							<FormItem label="应用下载地址" prop="app_link">
+								<Input style="width: 508px" placeholder="应用下载地址" maxlength="1000" v-model.trim="formBase.app_link"></Input>
+							</FormItem>
+
+
 							<FormItem label="选择接入方式" prop="access_type">
 								<!-- {{formBase.access_type}} -->
 								<RadioGroup class="private-check-card" type="button" v-model="formBase.access_type">
@@ -77,39 +84,39 @@
 								</CheckboxGroup>
 								<p class="upload-img-format-tips">若取消某方SDK，将不再下发对应广告</p>
 							</FormItem>
-							 <FormItem label="上传应用Icon" prop="icon">
+							<!-- <FormItem label="上传应用Icon" prop="icon">
 								<upload-image :idVal="1" refName="icon" :bit="1024" v-model="formBase.icon" :widthVal="150" :heightVal="150">
 									<Icon type="md-add" size="24"/>
 									<p>点击上传</p>
 								</upload-image>
 								<p class="upload-img-format-tips">（支持格式仅限jpg、jpeg、png,大小1M以内)</p>
-							</FormItem>
-							<FormItem label="上传计算机软件著作权登记证书" prop="copyright_img">
+							</FormItem> -->
+							<!-- <FormItem label="上传计算机软件著作权登记证书" prop="copyright_img">
 								<upload-image :idVal="2" refName="copyright_img" :bit="5 * 1024" v-model="formBase.copyright_img" :widthVal="150" :heightVal="150">
 									<Icon type="md-add" size="24"/>
 									<p>点击上传</p>
 								</upload-image>
 								<p class="upload-img-format-tips">（支持格式仅限jpg、jpeg、png,大小5M以内)</p>
-							</FormItem>
-							<FormItem label="上传公司关联关系及媒体授权证明">
+							</FormItem> -->
+							<!-- <FormItem label="上传公司关联关系及媒体授权证明">
 								<upload-image :idVal="3" refName="authorization_img" :bit="5 * 1024" v-model="formBase.authorization_img" :widthVal="150" :heightVal="150">
 									<Icon type="md-add" size="24"/>
 									<p>点击上传</p>
 								</upload-image>
 
 								<p class="upload-img-format-tips">（支持格式仅限jpg、jpeg、png,大小5M以内)</p>
-							</FormItem>
+							</FormItem> -->
 
-							<FormItem v-if="formBase.os_type" label="填写带有广告展示的应用商店及下载地址" class="choose-store" prop="app_check_store">
+							<!-- <FormItem v-if="formBase.os_type" label="填写带有广告展示的应用商店及下载地址" class="choose-store" prop="app_check_store">
 								<div class="child-item" v-for="(item, index) in formBase.app_check_store" :key="index">
 									<Select style="width: 120px" v-model="item.id" placeholder="应用商店">
 										<Option v-for="child in appStoreList" :value="child.id" :key="child.id">{{ child.name }}</Option>
 									</Select>
 									<Input style="width: 382px" placeholder="应用商店详情页地址" v-model.trim="item.value"></Input>
 								</div>
-							</FormItem>
+							</FormItem> -->
 
-							<FormItem label="应用受众用户特征信息" prop="user_character">
+							<!-- <FormItem label="应用受众用户特征信息" prop="user_character">
 								<div class="dau-flex" style="margin-bottom: 10px">
 									<div class="dau-child">
 										<p>日活用户数量(DAU):</p>
@@ -133,10 +140,10 @@
 										<Input style="width: 508px" placeholder="例如20-30岁" v-model="formBase.user_age_group"></Input>
 									</div>
 								</div>
-							</FormItem>
-							<FormItem label="应用用户特征">
+							</FormItem> -->
+							<!-- <FormItem label="应用用户特征">
 								<Input style="width: 508px" maxlength="100" show-word-limit placeholder="例如：年轻用户居多，活跃度高" v-model="formBase.user_character"></Input>
-							</FormItem>
+							</FormItem> -->
 							<FormItem label="适合预算类型">
 								<Input style="width: 508px" maxlength="100" show-word-limit placeholder="例如：下载、电商" v-model="formBase.fit_budget_type"></Input>
 							</FormItem>
@@ -148,7 +155,7 @@
 				</div>
 
 				<!-- sdk配置 -->
-				<div class="sdk-section"  v-show="navType === 'sdk'">
+				<div class="sdk-section" v-if="navType === 'sdk'">
 					<div class="sdk-middle">
 						<div class="sdk-left">
 							<Form :model="sdkFormBase" :label-colon="true" label-position="right" :label-width="300" :rules="sdkRuleBase" ref="sdkFormBase">
@@ -364,21 +371,22 @@ export default {
 
 			formBase: {
 				os_type: '', // 应用平台
-				app_store_id: '', // 应用商店ID
-				store_detail_url: '', // 应用商店详情地址
+				// app_store_id: '', // 应用商店ID
+				// store_detail_url: '', // 应用商店详情地址
 				store_download_url: '', // 商店下载地址
 				app_name: '', // 应用名称
-				app_type_one: '', // 应用所属行业一级分类ID
-				app_type_two: '', // 应用所属行业二级分类ID
+				// app_type_one: '', // 应用所属行业一级分类ID
+				// app_type_two: '', // 应用所属行业二级分类ID
 				keyword: '', // 应用关键字，英文逗号分隔
 				desc: '', // 应用简介
 				package_name: '', // 应用包名
+				app_link: '', // 应用下载地址
 				access_type: '', // 接入方式
 				app_platform_id: [], // 第三方SDK
-				icon: '', // 上传应用icon地址
-				copyright_img: '', // 上传计算机软件著作权登记证书
-				authorization_img: '', // 上传公司关联关系及媒体授权证明
-				app_check_store: [{id: '', value: ''}, {id: '', value: ''}, {id: '', value: ''}], // 应用商店确认 key是商店ID，value是商店地址
+				// icon: '', // 上传应用icon地址
+				// copyright_img: '', // 上传计算机软件著作权登记证书
+				// authorization_img: '', // 上传公司关联关系及媒体授权证明
+				// app_check_store: [{id: '', value: ''}, {id: '', value: ''}, {id: '', value: ''}], // 应用商店确认 key是商店ID，value是商店地址
 				app_dau: 0, // 日活用户数，单位（万人）
 				app_male_rate: 0, // 应用男性用户占比
 				app_female_rate: 0, // 应用女性用户占比
@@ -536,7 +544,14 @@ export default {
 
 			delete data.sdk_info
 
-			this.formBase = data
+			// formBase表单赋值
+			Object.keys(this.formBase).forEach(key => {
+				if (data[key] !== undefined) {
+					this.formBase[key] = data[key]
+				}
+			})
+
+			 // = data
 
 			this.setSdkData(sdkInfo) // 设置sdk值
 
@@ -554,7 +569,7 @@ export default {
 		 */
 		setSdkData(data) {
 			// this.sdkFormBase = sdkInfo
-			
+
 			if(!data) {
 				this.sdkFormBase = {}
 				return
@@ -598,10 +613,19 @@ export default {
 		 * @return {[type]}	  [description]
 		 */
 		submitFormData() {
-			Promise.all([
-				this.validateForm('formBase'),
-				this.validateForm('sdkFormBase')
-			]).then(res => {
+			// 0. 默认校验表单
+			const validPromiseArr = [this.validateForm('formBase')]
+
+			// 1. 当navType = 'sdk'时需要校验[附属表单]
+			if (this.navType === 'sdk') {
+				validPromiseArr.push(this.validateForm('sdkFormBase'))
+			}
+
+			console.log(validPromiseArr)
+
+			Promise.all(validPromiseArr).then(res => {
+
+				console.log(res)
 
 				if(!(res.toString().indexOf('false') > -1)) {
 					let form = {...this.formBase}
@@ -640,13 +664,13 @@ export default {
 					form.app_platform_id = _arr
 
 					// 2.格式化处理广告展示的应用商店及下载地址
-					let appCheckArr = []
-					form.app_check_store.map(item => {
-						if (!!item.id && !!item.value) {
-							appCheckArr.push(item)
-						}
-					})
-					form.app_check_store = appCheckArr
+					// let appCheckArr = []
+					// form.app_check_store.map(item => {
+					// 	if (!!item.id && !!item.value) {
+					// 		appCheckArr.push(item)
+					// 	}
+					// })
+					// form.app_check_store = appCheckArr
 
 					// 3. 提交审核状态
 					// 3.1 如果已拒绝，再次提交时，触发待审核
@@ -672,7 +696,11 @@ export default {
 						form.sdk_info = null
 					}
 
-					// console.log(form)
+
+					// 区分新增&编辑
+					!!this.app_id && (form.app_id = this.app_id)
+
+					console.log(form)
 
 					this.submitClock = true
 

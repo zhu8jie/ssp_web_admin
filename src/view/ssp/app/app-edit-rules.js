@@ -112,7 +112,7 @@ export const formRules = {
 				app_check_store: [{required: false, validator: appt3StoreDownCheck}], // 应用商店确认
 				copyright_img: [{required: true, message: '填写带有广告展示的应用商店及下载地址'}],
 				user_character: [{required: false, validator: userCharacterCheck}], // 应用受众用户特征信息
-				no_put_type: [{required: true, message: '请输入不可投放类型', trigger: 'blur'}]
+				// no_put_type: [{required: true, message: '请输入不可投放类型', trigger: 'blur'}]
 			},
 			sdkRuleBase: { // sdk配置
 				interact_video_goon_percent: [{required: false, validator: checkVideoPercent}], // 视频播放完直接跳转/下载/拨打电话

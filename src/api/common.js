@@ -108,17 +108,6 @@ export const getDownLoadXls = (data) => {
 		data
 	})
 }
-/**
- * 导出列表
- * @param {Object} param - 参数
- */
-export const getUserDownLoadXls = (data) => {
-  return axios.request({
-	method: 'POST',
-	url: `${APIUrl.userBaseUrl}/uc_api/v1/base/download_xls`,
-	data
-  })
-}
 
 /**
  * 文件上传

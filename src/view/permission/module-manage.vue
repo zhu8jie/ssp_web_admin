@@ -333,6 +333,8 @@ export default {
 				tempArr.push(item)
 			})
 
+			console.log(tempArr)
+
 			return tempArr
 		},
 

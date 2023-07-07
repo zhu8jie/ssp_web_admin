@@ -74,7 +74,7 @@ export const asyncRouterMap = [
 		]
 	},
 	{
-		path: '/ssp', // 预算管理
+		path: '/ssp', // 流量管理
 		name: 'ssp',
 		component: Main,
 		meta: {
@@ -185,6 +185,7 @@ export const asyncRouterMap = [
 				},
 				component: resolve => require(['@/view/ssp/adv/ad-config'], resolve)
 			},
+			/*
 			{
 				path: '/ssp/dealId/manage',
 				name: 'dealId-manage',
@@ -195,7 +196,7 @@ export const asyncRouterMap = [
 					inPageAccess: {'viewIndex': '首页', 'edit': '新建/修改Deal组'} // 页面内权限
 				},
 				component: resolve => require(['@/view/ssp/dealId/manage'], resolve)
-			},
+			},*/
 			{
 				path: '/ssp/dealId/edit',
 				name: 'dealId-edit',
@@ -219,6 +220,7 @@ export const asyncRouterMap = [
 			}
 		]
 	},
+	/*
 	{
 		path: '/plan', // 预算管理
 		name: 'ssp-plan',
@@ -272,7 +274,7 @@ export const asyncRouterMap = [
 				component: resolve => require(['@/view/plan/manage/edit'], resolve)
 			},
 		]
-	},
+	},*/
 	{
 		path: '/dsp', // 预算管理
 		name: 'dsp',
@@ -323,6 +325,7 @@ export const asyncRouterMap = [
 				},
 				component: resolve => require(['@/view/dsp/dsp-slot-edit'], resolve)
 			},
+			/*
 			{
 				path: '/dsp/third/manage',
 				name: 'third-account-manage',
@@ -332,7 +335,7 @@ export const asyncRouterMap = [
 					inPageAccess: {'viewIndex': '首页', 'addNewAccount': '新建账号', 'modify': '修改'} // 页面内权限
 				},
 				component: resolve => require(['@/view/dsp/third-manage'], resolve)
-			}
+			}*/
 		]
 	},
 	{
@@ -344,6 +347,7 @@ export const asyncRouterMap = [
 			icon: 'left-bar-icon revenue-tag'
 		},
 		children: [
+			/*
 			{
 				path: '/data/ssp/media/index',
 				name: 'ssp-media-data',
@@ -353,8 +357,8 @@ export const asyncRouterMap = [
 					inPageAccess: {'viewIndex': '首页', 'download': '下载报表'} // 页面内权限
 				},
 				component: resolve => require(['@/view/data/media-library-data/index'], resolve)
-			},
-			{
+			},*/
+			/*{
 				path: '/data/ssp/plan/index',
 				name: 'plan-data',
 				meta: {
@@ -363,7 +367,7 @@ export const asyncRouterMap = [
 					inPageAccess: {'viewIndex': '首页', 'download': '下载报表'} // 页面内权限
 				},
 				component: resolve => require(['@/view/data/plan-data/index'], resolve)
-			},
+			},*/
 			{
 				path: '/data/ssp/index',
 				name: 'ssp-data',
@@ -384,7 +388,7 @@ export const asyncRouterMap = [
 				},
 				component: resolve => require(['@/view/data/dsp-data/index'], resolve)
 			},
-			{
+			/*{
 				path: '/data/dsp/detail/index',
 				name: 'dsp-detail-data',
 				meta: {
@@ -393,8 +397,8 @@ export const asyncRouterMap = [
 					inPageAccess: {'viewIndex': '首页', 'download': '下载报表'} // 页面内权限
 				},
 				component: resolve => require(['@/view/data/dsp-detail-data/index'], resolve)
-			},
-			{
+			},*/
+			/*{
 				path: '/data/dsp/gap',
 				name: 'budget-gap',
 				meta: {
@@ -403,7 +407,7 @@ export const asyncRouterMap = [
 					inPageAccess: {'viewIndex': '首页'} // 页面内权限
 				},
 				component: resolve => require(['@/view/data/gap-data/index'], resolve)
-			},
+			},*/
 			{
 				path: '/data/export/index',
 				name: 'export-data',
@@ -426,6 +430,7 @@ export const asyncRouterMap = [
 			}
 		]
 	},
+	/*
 	{
 		path: '/finance', // 财务中心
 		name: 'finance',
@@ -448,7 +453,8 @@ export const asyncRouterMap = [
 				component: resolve => require(['@/view/finance/manage/index'], resolve)
 			}
 		]
-	},
+	},*/
+	/*
 	{
 		path: '/tag', // 人群标签
 		name: 'tag-manage',
@@ -471,7 +477,8 @@ export const asyncRouterMap = [
 				component: resolve => require(['@/view/tag/crowd/manage'], resolve)
 			}
 		]
-	},
+	},*/
+	/*
 	{
 		path: '/ad', // 广告物料
 		name: 'material-manage',
@@ -494,7 +501,8 @@ export const asyncRouterMap = [
 				component: resolve => require(['@/view/ad/material'], resolve)
 			}
 		]
-	},
+	},*/
+	/*
 	{
 		path: '/warn', // 预警中心
 		name: 'warn-manage',
@@ -527,7 +535,7 @@ export const asyncRouterMap = [
 				component: resolve => require(['@/view/warn/edit'], resolve)
 			}
 		]
-	},
+	},*/
 	{
 		path: '/access', // 接入管理
 		name: 'access-manage',
@@ -580,16 +588,6 @@ export const asyncRouterMap = [
 				},
 				component: resolve => require(['@/view/permission/role-manage'], resolve)
 			},
-			/*{
-				path: '/permission/module/manage',
-				name: 'permission-module',
-				meta: {
-					title: '模块管理',
-					isShowAccess: true,
-					inPageAccess: {'viewIndex': '首页', 'newAddModule': '新建模块', 'newAddChildModule': '新建子模块', 'modify': '修改', 'delete': '删除'} // 页面内权限
-				},
-				component: resolve => require(['@/view/permission/module-manage'], resolve)
-			},*/
 			{
 				path: '/permission/module/manage',
 				name: 'permission-module',
@@ -602,6 +600,7 @@ export const asyncRouterMap = [
 			}
 		]
 	},
+	/*
 	{
 		path: '/monitor', // 数据监测产品
 		name: 'monitor-manage',
@@ -652,7 +651,7 @@ export const asyncRouterMap = [
 				component: resolve => require(['@/view/monitor/task'], resolve)
 			}
 		]
-	}
+	}*/
 ]
 
 /**

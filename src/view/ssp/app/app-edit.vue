@@ -39,9 +39,9 @@
 									<Input style="width: 260px" maxlength="200" placeholder="应用商店详情页地址" v-model.trim="formBase.store_detail_url"></Input>
 								</FormItem> -->
 							</FormItem>
-							<FormItem label="填写应用商店下载地址">
+							<!-- <FormItem label="填写应用商店下载地址">
 								<Input style="width: 508px" maxlength="200" placeholder="可直接下载app的地址" v-model.trim="formBase.store_download_url"></Input>
-							</FormItem>
+							</FormItem> -->
 							<FormItem label="填写应用名称" prop="app_name">
 								<Input style="width: 508px" maxlength="30" show-word-limit placeholder="请填写与应用商店一致的应用名称" v-model.trim="formBase.app_name"></Input>
 							</FormItem>
@@ -373,7 +373,7 @@ export default {
 				os_type: '', // 应用平台
 				// app_store_id: '', // 应用商店ID
 				// store_detail_url: '', // 应用商店详情地址
-				store_download_url: '', // 商店下载地址
+				// store_download_url: '', // 商店下载地址
 				app_name: '', // 应用名称
 				// app_type_one: '', // 应用所属行业一级分类ID
 				// app_type_two: '', // 应用所属行业二级分类ID
@@ -387,9 +387,10 @@ export default {
 				// copyright_img: '', // 上传计算机软件著作权登记证书
 				// authorization_img: '', // 上传公司关联关系及媒体授权证明
 				// app_check_store: [{id: '', value: ''}, {id: '', value: ''}, {id: '', value: ''}], // 应用商店确认 key是商店ID，value是商店地址
-				app_dau: 0, // 日活用户数，单位（万人）
-				app_male_rate: 0, // 应用男性用户占比
-				app_female_rate: 0, // 应用女性用户占比
+				fit_budget_type: '', // 适合预算类型
+				// app_dau: 0, // 日活用户数，单位（万人）
+				// app_male_rate: 0, // 应用男性用户占比
+				// app_female_rate: 0, // 应用女性用户占比
 				no_put_type: '' // 不可投放类型
 			},
 			sdkFormBase: {
@@ -512,20 +513,20 @@ export default {
 			// 初始化有广告展示的应用商店及下载地址
 			let addArr = [{id: '', value: ''}, {id: '', value: ''}, {id: '', value: ''}]
 
-			if (!data.app_check_store || data.app_check_store.length === 0) {
-				data.app_check_store = addArr
-			} else {
+			// if (!data.app_check_store || data.app_check_store.length === 0) {
+			// 	data.app_check_store = addArr
+			// } else {
 
-				// 此处为保持和vue_media中的应用编辑一致，格式化处理一下，把 {app_store_id, store_download_url} => {id, value}
-				let _arr = []
-				data.app_check_store.map(item => {
-					_arr.push({
-						id: item.app_store_id,
-						value: item.store_download_url
-					})
-				})
-				data.app_check_store = [..._arr, ...addArr.slice(data.app_check_store.length)]
-			}
+			// 	// 此处为保持和vue_media中的应用编辑一致，格式化处理一下，把 {app_store_id, store_download_url} => {id, value}
+			// 	let _arr = []
+			// 	data.app_check_store.map(item => {
+			// 		_arr.push({
+			// 			id: item.app_store_id,
+			// 			value: item.store_download_url
+			// 		})
+			// 	})
+			// 	data.app_check_store = [..._arr, ...addArr.slice(data.app_check_store.length)]
+			// }
 
 			// 1. 防止恶意串改app_id，导致无数据情况
 			// 2. 部分内容不可修改

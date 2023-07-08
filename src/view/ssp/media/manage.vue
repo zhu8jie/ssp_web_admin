@@ -154,9 +154,9 @@
 					</RadioGroup>
 				</FormItem> -->
 
-				<FormItem label="合同有效期" prop="cooperation_time">
+				<!-- <FormItem label="合同有效期" prop="cooperation_time">
 					<DatePicker type="daterange" format="yyyy-MM-dd" v-model="setModalForm.cooperation_time" placeholder="请选择合同有效期" style="width: 240px"></DatePicker>
-				</FormItem>
+				</FormItem> -->
 
 				<!-- 发票类型-{{setModalForm.invoice_type}}, 发票项目-{{setModalForm.invoice_project}},
 				是否补扣其他税税率-{{setModalForm.is_cut_other_tax}}, 结算周期-{{setModalForm.settlement_period}} -->
@@ -436,7 +436,7 @@ export default {
 				type: [{type: 'number', required: true, message: '请选择媒体类型', trigger: 'change'}],
 				business: [{required: true, validator: validateBusCheck, trigger: 'blur'}],
 				// cooperation_company: [{required: true, message: '请选择合作主体'}],
-				cooperation_time: [{required: true, message: '请选择合同有效期'}],
+				// cooperation_time: [{required: true, message: '请选择合同有效期'}],
 				// invoice_type: [{required: true, validator: invoiceCheck, trigger: 'change'}],
 			},
 
@@ -683,7 +683,7 @@ export default {
 					type: row.type ? row.type : 1,
 					status: status === 2 ? 0 : String(status), // 此处特殊处理: 初始化创建的媒体，默认状态是待审核，而实际保存时需要选择
 					// cooperation_company: row.cooperation_company || null, // 合作主体，1=聚量，2=鼎广
-					cooperation_time: (row.cooperation_since && row.cooperation_until) ? [row.cooperation_since, row.cooperation_until] : [],
+					// cooperation_time: (row.cooperation_since && row.cooperation_until) ? [row.cooperation_since, row.cooperation_until] : [],
 					// invoice_type: row.invoice_type, // 发票类型，1=增值税普通发票，2=增值税专用发票（3%），3=增值税专用发票（6%）
 					// invoice_project: row.invoice_project, // 发票项目，1=广告发布费，2=非广告发布费的其他项目
 					// is_cut_other_tax: row.is_cut_other_tax === 1 ? 1 : 2, // 是否补扣其他税额，1=补扣，2=不扣
@@ -772,8 +772,8 @@ export default {
 					// 处理 财务信息
 					// a. 增值税专用发票(6%) 发票项目必须为非广告发布费的其他项目
 					// b. 处理时间
-					let startTime = formatDate(_form.cooperation_time[0], 'yyyy-MM-dd')
-					let endTime = formatDate(_form.cooperation_time[1], 'yyyy-MM-dd')
+					// let startTime = formatDate(_form.cooperation_time[0], 'yyyy-MM-dd')
+					// let endTime = formatDate(_form.cooperation_time[1], 'yyyy-MM-dd')
 
 					let params = {
 						ud_id: Number(_form.ud_id),
@@ -787,12 +787,12 @@ export default {
 						ad_type_support,
 						render_type,
 						// cooperation_company: _form.cooperation_company, // 合作主体，1=聚量，2=鼎广
-						cooperation_since: startTime,
-						cooperation_until: endTime,
+						// cooperation_since: startTime,
+						// cooperation_until: endTime,
 						// invoice_type: _form.invoice_type,
 						// invoice_project: _form.invoice_project,
 						// is_cut_other_tax: _form.is_cut_other_tax === 1 ? 1 : 2,
-						other_tax_rate: _form.is_cut_other_tax === 1 ? parseFloat(this.otherTax) : null,
+						// other_tax_rate: _form.is_cut_other_tax === 1 ? parseFloat(this.otherTax) : null,
 						// settlement_period: _form.settlement_period
 					}
 

@@ -11,24 +11,24 @@
               <FormItem class="appForm" label="应用平台">
                 <p class="text">{{ appDataList.os_type_text || '无'}} </p>
               </FormItem>
-              <FormItem class="appForm" label="应用商店">
+              <!-- <FormItem class="appForm" label="应用商店">
                 <p class="text">{{ appDataList.app_store_name || '无' }}</p>
-              </FormItem>
+              </FormItem> -->
 
-              <FormItem class="appForm" label="应用商店详情页">
+              <!-- <FormItem class="appForm" label="应用商店详情页">
                 <div class="text_url" v-if="appDataList.store_detail_url">
                   <a :href="appDataList['store_detail_url']">{{appDataList['store_detail_url']}}</a>
                   <Button class="tag-read" type="text" :data-clipboard-text="appDataList['store_detail_url']" @click="copy">复制</Button>
                 </div>
                 <p class="text" v-else>无</p>
-              </FormItem>
-              <FormItem class="appForm classifyForm" label="应用商店应用下载地址">
+              </FormItem> -->
+              <!-- <FormItem class="appForm classifyForm" label="应用商店应用下载地址">
                 <div class="text_url" v-if="appDataList.store_download_url">
                   <a :href="appDataList['store_download_url']">{{appDataList['store_download_url']}}</a>
                   <Button class="tag-read" type="text" :data-clipboard-text="appDataList['store_download_url']" @click="copy">复制</Button>
                 </div>
                 <p class="text" v-else>无</p>
-              </FormItem>
+              </FormItem> -->
               <FormItem class="appForm" label="应用名称">
                 <p class="text">{{ appDataList.app_name || '无' }}</p>
               </FormItem>
@@ -50,7 +50,7 @@
               <FormItem class="appForm classifyForm" label="接入第三方SDK">
                 <p class="text"> {{ appDataList.app_platform_name || '无' }} </p>
               </FormItem>
-              <FormItem class="appForm" label="应用Icon" style="margin-bottom: 20px">
+              <!-- <FormItem class="appForm" label="应用Icon" style="margin-bottom: 20px">
                 <div class="account_img" style="width: 60px;height: 60px;line-height: 60px" @mouseenter="enter(1)" @mouseleave="leave" v-if="appDataList.icon">
                   <img class="imgs" :src="appDataList['icon']" alt="">
                   <div style="width: 60px;height: 60px;line-height: 60px"  v-show="seen && 1===current" class="account_shade" @click="showImg(appDataList['icon'])">
@@ -58,8 +58,8 @@
                   </div>
                 </div>
                 <p class="text" v-else>无</p>
-              </FormItem>
-              <FormItem class="appForm"  label="计算机软件著作权登记证书" style="margin-bottom: 20px">
+              </FormItem> -->
+              <!-- <FormItem class="appForm"  label="计算机软件著作权登记证书" style="margin-bottom: 20px">
                 <div class="account_img" style="width: 128px;height: 180px;line-height: 180px" @mouseenter="enter(2)" @mouseleave="leave" v-if="appDataList.copyright_img">
                   <img class="imgs" :src="appDataList['copyright_img']" alt="">
                   <div style="width: 128px;height: 180px;line-height: 180px" v-show="seen && 2===current" class="account_shade" @click="showImg(appDataList['copyright_img'])">
@@ -67,8 +67,8 @@
                   </div>
                 </div>
                 <p class="text" v-else>无</p>
-              </FormItem>
-              <FormItem class="appForm classifyForm" label="公司关联关系及媒体授权证明">
+              </FormItem> -->
+              <!-- <FormItem class="appForm classifyForm" label="公司关联关系及媒体授权证明">
                 <div class="account_img" style="width: 128px;height: 180px;line-height: 180px" @mouseenter="enter(3)" @mouseleave="leave" v-if="appDataList.authorization_img">
                   <img class="imgs" :src="appDataList['authorization_img']" alt="">
                   <div style="width: 128px;height: 180px;line-height: 180px" v-show="seen && 3===current" class="account_shade" @click="showImg(appDataList['authorization_img'])">
@@ -76,17 +76,17 @@
                   </div>
                 </div>
                 <p class="text" v-else>无</p>
-              </FormItem>
-              <FormItem class="appForm" label="带有广告展示的应用商店及下载地址" style="margin-bottom: 5px">
+              </FormItem> -->
+              <!-- <FormItem class="appForm" label="带有广告展示的应用商店及下载地址" style="margin-bottom: 5px">
                  <div class="text_url" v-if="appDataList.app_check_store.length > 0" v-for="(item,index) in appDataList['app_check_store'] " :key="'text'+index">
                    <span style="margin-right: 20px">{{item.app_store_name}}</span>  <a :href="item.store_download_url">{{item.store_download_url}}</a>
                    <Button class="tag-read" type="text" :data-clipboard-text="item.store_download_url" @click="copy">复制</Button>
                  </div>
                   <p class="text" v-if="appDataList.app_check_store.length == 0">无</p>
-              </FormItem>
+              </FormItem> -->
 
               <FormItem class="appForm userForm" label='应用受众用户特征信息'>
-                <Row>
+                <!-- <Row>
                   <Col span="12">
                      <p class="feature_col">
                        <span class="feature_title">日活跃用户数量（DAU）</span>
@@ -99,14 +99,14 @@
                       <span class="feature_con" :title="appDataList.user_character">{{appDataList['user_character'] }}</span>
                     </p>
                   </Col>
-                </Row>
+                </Row> -->
                 <Row>
-                  <Col span="12">
+                  <!-- <Col span="12">
                     <p class="feature_col">
                       <span class="feature_title">男女用户占比</span>
                       <span class="feature_con">{{appDataList['app_male_rate'] }}:{{appDataList['app_female_rate'] }}</span>
                     </p>
-                  </Col>
+                  </Col> -->
                   <Col span="12">
                     <p class="feature_col" style="border-left: 0px">
                       <span class="feature_title">适合预算类型</span>
@@ -115,12 +115,12 @@
                   </Col>
                 </Row>
                 <Row>
-                  <Col span="12">
+                  <!-- <Col span="12">
                     <p class="feature_col">
                       <span class="feature_title">用户年龄层</span>
                       <span class="feature_con">{{appDataList['user_age_group'] }}岁</span>
                     </p>
-                  </Col>
+                  </Col> -->
                   <Col span="12">
                     <p class="feature_col" style="border-left: 0px">
                       <span class="feature_title">不可投放类型</span>

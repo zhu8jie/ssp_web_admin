@@ -99,19 +99,19 @@ export const formRules = {
 		return {
 			ruleBase: { // 基本配置正则
 				os_type: [{required: true, message: '请选择应用平台'}],
-				app_store_id: [{required: true, message: '请选择应用商店'}],
-				store_detail_url: [{required: true, validator: osTypeCheck}],
+				// app_store_id: [{required: true, message: '请选择应用商店'}],
+				// store_detail_url: [{required: true, validator: osTypeCheck}],
 				app_name: [{required: true, message: '请输入应用名称', trigger: 'blur'}],
-				app_type_one: [{required: true, validator: appOneTwoCheck}],
+				// app_type_one: [{required: true, validator: appOneTwoCheck}],
 				keyword: [{required: true, message: '请输入应用关键字', trigger: 'blur'}],
 				desc: [{required: true, message: '请输入应用简介', trigger: 'blur'}],
 				package_name: [{required: true, message: '请输入应用包名', trigger: 'blur'}],
 				access_type: [{required: true, message: '请选择接入方式'}],
 				app_platform_id: [{required: true, message: '请选择接入第三方SDK'}],
-				icon: [{required: true, message: '请上传应用Icon'}],
-				app_check_store: [{required: false, validator: appt3StoreDownCheck}], // 应用商店确认
-				copyright_img: [{required: true, message: '填写带有广告展示的应用商店及下载地址'}],
-				user_character: [{required: false, validator: userCharacterCheck}], // 应用受众用户特征信息
+				// icon: [{required: true, message: '请上传应用Icon'}],
+				// app_check_store: [{required: false, validator: appt3StoreDownCheck}], // 应用商店确认
+				// copyright_img: [{required: true, message: '填写带有广告展示的应用商店及下载地址'}],
+				// user_character: [{required: false, validator: userCharacterCheck}], // 应用受众用户特征信息
 				// no_put_type: [{required: true, message: '请输入不可投放类型', trigger: 'blur'}]
 			},
 			sdkRuleBase: { // sdk配置

@@ -147,7 +147,7 @@
       <div style="display: flex;justify-content: space-between">
         <div class="nav-handle-group" style="margin-top: 0px;">
           <RadioGroup v-model="filterSearch.status" type="button" @on-change="doFilterList">
-            <Radio :label="0">全部<span>({{count}})</span></Radio>
+            <!-- <Radio :label="0">全部<span>({{count}})</span></Radio> -->
             <Radio v-for="(it,index) in dspCountStatusList" :key="'状态' + index " :label="it.value">{{it.label}}<span :style="it.value===2 || it.value ===3 ? 'color:#F72D17':''">({{it.number}})</span></Radio>
           </RadioGroup>
         </div>
@@ -422,6 +422,7 @@
   import customColumn from '@/components/local-custom-column/custom-column' // 自定义列
   import {columnFn} from '@/mixin/custom-column.js'
   import {mapActions} from 'vuex'
+  import { dataType} from '@/libs/util'
 
   export default {
     name: 'dsp-slot-manage',
@@ -471,7 +472,7 @@
         dspSlotList: [], // 预算位名称
         dspSlotLoad: false, // 预算位加载中
 
-        count: 0, // 全部
+        // count: 0, // 全部
         dspCountStatusList: [], // 广告位的状态的列表
 
         // 搜索条件
@@ -773,23 +774,19 @@
             this.colDatList = dspList
 
             // c. 业务状态
-            const status_count = res.data.status_count || []
-            let count = 0 // 总数
-            const status_count_map = {} // 生成[状态 和 值]映射关系
-            status_count.forEach(item => {
-              status_count_map[item.status] = item.count
+            const status_count_map = {}
 
-              count += Number(item.count) // 统计全部
+            Object.keys(res.data).forEach(key => {
+              if (dataType(res.data[key]) === 'number') {
+                status_count_map[key] = res.data[key]
+              }
             })
 
             this.dspCountStatusList = dspSlotStatusEnum(this).map(item => {
-              item['number'] = status_count_map[item.value] || 0
+              item['number'] = status_count_map[item.key] || 0
 
               return item
             })
-            this.count = count
-
-            console.log(this.dspCountStatusList)
           }
         }, err => {
           if (err.code === 403) {

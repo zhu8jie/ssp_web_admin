@@ -35,23 +35,28 @@ export default {
 	APIUrl: {
 		dev: { // 开发环境 - 切换到灰度环境
 			baseUrl: 'http://apia.gladdigit.com', // 基础请求接口
-			mediaComUrl: 'http://apim.gladdigit.com' // 平台公告（公用接口）-从-->媒体平台 --获取
+			mediaComUrl: 'http://apim.gladdigit.com', // 平台公告（公用接口）-从-->媒体平台 --获取
+			media: 'http://media.gladdigit.com' // 媒体平台
 		},
 		deving: { // 开发环境
 			baseUrl: 'http://grayapia.gladdigit.com', // 基础请求接口
-			mediaComUrl: 'http://grayapim.gladdigit.com' // 平台公告（公用接口）-从-->媒体平台 --获取
+			mediaComUrl: 'http://grayapim.gladdigit.com', // 平台公告（公用接口）-从-->媒体平台 --获取
+			media: 'http://graymedia.gladdigit.com' // 媒体平台
 		},
 		testing: { // 测试服务器
 			baseUrl: 'http://grayapia.gladdigit.com', // 基础请求接口
-			mediaComUrl: 'http://grayapim.gladdigit.com' // 平台公告（公用接口）-从-->媒体平台 --获取
+			mediaComUrl: 'http://grayapim.gladdigit.com', // 平台公告（公用接口）-从-->媒体平台 --获取
+			media: 'http://graymedia.gladdigit.com' // 媒体平台
 		},
 		gray: { // 灰度
 			baseUrl: 'http://grayapia.gladdigit.com', // 基础请求接口
-			mediaComUrl: 'http://grayapim.gladdigit.com' // 平台公告（公用接口）-从-->媒体平台 --获取
+			mediaComUrl: 'http://grayapim.gladdigit.com', // 平台公告（公用接口）-从-->媒体平台 --获取
+			media: 'http://graymedia.gladdigit.com' // 媒体平台
 		},
 		pro: { // 正式服务器
 			baseUrl: 'http://apia.gladdigit.com', // 基础请求接口
-			mediaComUrl: 'http://apim.gladdigit.com' // 平台公告（公用接口）-从-->媒体平台 --获取
+			mediaComUrl: 'http://apim.gladdigit.com', // 平台公告（公用接口）-从-->媒体平台 --获取
+			media: 'http://media.gladdigit.com' // 媒体平台
 		}
 	},
 	/**

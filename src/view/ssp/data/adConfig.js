@@ -483,6 +483,7 @@ export const formRules = {
         callback()
       }
     }
+
     const payTypeValidFn = (rule, value, callback) => {
       let _form = this.deployData
       if (!_form.pay_type) {
@@ -494,8 +495,8 @@ export const formRules = {
           callback()
         }
       } else if (_form.pay_type === 2) {
-        if (_form.divide_price <= 0 || !/^\d+(\.\d{1,2})?$/.test(_form.divide_price)) {
-          callback(new Error('分成系数大于0,最多可填2位小数'))
+        if (_form.divide_price <= 0 || !/^[1-9]\d*$/.test(_form.divide_price)) {
+          callback(new Error('请填写大于0小于等于100的整数'))
         } else {
           callback()
         }

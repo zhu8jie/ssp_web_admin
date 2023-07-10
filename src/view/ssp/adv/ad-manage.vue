@@ -763,7 +763,7 @@
           ssp_slot_name_arr_textarea: null, // 广告位名称数组textarea
           ratio_arr_textarea: null, // 素材尺寸比例textarea
 
-          pay_type: 1, // 结算方式 1=固价 2=分成 3=RTB
+          pay_type: '', // 结算方式 1=固价 2=分成 3=RTB
 
           // 备用数组
           styleDataArr: [], // 广告样式列表 和 广告场景联动
@@ -1483,7 +1483,7 @@
         }
 
         // 结算方式
-        _filter.pay_type > 0 && (params.pay_type = _filter.pay_type)
+        params.pay_type = _filter.pay_type > 0 ? _filter.pay_type : 0
 
 
         _filter.created_since ? params.created_since = Date.parse(new Date(_filter.created_since)) / 1000 : '' // 创建时间的开始

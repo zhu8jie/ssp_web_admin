@@ -385,14 +385,15 @@ export const getProductColumn = (self) => {
 
 /**
  * [dspSlotStatusEnum 预算位 业务状态]
+ * 1=正常,2=停用,3=封禁,4=测试锁定
  * @type {Array}
  */
-
 export const dspSlotStatusEnum = (self) => {
   return [
-    {value: 1, label: '正常'},
-    {value: 2, label: '停用'},
-    {value: 3, label: '封禁'},
-    {value: 4, label: '测试锁定'}
+    {key: 'total_cout', value: 0, label: '全部'},
+    {key: 'valid_count', value: 1, label: '有效'},
+    {key: 'stop_count', value: 2, label: '停用'},
+    {key: 'reject_count', value: 3, label: '封禁'},
+    {key: 'test_count', value: 4, label: '测试锁定'}
   ]
 }

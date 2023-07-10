@@ -987,7 +987,7 @@ export default {
 
 			let decode = encodeURIComponent(row.dev_account)
 
-			window.open(`${this.$APIUrl.mediaComUrl}/account/adminLogin?dev_account=${decode}&secret=${secret}`, '_blank')
+			window.open(`${this.$APIUrl.media}/account/adminLogin?dev_account=${decode}&secret=${secret}`, '_blank')
 		}
 	},
 	watch: {

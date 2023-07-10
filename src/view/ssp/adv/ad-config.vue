@@ -230,20 +230,31 @@
                       <span slot="label" style="display: inline-block"
                         >CPM价格</span
                       >
-                      <Poptip trigger="focus">
+
+                      <InputNumber
+                        :min="0"
+                        :step="0.01"
+                        :precision="2"
+                        :max="inputMaxNumber"
+                        v-model="deployData.valuation_price"
+                        :active-change="false"
+                        style="width: 100px"
+                      />
+                      <!-- <Poptip trigger="focus">
                         <InputNumber
                           :min="0"
                           :step="1"
                           :precision="2"
                           :max="inputMaxNumber"
                           v-model="deployData.valuation_price"
+                          :active-change="false"
                           style="width: 100px"
                         />
                         <span>元</span>
                         <div slot="content">
                           {{ formatNumber(deployData.valuation_price) }}
                         </div>
-                      </Poptip>
+                      </Poptip> -->
                     </FormItem>
                   </div>
                   <div v-if="deployData.pay_type === 2">
@@ -257,7 +268,8 @@
                         :min="0"
                         :step="1"
                         :max="100"
-                        :precision="2"
+                        :precision="0"
+                        :active-change="false"
                         v-model="deployData.divide_price"
                         style="width: 100px"
                       />
@@ -1109,7 +1121,7 @@
                             </Poptip>
                           </div>
                         </div>
-                        <div class="deploy_box">
+                        <!-- <div class="deploy_box">
                           <div class="box_list">
                             <span class="deploy_slot"
                               >价格浮动系数
@@ -1137,7 +1149,41 @@
                             />
                             <span>%</span>
                           </div>
+                        </div> -->
+
+
+
+                        <div class="deploy_box deploy_line">
+                          <!-- 利润系数 -->
+                          <div class="box_list">
+                            <span class="deploy_slot">利润系数: </span>
+                            <InputNumber
+                              :min="0"
+                              :step="1"
+                              :max="100"
+                              :precision="0"
+                              v-model="it.profit_ratio"
+                              style="width: 150px"
+                            />
+                            &nbsp;&nbsp;%
+                          </div>
+                          <!-- 底价 -->
+                          <div class="box_list">
+                            <span class="deploy_slot">底价:</span>
+                            <InputNumber
+                              :min="0"
+                              :step="0.01"
+                              :precision="2"
+                              v-model="it.floor_price"
+                              :active-change="false"
+                              style="width: 150px"
+                            />
+                            &nbsp;&nbsp;元
+                          </div>
                         </div>
+
+
+                        <!-- Deal组
                         <div class="deploy_box deploy_line">
                           <div class="xuan_title">
                             Deal组
@@ -1180,7 +1226,9 @@
                               该广告位已配置DealID，如有需要，请选择合适的Deal组
                             </Alert>
                           </div>
-                        </div>
+                        </div> -->
+
+
                         <div class="deploy_box deploy_line">
                           <div class="xuan_title">投放时段:</div>
                           <div class="xuan_content">
@@ -1494,16 +1542,35 @@ export default {
       ) {
         showTxt = "请选择预算位";
       }
+
+      // 校验[尺寸比例]
       if (dateItem.ratio_is_ok === -1 || dateItem.ratio_is_ok === "-1") {
         showTxt = "尺寸比例检验不通过";
       }
+
+      // 校验价格浮动系数
+      // if (
+      //   dateItem.price_float <= 0 ||
+      //   dateItem.price_float > 200 ||
+      //   dateItem.price_float % 1 !== 0
+      // ) {
+      //   showTxt = "价格浮动系数必须是1~200中的任意整数";
+      // }
+
+      // 校验利润系数 (大于0小于等于100)
       if (
-        dateItem.price_float <= 0 ||
-        dateItem.price_float > 200 ||
-        dateItem.price_float % 1 !== 0
+        dateItem.profit_ratio <= 0 ||
+        dateItem.profit_ratio > 100 ||
+        dateItem.profit_ratio % 1 !== 0
       ) {
-        showTxt = "价格浮动系数必须是1~200中的任意整数";
+        showTxt = "利润系数必须大于0小于等于100的整数";
       }
+
+      // 校验[底价] (大于等于0)
+      if (dateItem.floor_price < 0) {
+        showTxt = "底价必须大于等于0";
+      }
+
       if (
         dateItem.control_weight < 0 ||
         dateItem.control_weight > 1000 ||
@@ -1981,6 +2048,9 @@ export default {
       listData.last_ecpm = selectedData.last_ecpm;
       listData.width_ratio = _temp.width;
       listData.height_ratio = _temp.height;
+
+
+      console.log(curArr)
       this.infos.flowData = curArr;
     },
 
@@ -2228,8 +2298,16 @@ export default {
         item.catch = item.catch === 1 ? 1 : -1;
         // 屏蔽老旧机型
         item.checkPhone = item.check_old_phone ? item.check_old_phone : -1;
+
+
+        // 利润系数 & 底价  => 需要 / 100
+        item.profit_ratio = item.profit_ratio / 100
+        item.floor_price = item.floor_price / 100
+
         return item;
       });
+
+      console.log('geshihua')
       return dataList;
     },
     /**
@@ -2497,8 +2575,17 @@ export default {
         obj.catch = item.catch;
         // deal组的选择
         obj.dg_id = item.dg_id;
+
+
+        // 利润系数 & 底价  => 需要 * 100
+        obj.profit_ratio = item.profit_ratio * 100
+        obj.floor_price = item.floor_price * 100
+
+
         resource.push(obj);
       });
+
+      console.log(resource)
       return resource;
     },
     /**
@@ -2547,7 +2634,11 @@ export default {
               control_req_day: 0, // 请求控量
               control_show_day: 0, // 展示控量
               control_click_day: 0, // 点击控量
-              price_float: 100, // 价格浮动系数
+
+              profit_ratio: 0, // 利润系数
+              floor_price: 0, // 底价
+              // price_float: 100, // 价格浮动系数
+
               size_ratio: 0, // 尺寸比例比
               width_ratio: 0, // 尺寸比例宽
               height_ratio: 0, // 尺寸比例高
@@ -2608,7 +2699,11 @@ export default {
         control_req_day: 0, // 请求控量
         control_show_day: 0, // 展示控量
         control_click_day: 0, // 点击控量
-        price_float: 100, // 价格浮动系数
+
+        profit_ratio: 0, // 利润系数
+        floor_price: 0, // 底价
+        // price_float: 100, // 价格浮动系数
+
         size_ratio: 0, // 尺寸比例比
         width_ratio: 0, // 尺寸比例宽
         height_ratio: 0, // 尺寸比例高

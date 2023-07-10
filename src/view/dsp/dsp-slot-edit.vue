@@ -281,8 +281,6 @@
                 />
               </FormItem>
 
-              {{modalForm}}
-
               <!-- 结算方式 -->
               <FormItem class="deployText" label="结算方式" prop="pay_type">
                 <!-- 1=固价 2=分成 3=RTB -->
@@ -302,8 +300,9 @@
                     :min="0"
                     :step="1"
                     :max="100"
-                    :precision="2"
-                    v-model="modalForm.divide_price"
+                    :precision="0"
+                    v-model="modalForm.deal_ratio"
+                    :active-change="false"
                     style="width: 100px"
                   />%
                 </div>
@@ -948,6 +947,38 @@
                             </Poptip>
                           </div>
                         </div>
+
+
+                        <!-- 利润系数+底价 -->
+                        <div class="deploy_box">
+                          <!-- 利润系数 -->
+                          <div class="box_list" style="width: 31%">
+                            <span class="deploy_slot">利润系数:</span>
+                            <InputNumber
+                              :min="0"
+                              :step="1"
+                              :max="100"
+                              :precision="0"
+                              v-model="it.profit_ratio"
+                              style="width: 150px"
+                            />
+                            &nbsp;&nbsp;%
+                          </div>
+                          <!-- 底价 -->
+                          <div class="box_list" style="width: 31%">
+                            <span class="deploy_slot">底价:</span>
+                            <InputNumber
+                              :min="0"
+                              :step="0.01"
+                              :precision="2"
+                              v-model="it.floor_price"
+                              :active-change="false"
+                              style="width: 150px"
+                            />
+                            &nbsp;&nbsp;元
+                          </div>
+                        </div>
+
                         <div class="deploy_box deploy_line">
                           <div class="xuan_title">
                             Deal组
@@ -989,6 +1020,7 @@
                             >
                           </div>
                         </div>
+                        
                         <div class="deploy_box deploy_line">
                           <div class="xuan_title">投放时段:</div>
                           <div class="xuan_content">
@@ -1122,6 +1154,8 @@
         </FormItem>
       </Form>
     </div>
+
+    <!-- 选择广告位 -->
     <selectAdvertising
       v-model="modalSelect"
       :dataList="modalForm"
@@ -1129,7 +1163,7 @@
       :std="Number(selectSstd)"
       :deleteArr="except_ssp_slot_id"
       @name="selectSuccess"
-      @see="detail"
+      @see="seeDetailFn"
     />
     <Drawer
       v-model="flowModalFlag"
@@ -1216,7 +1250,7 @@
 
 <script>
 import { showTitle, regNumPositiveInteger, inputMaxNumber } from "@/libs/util";
-import { debounce, number2Thousand } from "@/libs/tools";
+import { debounce, number2Thousand, deepClone } from "@/libs/tools";
 import { getProvinceCityApi, getPhoneBrand, getAdRatio } from "@/api/common";
 import {
   saveDspSlot,
@@ -1367,7 +1401,7 @@ export default {
      */
     const validatePayTypeFn = (rule, value, callback) => {
       const pay_type = Number(this.modalForm.pay_type) // 结算方式
-      const divide_price = this.modalForm.divide_price > 0 ? this.modalForm.divide_price : 0
+      const deal_ratio = this.modalForm.deal_ratio > 0 ? this.modalForm.deal_ratio : 0
 
       // 1=固价 2=分成 3=RTB
       if (!pay_type) {
@@ -1375,8 +1409,8 @@ export default {
       } else {
         if (pay_type === 3) {
 
-          if (divide_price <= 0 || !/^\d+(\.\d{1,2})?$/.test(divide_price)) {
-            callback(new Error('成交价系数大于0,最多可填2位小数'))
+          if (deal_ratio <= 0 || !/^[1-9]\d*$/.test(deal_ratio)) {
+            callback(new Error('请填写大于0小于等于100的整数'))
           } else {
             callback()
           }
@@ -1401,8 +1435,8 @@ export default {
         interact_mode: 1, // 属性
         material_type: 1, // 素材类型
         pay_type: 1, // 结算方式
-        divide_price: '', // 成交价系数
-        dsp_app_vc: 0, // 应用版本号
+        deal_ratio: '', // 成交价系数
+        dsp_app_vc: '', // 应用版本号
         dsp_app_store_vc: '', // 应用商店版本号
         dsp_app_store_link: '', // 应用商店地址
       }, // 修改表单
@@ -1597,10 +1631,10 @@ export default {
       });
     },
     /**
-     * [detail 流量拆封的列表]
+     * [seeDetailFn 流量拆封的列表]
      * @return {[type]} [description]
      */
-    detail(row) {
+    seeDetailFn(row) {
       this.flowSplitData = row;
       this.flowModalFlag = true;
     },
@@ -1633,6 +1667,20 @@ export default {
       ) {
         showTxt = "展现控制必须大于0的任意整数";
       }
+
+      // 校验利润系数 (大于0小于等于100)
+      if (
+        dateItem.profit_ratio <= 0 ||
+        dateItem.profit_ratio > 100 ||
+        dateItem.profit_ratio % 1 !== 0
+      ) {
+        showTxt = "利润系数必须大于0小于等于100的整数";
+      }
+      // 校验[底价] (大于等于0)
+      if (dateItem.floor_price < 0) {
+        showTxt = "底价必须大于等于0";
+      }
+
       if (
         dateItem.control_click_day < 0 ||
         dateItem.control_click_day % 1 !== 0
@@ -1698,7 +1746,7 @@ export default {
             dsp_slot_code: row.dsp_slot_code,
 
             pay_type: row.pay_type, // 结算方式
-            divide_price: row.divide_price > 0 ? Number(row.divide_price / 100) : 0, // 成交价系数
+            deal_ratio: row.deal_ratio > 0 ? Number(row.deal_ratio / 100) : 0, // 成交价系数
             dsp_app_vc: row.dsp_app_vc, // 应用版本号
             dsp_app_store_vc: row.dsp_app_store_vc, // 应用商店版本号
             dsp_app_store_link: row.dsp_app_store_link, // 应用商店地址
@@ -1800,7 +1848,12 @@ export default {
           ad_type_id: item.ssp_slot.ad_type_id, // 广告场景
           control_req_day: item.control_req_day, // 请求控量
           control_show_day: item.control_show_day, // 展示控量
+
+          // 利润系数 & 底价  => 需要 / 100
+          profit_ratio: item.profit_ratio / 100, // 利润系数
+          floor_price: item.floor_price / 100, // 底价
           control_click_day: item.control_click_day, // 点击控量
+
           price_float: item.price_float, // 价格浮动系数
           ad_ratio: item.ssp_slot.ad_ratio.map((item) => {
             item.width = item.width_ratio;
@@ -1845,6 +1898,8 @@ export default {
               ? Number(this.number2Thousand(item.ssp_slot.cpm_price / 100))
               : 0, // 出价CPM
           sstd_id: item.sstd_id, // 广告流量分配的主键ID
+
+
         };
         dataList.push(obj1);
       });
@@ -1873,6 +1928,8 @@ export default {
      * @return {[type]} [description]
      */
     selectSuccess(selectedData) {
+      console.log('选择广告位成功的返回')
+      console.log(deepClone(selectedData))
       let curArr = [...this.infos.flowData];
       let scaleNum =
         number2Thousand(
@@ -2218,7 +2275,11 @@ export default {
         control_show_day: 0, // 展示控量
         control_click_day: 0, // 点击控量
         control_weight: 0, // 权重的显示
+
+        profit_ratio: 0, // 利润系数
+        floor_price: 0, // 底价
         price_float: 100, // 价格浮动系数
+
         ad_ratio: [{ width: 0, height: 0 }], // 尺寸比列
         ratio_is_ok: -1, // 尺寸比列是否匹配
         control_time_type: 2, // 投放时段的状态
@@ -2421,12 +2482,18 @@ export default {
         params.dsp_ad_ratio_width = [params.dsp_ad_ratio_width];
       }
       let data = [...this.infos.flowData];
+
       params.control_list = this.saveResource(data);
 
       // 成交价系数[结算方式=3=RTB时]
-      params.divide_price = this.modalForm.pay_type === 3
-          ? Math.ceil(parseFloat(this.modalForm.divide_price) * 100)
+      params.deal_ratio = this.modalForm.pay_type === 3
+          ? Math.ceil(parseFloat(this.modalForm.deal_ratio) * 100)
           : 0;
+
+      // 格式化[应用版本号 + 应用商店版本号 + 应用商店地址]
+      params.dsp_app_vc = params.dsp_app_vc ? params.dsp_app_vc.split(',') : [] // 应用版本号
+      params.dsp_app_store_vc = params.dsp_app_store_vc ? params.dsp_app_store_vc.split(',') : [] // 应用商店版本号
+      params.dsp_app_store_link = params.dsp_app_store_link ? params.dsp_app_store_link.split(',') : [] // 应用商店地址
 
       saveDspSlot(params).then(
         (res) => {
@@ -2491,6 +2558,11 @@ export default {
 
         // deal组的选择
         obj.dg_id = item.dg_id;
+
+        // 利润系数 & 底价  => 需要 * 100
+        obj.profit_ratio = item.profit_ratio * 100
+        obj.floor_price = item.floor_price * 100
+
         resource.push(obj);
       });
       return resource;

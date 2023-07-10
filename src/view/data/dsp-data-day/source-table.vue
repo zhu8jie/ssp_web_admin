@@ -538,7 +538,27 @@
           </div>
         </Tooltip>
       </template>
-      <!--收益-->
+
+      <!--展现占比-->
+      <template slot-scope="{ row }" slot="show_pv_ratio">
+        <Tooltip placement="right-start" :transfer="true">
+          <p class="data_value">{{getNumberFloat(row.show_pv_ratio)}}</p>
+          <p v-if="getProportion(row.show_pv_ratio,row.yes_show_pv_ratio) > 10" class="data_scale up_scale">
+            {{getProportion(row.show_pv_ratio,row.yes_show_pv_ratio)}}%<Icon type="md-arrow-round-up" />
+          </p>
+          <p v-else-if="getProportion(row.show_pv_ratio,row.yes_show_pv_ratio) < -10" class="data_scale down_scale">
+            {{getProportion(row.show_pv_ratio,row.yes_show_pv_ratio)}}%<Icon type="md-arrow-round-down" />
+          </p>
+          <p v-else class="data_scale">
+            {{getProportion(row.show_pv_ratio,row.yes_show_pv_ratio)}}%
+          </p>
+          <div slot="content">
+            <p style="font-size: 12px">昨天:{{getNumberFloat(row.yes_show_pv_ratio)}}</p>
+          </div>
+        </Tooltip>
+      </template>
+
+      <!--预估收益-->
       <template slot-scope="{ row }" slot="income">
         <Tooltip placement="right-start" :transfer="true">
           <p class="data_value">{{getNumberFloat(row.income)}}</p>
@@ -849,6 +869,8 @@
                 }
               })
             }
+
+            console.log(this.sourceData)
           }
         })
       },

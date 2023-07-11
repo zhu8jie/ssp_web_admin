@@ -41,6 +41,12 @@
         <template slot-scope="{ row }" slot="dsp_slot_code">
           <p class="table_text" :title="row.dsp_slot_code">{{ row.dsp_slot_code }}</p>
         </template>
+
+        <!-- 结算方式 -->
+        <template slot-scope="{ row }" slot="pay_type_text">
+          <p class="table_text">{{ row.pay_type_text }}</p>
+        </template>
+
         <!--历史最新CPM-->
         <template slot-scope="{ row }" slot="cpm">
           <p class="table_text">{{ row.last_ecpm }}</p>

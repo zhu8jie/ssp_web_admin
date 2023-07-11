@@ -54,6 +54,11 @@ export const getSelectCols = (self) => {
       minWidth: 130
     },
     {
+      title: '结算方式',
+      slot: 'pay_type_text',
+      minWidth: 130
+    },
+    {
       title: '近三天最新CPM',
       slot: 'cpm',
       minWidth: 120

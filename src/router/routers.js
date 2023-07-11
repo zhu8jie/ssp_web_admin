@@ -388,7 +388,7 @@ export const asyncRouterMap = [
 				},
 				component: resolve => require(['@/view/data/dsp-data/index'], resolve)
 			},
-			/*{
+			{
 				path: '/data/dsp/detail/index',
 				name: 'dsp-detail-data',
 				meta: {
@@ -397,7 +397,7 @@ export const asyncRouterMap = [
 					inPageAccess: {'viewIndex': '首页', 'download': '下载报表'} // 页面内权限
 				},
 				component: resolve => require(['@/view/data/dsp-detail-data/index'], resolve)
-			},*/
+			},
 			/*{
 				path: '/data/dsp/gap',
 				name: 'budget-gap',

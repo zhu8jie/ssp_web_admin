@@ -142,7 +142,7 @@
       <!--广告展现pv-->
       <template slot-scope="{ row }" slot="show_pv">
         <Tooltip placement="right-start" :transfer="true">
-          <p class="data_value">{{getNumberInt(row.show_pv)}}</p>
+          <p class="data_value">{{getNumberInt(row.show_pv)}} &nbsp; <template v-if="row.show_pv_ratio < 100">({{row.show_pv_ratio}}%)</template></p>
           <p v-if="getProportion(row.show_pv,row.yes_show_pv) > 10" class="data_scale up_scale">
             {{getProportion(row.show_pv,row.yes_show_pv)}}%
             <Icon type="md-arrow-round-up"/>
@@ -219,26 +219,27 @@
           </div>
         </Tooltip>
       </template>
-		<!--加群点击数-->
-		<template slot-scope="{ row }" slot="jc_pv">
-			<Tooltip placement="right-start" :transfer="true">
-				<p class="data_value">{{getNumberInt(row.jc_pv)}}</p>
-				<p v-if="getProportion(row.jc_pv,row.yes_jc_pv) > 10" class="data_scale up_scale">
-					{{getProportion(row.jc_pv,row.yes_jc_pv)}}%
-					<Icon type="md-arrow-round-up"/>
-				</p>
-				<p v-else-if="getProportion(row.jc_pv,row.yes_jc_pv) < -10" class="data_scale down_scale">
-					{{getProportion(row.jc_pv,row.yes_jc_pv)}}%
-					<Icon type="md-arrow-round-down"/>
-				</p>
-				<p v-else class="data_scale">
-					{{getProportion(row.jc_pv,row.yes_jc_pv)}}%
-				</p>
-				<div slot="content">
-					<p style="font-size: 12px">昨天:{{getNumberInt(row.yes_jc_pv)}}</p>
-				</div>
-			</Tooltip>
-		</template>
+
+      <!--加群点击数-->
+      <template slot-scope="{ row }" slot="jc_pv">
+        <Tooltip placement="right-start" :transfer="true">
+          <p class="data_value">{{getNumberInt(row.jc_pv)}}</p>
+          <p v-if="getProportion(row.jc_pv,row.yes_jc_pv) > 10" class="data_scale up_scale">
+            {{getProportion(row.jc_pv,row.yes_jc_pv)}}%
+            <Icon type="md-arrow-round-up"/>
+          </p>
+          <p v-else-if="getProportion(row.jc_pv,row.yes_jc_pv) < -10" class="data_scale down_scale">
+            {{getProportion(row.jc_pv,row.yes_jc_pv)}}%
+            <Icon type="md-arrow-round-down"/>
+          </p>
+          <p v-else class="data_scale">
+            {{getProportion(row.jc_pv,row.yes_jc_pv)}}%
+          </p>
+          <div slot="content">
+            <p style="font-size: 12px">昨天:{{getNumberInt(row.yes_jc_pv)}}</p>
+          </div>
+        </Tooltip>
+      </template>
       <!--调起数-->
       <template slot-scope="{ row }" slot="dplsucc_pv">
         <Tooltip placement="right-start" :transfer="true">
@@ -539,24 +540,7 @@
         </Tooltip>
       </template>
 
-      <!--展现占比-->
-      <template slot-scope="{ row }" slot="show_pv_ratio">
-        <Tooltip placement="right-start" :transfer="true">
-          <p class="data_value">{{getNumberFloat(row.show_pv_ratio)}}</p>
-          <p v-if="getProportion(row.show_pv_ratio,row.yes_show_pv_ratio) > 10" class="data_scale up_scale">
-            {{getProportion(row.show_pv_ratio,row.yes_show_pv_ratio)}}%<Icon type="md-arrow-round-up" />
-          </p>
-          <p v-else-if="getProportion(row.show_pv_ratio,row.yes_show_pv_ratio) < -10" class="data_scale down_scale">
-            {{getProportion(row.show_pv_ratio,row.yes_show_pv_ratio)}}%<Icon type="md-arrow-round-down" />
-          </p>
-          <p v-else class="data_scale">
-            {{getProportion(row.show_pv_ratio,row.yes_show_pv_ratio)}}%
-          </p>
-          <div slot="content">
-            <p style="font-size: 12px">昨天:{{getNumberFloat(row.yes_show_pv_ratio)}}</p>
-          </div>
-        </Tooltip>
-      </template>
+      
 
       <!--预估收益-->
       <template slot-scope="{ row }" slot="income">

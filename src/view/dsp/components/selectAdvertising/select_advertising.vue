@@ -82,6 +82,14 @@
           <p class="name-row-ellipsis" :title="row.user_company_name">{{ row.user_company_name }}</p>
           <p class="tip-row-line">ID: {{ row.ud_id }}</p>
         </template>
+
+        <!-- 结算方式 -->
+        <template slot-scope="{ row }" slot="pay_type">
+          <p class="table_text" v-if="row.pay_type === 1">固价</p>
+          <p class="table_text" v-else-if="row.pay_type === 2">分成</p>
+          <p class="table_text" v-else-if="row.pay_type === 3">RTB</p>
+        </template>
+
         <!--应用平台-->
         <template slot-scope="{ row }" slot="app_os_type">
           {{row.app_os_type || '-'}}

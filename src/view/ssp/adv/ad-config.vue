@@ -847,6 +847,22 @@
                               </span>
                             </span>
                           </p>
+
+                          <!-- 结算方式 -->
+                          <p class="classify_text">
+                            <span class="classify_name">结算方式:</span>
+                            <span
+                              class="classify_con classify_zoom"
+                              style="max-width: 120px"
+                              :title="it.pay_type"
+                            >
+                              {{it.pay_type_text}}
+                              <!-- <span v-if="it.pay_type === 1">固价</span>
+                              <span v-else-if="it.pay_type === 2">分成</span>
+                              <span v-else-if="it.pay_type === 3">RTB</span> -->
+                               <!-- - {{ it.pay_type }} -->
+                            </span>
+                          </p>
                         </div>
                         <div class="classify_list">
                           <p class="classify_text">
@@ -886,6 +902,8 @@
                               </span>
                             </span>
                           </p>
+
+
                         </div>
                       </div>
                       <div class="deploy_status">
@@ -1154,8 +1172,10 @@
 
 
                         <div class="deploy_box deploy_line">
-                          <!-- 利润系数 -->
-                          <div class="box_list">
+                          <!-- 利润系数: {{ it.pay_type }}<br> -->
+                          <!-- 1=固价 2=分成 3=RTB -->
+                          <!-- 利润系数  当[广告位结算方式 & 预算位结算方式]同时为RTB 显示-->
+                          <div class="box_list" v-if="deployData.pay_type === 3 && it.pay_type === 3">
                             <span class="deploy_slot">利润系数: </span>
                             <InputNumber
                               :min="0"
@@ -1167,8 +1187,9 @@
                             />
                             &nbsp;&nbsp;%
                           </div>
-                          <!-- 底价 -->
-                          <div class="box_list">
+                          <!-- 底价 广告位为非RTB, 预算位为RTB-->
+                          <!-- 1=固价 2=分成 3=RTB -->
+                          <div class="box_list" v-if="deployData.pay_type !== 3 && it.pay_type === 3">
                             <span class="deploy_slot">底价:</span>
                             <InputNumber
                               :min="0"
@@ -1396,7 +1417,7 @@
 </template>
 
 <script>
-import { showTitle, inputMaxNumber } from "@/libs/util";
+import { showTitle, inputMaxNumber } from "@/libs/util.js";
 import { getSelfCols, getHandCols, formRules } from "../data/adConfig";
 import {
   getSspSlotConfigData,
@@ -1522,7 +1543,7 @@ export default {
           });
         });
       },
-    },
+    }
   },
   methods: {
     /**
@@ -1557,18 +1578,24 @@ export default {
       //   showTxt = "价格浮动系数必须是1~200中的任意整数";
       // }
 
-      // 校验利润系数 (大于0小于等于100)
-      if (
-        dateItem.profit_ratio <= 0 ||
-        dateItem.profit_ratio > 100 ||
-        dateItem.profit_ratio % 1 !== 0
-      ) {
-        showTxt = "利润系数必须大于0小于等于100的整数";
+      // <!-- 1=固价 2=分成 3=RTB -->
+
+      // 校验利润系数 (大于0小于等于100) (结算方式及价格=3=RTB & )
+      if (this.deployData.pay_type === 3 && dateItem.pay_type === 3) {
+        if (
+          dateItem.profit_ratio < 0 ||
+          dateItem.profit_ratio > 100 ||
+          dateItem.profit_ratio % 1 !== 0
+        ) {
+          showTxt = "利润系数必须大于等于0小于等于100的整数";
+        }
       }
 
       // 校验[底价] (大于等于0)
-      if (dateItem.floor_price < 0) {
-        showTxt = "底价必须大于等于0";
+      if (this.deployData.pay_type !== 3 && dateItem.pay_type === 3) {
+        if (dateItem.floor_price < 0) {
+          showTxt = "底价必须大于等于0";
+        }
       }
 
       if (
@@ -2006,12 +2033,21 @@ export default {
      * @return {[type]} [description]
      */
     selectSuccess(selectedData) {
+
+
+      console.log('选择预算位成功的返回')
+      console.log(JSON.parse(JSON.stringify(selectedData)))
+
       let curArr = [...this.infos.flowData];
       let scale = this.size_ratio.map((item) => {
         return Number(item.scale);
       });
       let listData = {};
       listData = curArr[this.radio_index].data.selfActionData[this.radio_i];
+
+      console.log(JSON.parse(JSON.stringify(listData)))
+
+
       let _temp = selectedData.ad_ratio[selectedData.ad_ratio.length - 1];
       listData.size_ratio = _temp
         ? Number(this.number2Thousand(_temp.width / _temp.height))
@@ -2049,8 +2085,10 @@ export default {
       listData.width_ratio = _temp.width;
       listData.height_ratio = _temp.height;
 
+      // 结算方式
+      listData.pay_type = selectedData.pay_type
+      listData.pay_type_text = selectedData.pay_type_text
 
-      console.log(curArr)
       this.infos.flowData = curArr;
     },
 
@@ -2240,6 +2278,7 @@ export default {
             });
             this.infos.flowData = dataList;
           }
+
           this.deployData = list;
         }
       });
@@ -2248,7 +2287,12 @@ export default {
      * [getConfigurationData 配置初始化复值的时候的时候流量的分配]
      * @return {[type]} [description]
      */
-    getResourceList(data) {
+    getResourceList(data, res) {
+
+      console.log('getResourceList')
+      console.log(JSON.parse(JSON.stringify(data)))
+
+
       let controllerList = data;
       let dataList = controllerList.map((item, q) => {
         let type =
@@ -2301,13 +2345,17 @@ export default {
 
 
         // 利润系数 & 底价  => 需要 / 100
-        item.profit_ratio = item.profit_ratio / 100
+        item.profit_ratio = item.profit_ratio
         item.floor_price = item.floor_price / 100
+        item.pay_type = item.dsp_slot_pay_type // 结算类型
+        item.pay_type_text = item.dsp_slot_pay_type_text // 结算类型-文字
 
         return item;
       });
 
-      console.log('geshihua')
+      console.log(JSON.parse(JSON.stringify(dataList)))
+
+
       return dataList;
     },
     /**
@@ -2576,16 +2624,19 @@ export default {
         // deal组的选择
         obj.dg_id = item.dg_id;
 
+        // <!-- 1=固价 2=分成 3=RTB -->
 
-        // 利润系数 & 底价  => 需要 * 100
-        obj.profit_ratio = item.profit_ratio * 100
-        obj.floor_price = item.floor_price * 100
-
+        // 利润系数 当[广告位结算方式 & 预算位结算方式]同时为RTB 显示
+        obj.profit_ratio = this.deployData.pay_type == 3 && item.pay_type == 3 ? item.profit_ratio : 0
+        // 底价 广告位为非RTB, 预算位为RTB
+        obj.floor_price = this.deployData.pay_type != 3 && item.pay_type == 3 ? item.floor_price * 100 : 0
 
         resource.push(obj);
       });
 
-      console.log(resource)
+      console.log('点击保存')
+      console.log(JSON.parse(JSON.stringify(resource)))
+
       return resource;
     },
     /**
@@ -2669,6 +2720,7 @@ export default {
           ],
         },
       };
+
       this.infos.flowData.push(flowObj);
     },
     /**
@@ -2733,6 +2785,9 @@ export default {
         last_ecpm: 0, // 预算位的cpm
         dg_id: null, // dealID
       };
+
+      console.log(obj1)
+
       let curArr = [...this.infos.flowData];
       curArr[index].data.selfActionData.push(obj1);
       this.infos.flowData = curArr;

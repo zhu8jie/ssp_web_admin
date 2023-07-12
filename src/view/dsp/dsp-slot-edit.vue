@@ -281,6 +281,8 @@
                 />
               </FormItem>
 
+              modalForm.pay_type {{ modalForm.pay_type}}
+
               <!-- 结算方式 -->
               <FormItem class="deployText" label="结算方式" prop="pay_type">
                 <!-- 1=固价 2=分成 3=RTB -->
@@ -687,6 +689,18 @@
                               </span>
                             </span>
                           </p>
+
+                          <!-- 结算方式 -->
+                          <p class="classify_text">
+                            <span class="classify_name">结算方式:</span>
+                            <span
+                              class="classify_con classify_zoom"
+                              style="max-width: 120px"
+                              :title="it.pay_type"
+                            >
+                              {{it.pay_type_text}}
+                            </span>
+                          </p>
                         </div>
                         <div class="classify_list">
                           <p class="classify_text">
@@ -951,9 +965,11 @@
 
                         <!-- 利润系数+底价 -->
                         <div class="deploy_box">
-                          <!-- 利润系数 -->
-                          <div class="box_list" style="width: 31%">
-                            <span class="deploy_slot">利润系数:</span>
+                          <!-- 利润系数: {{ it.pay_type }}<br> -->
+                          <!-- 1=固价 2=分成 3=RTB -->
+                          <!-- 利润系数  当[预算位结算方式 & 管高位结算方式]同时为RTB 显示-->
+                          <div class="box_list" style="width: 31%" v-if="modalForm.pay_type === 3 && it.pay_type === 3">
+                            <span class="deploy_slot">利润系数: </span>
                             <InputNumber
                               :min="0"
                               :step="1"
@@ -964,8 +980,11 @@
                             />
                             &nbsp;&nbsp;%
                           </div>
-                          <!-- 底价 -->
-                          <div class="box_list" style="width: 31%">
+
+
+                          <!-- 底价 广告位为非RTB, 预算位为RTB-->
+                          <!-- 1=固价 2=分成 3=RTB -->
+                          <div class="box_list" style="width: 31%" v-if="modalForm.pay_type !== 3 && it.pay_type === 3">
                             <span class="deploy_slot">底价:</span>
                             <InputNumber
                               :min="0"
@@ -1669,16 +1688,21 @@ export default {
       }
 
       // 校验利润系数 (大于0小于等于100)
-      if (
-        dateItem.profit_ratio <= 0 ||
-        dateItem.profit_ratio > 100 ||
-        dateItem.profit_ratio % 1 !== 0
-      ) {
-        showTxt = "利润系数必须大于0小于等于100的整数";
+      if (this.modalForm.pay_type === 3 && dateItem.pay_type === 3) {
+        if (
+          dateItem.profit_ratio < 0 ||
+          dateItem.profit_ratio > 100 ||
+          dateItem.profit_ratio % 1 !== 0
+        ) {
+          showTxt = "利润系数必须大于等于0小于等于100的整数";
+        }
       }
+
       // 校验[底价] (大于等于0)
-      if (dateItem.floor_price < 0) {
-        showTxt = "底价必须大于等于0";
+      if (this.modalForm.pay_type !== 3 && dateItem.pay_type === 3) {
+        if (dateItem.floor_price < 0) {
+          showTxt = "底价必须大于等于0";
+        }
       }
 
       if (
@@ -1849,9 +1873,6 @@ export default {
           control_req_day: item.control_req_day, // 请求控量
           control_show_day: item.control_show_day, // 展示控量
 
-          // 利润系数 & 底价  => 需要 / 100
-          profit_ratio: item.profit_ratio / 100, // 利润系数
-          floor_price: item.floor_price / 100, // 底价
           control_click_day: item.control_click_day, // 点击控量
 
           price_float: item.price_float, // 价格浮动系数
@@ -1899,6 +1920,12 @@ export default {
               : 0, // 出价CPM
           sstd_id: item.sstd_id, // 广告流量分配的主键ID
 
+          // 利润系数 & 底价
+          profit_ratio: item.profit_ratio, // 利润系数
+          floor_price: item.floor_price / 100, // 底价
+
+          pay_type: item.dsp_slot_pay_type, // 结算类型
+          pay_type_text: item.dsp_slot_pay_type_text // 结算类型-文字
 
         };
         dataList.push(obj1);
@@ -1983,6 +2010,13 @@ export default {
         }
       });
       listData.dealList = dealList;
+
+      // 结算方式
+      listData.pay_type = selectedData.pay_type
+      listData.pay_type_text = selectedData.pay_type_text
+
+      
+
       this.infos.flowData = curArr;
     },
 
@@ -2559,9 +2593,11 @@ export default {
         // deal组的选择
         obj.dg_id = item.dg_id;
 
-        // 利润系数 & 底价  => 需要 * 100
-        obj.profit_ratio = item.profit_ratio * 100
-        obj.floor_price = item.floor_price * 100
+        // <!-- 1=固价 2=分成 3=RTB -->
+        // 利润系数 当[广告位结算方式 & 预算位结算方式]同时为RTB 显示
+        obj.profit_ratio = this.modalForm.pay_type == 3 && item.pay_type == 3 ? item.profit_ratio : 0
+        // 底价 广告位为非RTB, 预算位为RTB
+        obj.floor_price = this.modalForm.pay_type != 3 && item.pay_type == 3 ? item.floor_price * 100 : 0
 
         resource.push(obj);
       });

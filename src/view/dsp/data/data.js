@@ -306,7 +306,7 @@ export const getSelectCols = (self) => {
     },
     {
       title: '结算方式',
-      slot: 'pay_type',
+      slot: 'pay_type_text',
       minWidth: 130
     },
     {

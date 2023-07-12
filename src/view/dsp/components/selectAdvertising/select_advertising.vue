@@ -84,10 +84,8 @@
         </template>
 
         <!-- 结算方式 -->
-        <template slot-scope="{ row }" slot="pay_type">
-          <p class="table_text" v-if="row.pay_type === 1">固价</p>
-          <p class="table_text" v-else-if="row.pay_type === 2">分成</p>
-          <p class="table_text" v-else-if="row.pay_type === 3">RTB</p>
+        <template slot-scope="{ row }" slot="pay_type_text">
+          <p class="table_text">{{ row.pay_type_text }}</p>
         </template>
 
         <!--应用平台-->

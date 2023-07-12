@@ -698,7 +698,10 @@
                               style="max-width: 120px"
                               :title="it.pay_type"
                             >
-                              {{it.pay_type_text}}
+                              <!-- {{it.pay_type}} -->
+                              <template v-if="it.pay_type === 1">固价</template>
+                              <template v-else-if="it.pay_type === 2">分成</template>
+                              <template v-else-if="it.pay_type === 3">RTB</template>
                             </span>
                           </p>
                         </div>
@@ -1692,7 +1695,8 @@ export default {
         if (
           dateItem.profit_ratio < 0 ||
           dateItem.profit_ratio > 100 ||
-          dateItem.profit_ratio % 1 !== 0
+          dateItem.profit_ratio % 1 !== 0 ||
+          dateItem.profit_ratio === null
         ) {
           showTxt = "利润系数必须大于等于0小于等于100的整数";
         }
@@ -1700,7 +1704,7 @@ export default {
 
       // 校验[底价] (大于等于0)
       if (this.modalForm.pay_type !== 3 && dateItem.pay_type === 3) {
-        if (dateItem.floor_price < 0) {
+        if (dateItem.floor_price < 0 || dateItem.floor_price === null) {
           showTxt = "底价必须大于等于0";
         }
       }
@@ -1924,9 +1928,7 @@ export default {
           profit_ratio: item.profit_ratio, // 利润系数
           floor_price: item.floor_price / 100, // 底价
 
-          pay_type: item.dsp_slot_pay_type, // 结算类型
-          pay_type_text: item.dsp_slot_pay_type_text // 结算类型-文字
-
+          pay_type: item.ssp_slot.pay_type, // 结算类型
         };
         dataList.push(obj1);
       });
@@ -2013,9 +2015,6 @@ export default {
 
       // 结算方式
       listData.pay_type = selectedData.pay_type
-      listData.pay_type_text = selectedData.pay_type_text
-
-      
 
       this.infos.flowData = curArr;
     },

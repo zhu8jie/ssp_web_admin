@@ -1585,7 +1585,8 @@ export default {
         if (
           dateItem.profit_ratio < 0 ||
           dateItem.profit_ratio > 100 ||
-          dateItem.profit_ratio % 1 !== 0
+          dateItem.profit_ratio % 1 !== 0 ||
+          dateItem.profit_ratio === null
         ) {
           showTxt = "利润系数必须大于等于0小于等于100的整数";
         }
@@ -1593,7 +1594,7 @@ export default {
 
       // 校验[底价] (大于等于0)
       if (this.deployData.pay_type !== 3 && dateItem.pay_type === 3) {
-        if (dateItem.floor_price < 0) {
+        if (dateItem.floor_price < 0 || dateItem.floor_price === null) {
           showTxt = "底价必须大于等于0";
         }
       }

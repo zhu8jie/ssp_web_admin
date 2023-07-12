@@ -216,11 +216,11 @@
           company_short_name: '', // 公司对外简称
           credit_code: '', // 统一社会信用代码
           business_license: '', // 营业执照照片地址
-          legal_person_name: '', // 公司法人姓名
-          legal_person_code: '', // 公司法人身份证号
-          legal_person_card_p: '', // 公司法人身份证正面照片
-          legal_person_card_b: '', // 公司法人身份证反面照片
-          product_list: '', // 产品名单
+          // legal_person_name: '', // 公司法人姓名
+          // legal_person_code: '', // 公司法人身份证号
+          // legal_person_card_p: '', // 公司法人身份证正面照片
+          // legal_person_card_b: '', // 公司法人身份证反面照片
+          // product_list: '', // 产品名单
           province_id: '', // 省份ID
           city_id: '', // 城市ID
           address: '', // 联系地址

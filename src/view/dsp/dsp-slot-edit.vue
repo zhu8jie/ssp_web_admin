@@ -281,8 +281,6 @@
                 />
               </FormItem>
 
-              modalForm.pay_type {{ modalForm.pay_type}}
-
               <!-- 结算方式 -->
               <FormItem class="deployText" label="结算方式" prop="pay_type">
                 <!-- 1=固价 2=分成 3=RTB -->

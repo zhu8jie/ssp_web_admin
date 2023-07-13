@@ -968,7 +968,7 @@
                         <div class="deploy_box">
                           <!-- 利润系数: {{ it.pay_type }}<br> -->
                           <!-- 1=固价 2=分成 3=RTB -->
-                          <!-- 利润系数  当[预算位结算方式 & 管高位结算方式]同时为RTB 显示-->
+                          <!-- 利润系数  当[预算位结算方式 & 广告位结算方式]同时为RTB 显示-->
                           <div class="box_list" style="width: 31%" v-if="modalForm.pay_type === 3 && it.pay_type === 3">
                             <span class="deploy_slot">利润系数: </span>
                             <InputNumber
@@ -985,7 +985,7 @@
 
                           <!-- 底价 广告位为非RTB, 预算位为RTB-->
                           <!-- 1=固价 2=分成 3=RTB -->
-                          <div class="box_list" style="width: 31%" v-if="modalForm.pay_type !== 3 && it.pay_type === 3">
+                          <div class="box_list" style="width: 31%" v-if="modalForm.pay_type === 3 && it.pay_type !== 3">
                             <span class="deploy_slot">底价:</span>
                             <InputNumber
                               :min="0"
@@ -1688,7 +1688,7 @@ export default {
         showTxt = "展现控制必须大于0的任意整数";
       }
 
-      // 校验利润系数 (大于0小于等于100)
+      // 校验利润系数 (大于0小于等于100)  预算位RTB & 广告位RTB
       if (this.modalForm.pay_type === 3 && dateItem.pay_type === 3) {
         if (
           dateItem.profit_ratio < 0 ||
@@ -1700,8 +1700,8 @@ export default {
         }
       }
 
-      // 校验[底价] (大于等于0)
-      if (this.modalForm.pay_type !== 3 && dateItem.pay_type === 3) {
+      // 校验[底价] (大于等于0)  预算位RTB & 广告位非RTB
+      if (this.modalForm.pay_type === 3 && dateItem.pay_type !== 3) {
         if (dateItem.floor_price < 0 || dateItem.floor_price === null) {
           showTxt = "底价必须大于等于0";
         }
@@ -1772,7 +1772,7 @@ export default {
             dsp_slot_code: row.dsp_slot_code,
 
             pay_type: row.pay_type, // 结算方式
-            deal_ratio: row.deal_ratio > 0 ? Number(row.deal_ratio / 100) : 0, // 成交价系数
+            deal_ratio: row.deal_ratio > 0 ? row.deal_ratio : 0, // 成交价系数
             dsp_app_vc: row.dsp_app_vc, // 应用版本号
             dsp_app_store_vc: row.dsp_app_store_vc, // 应用商店版本号
             dsp_app_store_link: row.dsp_app_store_link, // 应用商店地址
@@ -1926,7 +1926,7 @@ export default {
           profit_ratio: item.profit_ratio, // 利润系数
           floor_price: item.floor_price / 100, // 底价
 
-          pay_type: item.ssp_slot.pay_type, // 结算类型
+          pay_type: item.ssp_slot.pay_type, // 结算方式 1=固价 2=分成 3=RTB
         };
         dataList.push(obj1);
       });
@@ -2011,7 +2011,7 @@ export default {
       });
       listData.dealList = dealList;
 
-      // 结算方式
+      // 结算方式 1=固价 2=分成 3=RTB
       listData.pay_type = selectedData.pay_type
 
       this.infos.flowData = curArr;
@@ -2518,7 +2518,7 @@ export default {
 
       // 成交价系数[结算方式=3=RTB时]
       params.deal_ratio = this.modalForm.pay_type === 3
-          ? Math.ceil(parseFloat(this.modalForm.deal_ratio) * 100)
+          ? this.modalForm.deal_ratio
           : 0;
 
       // 格式化[应用版本号 + 应用商店版本号 + 应用商店地址]
@@ -2591,10 +2591,10 @@ export default {
         obj.dg_id = item.dg_id;
 
         // <!-- 1=固价 2=分成 3=RTB -->
-        // 利润系数 当[广告位结算方式 & 预算位结算方式]同时为RTB 显示
+        // 利润系数 当[预算位RTB & 广告位RTB] 传 利润系数
         obj.profit_ratio = this.modalForm.pay_type == 3 && item.pay_type == 3 ? item.profit_ratio : 0
-        // 底价 广告位为非RTB, 预算位为RTB
-        obj.floor_price = this.modalForm.pay_type != 3 && item.pay_type == 3 ? item.floor_price * 100 : 0
+        // 底价 [预算位RTB & 广告位为非RTB]
+        obj.floor_price = this.modalForm.pay_type == 3 && item.pay_type != 3 ? item.floor_price * 100 : 0
 
         resource.push(obj);
       });

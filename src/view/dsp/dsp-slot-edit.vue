@@ -723,7 +723,7 @@
                               {{ it.ad_ratio | filterAdRatio }}
                             </span>
                           </p>
-                          <p class="classify_text">
+                          <!-- <p class="classify_text">
                             <span class="classify_name">Deal组:</span>
                             <span
                               class="classify_con classify_zoom"
@@ -740,7 +740,7 @@
                                 >
                               </span>
                             </span>
-                          </p>
+                          </p> -->
                         </div>
                       </div>
                       <div class="deploy_status">
@@ -834,7 +834,7 @@
                               </Tooltip>
                             </span>
                           </div>
-                          <div class="box_list" style="width: 38%">
+                          <!-- <div class="box_list" style="width: 38%">
                             <span class="deploy_slot"
                               >价格浮动系数
                               <Tooltip
@@ -865,7 +865,7 @@
                                 number2ThousandNumber(it.cpm_price)
                               }}元）</span
                             >
-                          </div>
+                          </div> -->
                         </div>
                         <div class="deploy_box">
                           <div class="box_list" style="width: 31%">
@@ -965,7 +965,7 @@
 
 
                         <!-- 利润系数+底价 -->
-                        <div class="deploy_box">
+                        <div class="deploy_box deploy_line">
                           <!-- 利润系数: {{ it.pay_type }}<br> -->
                           <!-- 1=固价 2=分成 3=RTB -->
                           <!-- 利润系数  当[预算位结算方式 & 广告位结算方式]同时为RTB 显示-->
@@ -999,7 +999,7 @@
                           </div>
                         </div>
 
-                        <div class="deploy_box deploy_line">
+                        <!-- <div class="deploy_box deploy_line">
                           <div class="xuan_title">
                             Deal组
                             <Tooltip
@@ -1039,7 +1039,7 @@
                               >该广告位已配置DealID，如有需要，请选择合适的Deal组</Alert
                             >
                           </div>
-                        </div>
+                        </div> -->
                         
                         <div class="deploy_box deploy_line">
                           <div class="xuan_title">投放时段:</div>
@@ -1674,13 +1674,15 @@ export default {
       if (dateItem.ratio_is_ok === -1 || dateItem.ratio_is_ok === "-1") {
         showTxt = "尺寸比例检验不通过";
       }
-      if (
-        dateItem.price_float <= 0 ||
-        dateItem.price_float > 200 ||
-        dateItem.price_float % 1 !== 0
-      ) {
-        showTxt = "价格浮动系数必须是1~200中的任意整数";
-      }
+      
+      // if (
+      //   dateItem.price_float <= 0 ||
+      //   dateItem.price_float > 200 ||
+      //   dateItem.price_float % 1 !== 0
+      // ) {
+      //   showTxt = "价格浮动系数必须是1~200中的任意整数";
+      // }
+
       if (
         dateItem.control_show_day < 0 ||
         dateItem.control_show_day % 1 !== 0
@@ -1877,7 +1879,7 @@ export default {
 
           control_click_day: item.control_click_day, // 点击控量
 
-          price_float: item.price_float, // 价格浮动系数
+          // price_float: item.price_float, // 价格浮动系数
           ad_ratio: item.ssp_slot.ad_ratio.map((item) => {
             item.width = item.width_ratio;
             item.height = item.height_ratio;
@@ -1914,7 +1916,7 @@ export default {
           last_cpc: item.ssp_slot.today_cpc, // 媒体cpc
           last_ecpm: item.ssp_slot.today_ecpm, // 媒体cpm
           ctr: item.ssp_slot.today_ctr, // ctr
-          dg_id: item.dg_id, // deal组的选择
+          // dg_id: item.dg_id, // deal组的选择
           dealList: dealList, // deal组的列表
           cpm_price:
             item.ssp_slot.cpm_price > 0
@@ -2309,7 +2311,7 @@ export default {
 
         profit_ratio: 0, // 利润系数
         floor_price: 0, // 底价
-        price_float: 100, // 价格浮动系数
+        // price_float: 100, // 价格浮动系数
 
         ad_ratio: [{ width: 0, height: 0 }], // 尺寸比列
         ratio_is_ok: -1, // 尺寸比列是否匹配
@@ -2331,7 +2333,7 @@ export default {
         last_cpc: 0, // 媒体cpc
         last_ecpm: 0, // 媒体cpm
         ctr: 0, // ctr
-        dg_id: null, // deal组的选择
+        // dg_id: null, // deal组的选择
         dealList: [], // deal组的列表
         cpm_price: 0, // 出价CPM
         sstd_id: null, // 广告流量分配的主键ID
@@ -2558,7 +2560,7 @@ export default {
         obj.sstd_id = item.sstd_id !== 1 ? Number(item.sstd_id) : ""; // 外建
         obj.control_weight = Number(item.control_weight); // 权重
         obj.control_proportion = 0; // 流量占比
-        obj.price_float = Number(item.price_float); // 价格浮动系数
+        // obj.price_float = Number(item.price_float); // 价格浮动系数
         obj.control_show_day = Number(item.control_show_day); // 展示控制
         obj.control_click_day = Number(item.control_click_day); // 展现控制
         obj.control_req_day = Number(item.control_req_day); // 请求量控制
@@ -2588,7 +2590,7 @@ export default {
           obj.tag_orientation === 0 ? [] : item.defaultCrowd.tag_list;
 
         // deal组的选择
-        obj.dg_id = item.dg_id;
+        // obj.dg_id = item.dg_id;
 
         // <!-- 1=固价 2=分成 3=RTB -->
         // 利润系数 当[预算位RTB & 广告位RTB] 传 利润系数

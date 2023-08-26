@@ -240,6 +240,7 @@
                         :active-change="false"
                         style="width: 100px"
                       />
+                      元
                       <!-- <Poptip trigger="focus">
                         <InputNumber
                           :min="0"
@@ -268,7 +269,7 @@
                         :min="0"
                         :step="1"
                         :max="100"
-                        :precision="0"
+                        :precision="2"
                         :active-change="false"
                         v-model="deployData.divide_price"
                         style="width: 100px"
@@ -1435,6 +1436,7 @@ import retargetMutiCascaderAdSlot from "@/components/cascader-retarget";
 import crowdControl from "@/components/control/crowd/index.vue";
 
 import { adPayType } from '@/view/ssp/data/adManage.js'
+import { BigNumber } from 'bignumber.js'
 
 export default {
   name: "ad-config",
@@ -2505,23 +2507,23 @@ export default {
       obj.ssp_ad_ratio_height = sspHeight;
       // cpm底价为0时传-1
       obj.floor_price_cpm = this.deployData.cpm
-        ? parseInt(parseFloat(this.deployData.floor_price_cpm) * 100)
+        ? BigNumber(this.deployData.floor_price_cpm).multipliedBy(100).toNumber()
         : -1;
       // cpc底价为0时传-1
       obj.floor_price_cpc = this.deployData.cpc
-        ? parseInt(parseFloat(this.deployData.floor_price_cpc) * 100)
+        ? BigNumber(this.deployData.floor_price_cpc).multipliedBy(100).toNumber()
         : -1;
 
 
       // cpm价格
       obj.valuation_price =
         this.deployData.pay_type === 1
-          ? Math.ceil(parseFloat(this.deployData.valuation_price) * 100)
+          ? BigNumber(this.deployData.valuation_price).multipliedBy(100).toNumber()
           : 0;
       // cpc价格(分成系数)
       obj.divide_price =
         this.deployData.pay_type === 2
-          ? Math.ceil(parseFloat(this.deployData.divide_price) * 100)
+          ? BigNumber(this.deployData.divide_price).multipliedBy(100).toNumber()
           : 0;
       // 结算方式及价格
       obj.pay_type = this.deployData.pay_type

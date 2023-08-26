@@ -500,8 +500,8 @@ export const formRules = {
           callback()
         }
       } else if (_form.pay_type === 2) {
-        if (_form.divide_price <= 0 || !/^[1-9]\d*$/.test(_form.divide_price)) {
-          callback(new Error('请填写大于0小于等于100的整数'))
+        if (_form.divide_price <= 0 || _form.divide_price > 100) {
+          callback(new Error('请填写大于0小于等于100的数字'))
         } else {
           callback()
         }

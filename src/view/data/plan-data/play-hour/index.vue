@@ -1120,7 +1120,7 @@
           if (data.code === 200) {
             let url = data.data.url
             let filename = this.datePickerTime + '计划报表小时表.xlsx'
-            createObjectURL(url, filename)
+            createObjectURL(`${this.$APIUrl.baseUrl}${url}`, filename)
           }
 
           this.submitClock = false

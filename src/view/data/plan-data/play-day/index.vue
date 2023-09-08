@@ -1229,7 +1229,7 @@
           if (data.code === 200) {
             let url = data.data.url
             let filename = _filter.start_date + '~' + _filter.end_date + '计划报表天数据.xlsx'
-            createObjectURL(url, filename)
+            createObjectURL(`${this.$APIUrl.baseUrl}${url}`, filename)
           }
 
           this.submitClock = false

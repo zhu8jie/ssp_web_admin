@@ -489,7 +489,7 @@
         getDownLoadXls(down).then(res => {
           if (res.code === 200) {
             let filename = '监测概况.xlsx'
-            createObjectURL(res.data.url, filename)
+            createObjectURL(`${this.$APIUrl.baseUrl}${res.data.url}`, filename)
           }
           this.downClock = false
         })

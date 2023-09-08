@@ -1221,8 +1221,7 @@ export default {
 			getDownLoadXls(down).then(res => {
 				if (res.code === 200) {
 					let filename = `${this.search.start_date}～${this.search.end_date}预算数据.xlsx`
-
-					createObjectURL(res.data.url, filename)
+					createObjectURL(`${this.$APIUrl.baseUrl}${res.data.url}`, filename)
 				}
 				this.downClock = false
 			}, err => {

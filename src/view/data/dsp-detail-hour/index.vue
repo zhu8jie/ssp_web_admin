@@ -1119,7 +1119,7 @@ export default {
 			getDownLoadXls(down).then(res => {
 				if (res.code === 200) {
 					let filename = `${this.datePickerTime}预算位详细数据.xlsx`
-					createObjectURL(res.data.url, filename)
+					createObjectURL(`${this.$APIUrl.baseUrl}${res.data.url}`, filename)
 				}
 				this.submitClock = false
 			}, err => {

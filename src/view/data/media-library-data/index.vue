@@ -1087,7 +1087,7 @@ export default {
 
 			downSspLibrayData(params).then(res => {
 				if (res.code === 200) {
-					createObjectURL(res.data.url, '媒体库数据.xlsx')
+					createObjectURL(`${this.$APIUrl.baseUrl}${res.data.url}`, '媒体库数据.xlsx')
 				}
 				this.submitClock = false
 			}, err => {

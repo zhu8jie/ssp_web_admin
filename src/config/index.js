@@ -34,29 +34,29 @@ export default {
 	 */
 	APIUrl: {
 		dev: { // 开发环境 - 切换到灰度环境
-			baseUrl: 'http://apia.gladdigit.com', // 基础请求接口
-			mediaComUrl: 'http://apim.gladdigit.com', // 平台公告（公用接口）-从-->媒体平台 --获取
-			media: 'http://media.gladdigit.com' // 媒体平台
+			baseUrl: 'http://apia.okbyte.top', // 基础请求接口
+			mediaComUrl: 'http://apim.okbyte.top', // 平台公告（公用接口）-从-->媒体平台 --获取
+			media: 'http://media.okbyte.top' // 媒体平台
 		},
 		deving: { // 开发环境
-			baseUrl: 'http://grayapia.gladdigit.com', // 基础请求接口
-			mediaComUrl: 'http://grayapim.gladdigit.com', // 平台公告（公用接口）-从-->媒体平台 --获取
-			media: 'http://graymedia.gladdigit.com' // 媒体平台
+			baseUrl: 'http://grayapia.okbyte.top', // 基础请求接口
+			mediaComUrl: 'http://grayapim.okbyte.top', // 平台公告（公用接口）-从-->媒体平台 --获取
+			media: 'http://graymedia.okbyte.top' // 媒体平台
 		},
 		testing: { // 测试服务器
-			baseUrl: 'http://grayapia.gladdigit.com', // 基础请求接口
-			mediaComUrl: 'http://grayapim.gladdigit.com', // 平台公告（公用接口）-从-->媒体平台 --获取
-			media: 'http://graymedia.gladdigit.com' // 媒体平台
+			baseUrl: 'http://grayapia.okbyte.top', // 基础请求接口
+			mediaComUrl: 'http://grayapim.okbyte.top', // 平台公告（公用接口）-从-->媒体平台 --获取
+			media: 'http://graymedia.okbyte.top' // 媒体平台
 		},
 		gray: { // 灰度
-			baseUrl: 'http://grayapia.gladdigit.com', // 基础请求接口
-			mediaComUrl: 'http://grayapim.gladdigit.com', // 平台公告（公用接口）-从-->媒体平台 --获取
-			media: 'http://graymedia.gladdigit.com' // 媒体平台
+			baseUrl: 'http://grayapia.okbyte.top', // 基础请求接口
+			mediaComUrl: 'http://grayapim.okbyte.top', // 平台公告（公用接口）-从-->媒体平台 --获取
+			media: 'http://graymedia.okbyte.top' // 媒体平台
 		},
 		pro: { // 正式服务器
-			baseUrl: 'http://apia.gladdigit.com', // 基础请求接口
-			mediaComUrl: 'http://apim.gladdigit.com', // 平台公告（公用接口）-从-->媒体平台 --获取
-			media: 'http://media.gladdigit.com' // 媒体平台
+			baseUrl: 'http://apia.okbyte.top', // 基础请求接口
+			mediaComUrl: 'http://apim.okbyte.top', // 平台公告（公用接口）-从-->媒体平台 --获取
+			media: 'http://media.okbyte.top' // 媒体平台
 		}
 	},
 	/**
@@ -65,7 +65,7 @@ export default {
 	 */
 	xlsApiUrl: {
 		dev: 'http://192.168.3.36:8899/example', // dev和test使用
-		pro: 'http://apia.gladdigit.com/example' // gray和production使用
+		pro: 'http://apia.okbyte.top/example' // gray和production使用
 	},
 	/**
 	 * @description 默认打开的首页的路由name值，默认为home

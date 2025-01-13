@@ -67,7 +67,8 @@ const showThisMenuEle = (item, access) => {
  */
 export const getMenuByRouter = (list, accessObj) => {
     let res = []
-
+    console.log("Util.js中的router list:",accessObj)
+  //  console.log(" accessObj:",laccessObjist)
     if (!accessObj) return res
 
     try {
@@ -127,6 +128,7 @@ export const getMenuByRouter = (list, accessObj) => {
  * @returns {Array}
  */
 export const adminGetMenuByRouter = (list, access) => {
+    console.log("admin:",access)
     let res = []
     forEach(list, item => {
         if (!item.meta || (item.meta && !item.meta.hideInMenu)) {
@@ -501,6 +503,8 @@ export const localSave = (key, value) => {
 }
 
 export const localRead = (key) => {
+    console.log("localRead key:",key)
+    console.log("localRead value:",localStorage.getItem(key))
     return localStorage.getItem(key) || ''
 }
 

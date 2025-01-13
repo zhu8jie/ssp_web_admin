@@ -48,11 +48,14 @@ export default {
 	},
 	computed: {
 		menuList() {
+			//console.log(this.$store.getters.menuList)
 			return this.$store.getters.menuList
+
 		}
 	},
 	created() {
 		let _val = localRead(this.localName)
+		console.log("_val:",_val)
 		this.collapsed = _val === 'true'
 		this.marginLeft = _val === 'true' ? 64 : 140
 	},
@@ -69,6 +72,8 @@ export default {
 		 * @return {[type]} [description]
 		 */
 		curRouteName() {
+			console.log("name:",this.$route.meta)
+
 			return (this.$route.meta && this.$route.meta.targetHighLight) ? this.$route.meta.targetHighLight : this.$route.name
 		},
 		/**

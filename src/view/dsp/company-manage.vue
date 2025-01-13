@@ -120,6 +120,7 @@ export default {
 			},
 
 			companyColumns: getCompanyColumn(this), // 列
+			
 			companyDataList: [], // 公司列表
 			tableLoadFlag: true, // table的loading
 
@@ -187,6 +188,9 @@ export default {
 				if (res.code === 200) {
 					this.total_count = res.data.total_count
 					this.companyDataList = res.data.list
+					console.log("公司列表：",this.companyDataList)
+					
+					
 				}
 			}, err=> {
 				if (err.code === 403) {

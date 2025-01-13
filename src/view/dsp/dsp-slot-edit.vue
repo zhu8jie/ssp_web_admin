@@ -9,37 +9,52 @@
         近三天最新数据：<span>CPM</span>：{{
           number2ThousandNumber(modalForm.last_ecpm)
         }}元 / <span>CPC</span>：{{
-          number2ThousandNumber(modalForm.last_cpc)
-        }}元 / <span>CTR</span>：{{
-          number2ThousandNumber(modalForm.last_ctr)
-        }}%
+  number2ThousandNumber(modalForm.last_cpc)
+}}元 / <span>CTR</span>：{{
+  number2ThousandNumber(modalForm.last_ctr)
+}}%
       </div>
     </div>
     <div class="config_con">
-      <Form
-        ref="modalForm"
-        label-position="left"
-        :model="modalForm"
-        :rules="modalFormRules"
-        :label-width="130"
-      >
+      <Form ref="modalForm" label-position="left" :model="modalForm" :rules="modalFormRules" :label-width="130">
         <div class="config_detail">
           <div class="config_header">
             <div><span class="line"></span><span>基本信息</span></div>
             <div>
               <div class="action" @click="changeState(1)">
                 <p v-show="basicDspStatus === 1">
-                  收起<span> <Icon type="ios-arrow-down" /></span>
+                  收起<span>
+                    <Icon type="ios-arrow-down" />
+                  </span>
                 </p>
                 <p v-show="basicDspStatus === 2">
-                  展开<span> <Icon type="ios-arrow-up" /></span>
+                  展开<span>
+                    <Icon type="ios-arrow-up" />
+                  </span>
                 </p>
               </div>
             </div>
           </div>
           <div style="margin-top: 15px" v-show="basicDspStatus === 1">
             <div class="config_matter">
-              <FormItem
+
+              <FormItem label="公司名称" 
+                  class="deployText" 
+                  prop="dsp_company_id"
+                  >
+                <Select 
+                class="editSelect"
+                    filterable 
+                    v-model="modalForm.dsp_company_id" 
+                    @on-change="getProductList"
+                    placeholder="公司名称/ID">
+                  <Option 
+                    v-for="item in dspCompanyList" 
+                    :value="item.id" 
+                    :key="item.id">{{ item.company_name }} (ID:{{ item.id }})</Option>
+                </Select>
+              </FormItem>
+              <!-- <FormItem
                 class="deployText"
                 label="公司名称"
                 prop="dsp_company_id"
@@ -57,87 +72,37 @@
                     >{{ item.company_name }}
                   </Option>
                 </Select>
-              </FormItem>
-              <FormItem
-                class="deployText"
-                label="产品名称"
-                prop="dsp_product_id"
-              >
-                <Select
-                  class="editSelect"
-                  v-model="modalForm.dsp_product_id"
-                  placeholder="请选择"
-                  @on-change="productChange"
-                >
-                  <Option
-                    v-for="item in productList"
-                    :value="item.id"
-                    :key="'产品' + item.name + item.id"
-                    >{{ item.name }}
+              </FormItem> -->
+              <FormItem class="deployText" label="产品名称" prop="dsp_product_id">
+                <Select class="editSelect" v-model="modalForm.dsp_product_id" placeholder="请选择"
+                  @on-change="productChange">
+                  <Option v-for="item in productList" :value="item.id" :key="'产品' + item.name + item.id">{{ item.name }}
                   </Option>
                 </Select>
               </FormItem>
-              <FormItem
-                class="deployText"
-                label="预算位名称"
-                prop="dsp_slot_name"
-              >
-                <Input
-                  class="editSelect"
-                  v-model.trim="modalForm.dsp_slot_name"
-                  maxlength="50"
-                  show-word-limit
-                />
+              <FormItem class="deployText" label="预算位名称" prop="dsp_slot_name">
+                <Input class="editSelect" v-model.trim="modalForm.dsp_slot_name" maxlength="50" show-word-limit />
               </FormItem>
-              <FormItem
-                label="应用平台"
-                prop="os_type"
-                class="size_card deployText"
-              >
+              <FormItem label="应用平台" prop="os_type" class="size_card deployText">
                 <!-- {{modalForm.os_type}} -->
                 <RadioGroup v-model="modalForm.os_type" type="button">
-                  <Radio
-                    v-for="item in osType"
-                    :key="'应用平台' + item.id"
-                    :label="item.id"
-                    >{{ item.name }}</Radio
-                  >
+                  <Radio v-for="item in osType" :key="'应用平台' + item.id" :label="item.id">{{ item.name }}</Radio>
                   <Radio :key="0" :label="0">不限</Radio>
                 </RadioGroup>
                 <div class="size_diff" v-if="setModalFlag">
-                  <template v-if="osTypeErrSlotList.length"
-                    >不匹配的广告位有</template
-                  >
-                  <Poptip
-                    placement="bottom-end"
-                    trigger="hover"
-                    popper-class="slot-contact-pop"
-                    padding="8px"
-                    :width="340"
-                    :transfer="true"
-                  >
-                    <span
-                      style="
+                  <template v-if="osTypeErrSlotList.length">不匹配的广告位有</template>
+                  <Poptip placement="bottom-end" trigger="hover" popper-class="slot-contact-pop" padding="8px"
+                    :width="340" :transfer="true">
+                    <span style="
                         cursor: pointer;
                         color: #4083f8;
                         font-weight: bold;
                         margin: 0 4px;
-                      "
-                      v-if="osTypeErrSlotList.length"
-                      >{{ osTypeErrSlotList.length }}</span
-                    >
-                    <div
-                      class="slot-contact-card"
-                      slot="content"
-                      v-if="osTypeErrSlotList.length"
-                    >
+                      " v-if="osTypeErrSlotList.length">{{ osTypeErrSlotList.length }}</span>
+                    <div class="slot-contact-card" slot="content" v-if="osTypeErrSlotList.length">
                       <dl>
                         <dt>不匹配的广告位有：</dt>
-                        <dd
-                          @click="toAdConfig(item.id)"
-                          v-for="item in osTypeErrSlotList"
-                          :key="item.id + '不匹配'"
-                        >
+                        <dd @click="toAdConfig(item.id)" v-for="item in osTypeErrSlotList" :key="item.id + '不匹配'">
                           <span class="dd-title" :title="item.ssp_slot_name">{{
                             item.ssp_slot_name
                           }}</span>
@@ -151,36 +116,14 @@
                 </div>
               </FormItem>
               <FormItem class="deployText" label="广告场景" prop="ad_type_id">
-                <Select
-                  class="editSelect"
-                  v-model="modalForm.ad_type_id"
-                  placeholder="请选择"
-                >
-                  <Option
-                    v-for="item in adTypeList"
-                    :value="item.id"
-                    :key="'场景' + item.id"
-                    >{{ item.name }}</Option
-                  >
+                <Select class="editSelect" v-model="modalForm.ad_type_id" placeholder="请选择">
+                  <Option v-for="item in adTypeList" :value="item.id" :key="'场景' + item.id">{{ item.name }}</Option>
                 </Select>
               </FormItem>
-              <FormItem
-                class="deployText"
-                label="广告样式"
-                prop="creative_type"
-              >
-                <Select
-                  class="editSelect"
-                  v-model="modalForm.creative_type"
-                  placeholder="请选择"
-                  @on-change="getAdMaterialSize"
-                >
-                  <Option
-                    v-for="item in styleData"
-                    :value="item.id"
-                    :key="'样式' + item.id"
-                    >{{ item.title }}</Option
-                  >
+              <FormItem class="deployText" label="广告样式" prop="creative_type">
+                <Select class="editSelect" v-model="modalForm.creative_type" placeholder="请选择"
+                  @on-change="getAdMaterialSize">
+                  <Option v-for="item in styleData" :value="item.id" :key="'样式' + item.id">{{ item.title }}</Option>
                 </Select>
               </FormItem>
 
@@ -192,60 +135,28 @@
               <!--                  <Radio :label="4">测试锁定</Radio>-->
               <!--                </RadioGroup>-->
               <!--              </FormItem>-->
-              <FormItem
-                label="素材尺寸比例"
-                prop="dsp_ratio"
-                class="deployText size_card"
-              >
+              <FormItem label="素材尺寸比例" prop="dsp_ratio" class="deployText size_card">
                 <!-- {{modalForm.dsp_ad_ratio_width}}, {{modalForm.dsp_ad_ratio_height}} -->
-                <Select
-                  class="editSelect"
-                  v-model="modalForm.sizeRatio"
-                  placeholder="请选择"
-                  @on-change="sizeChange()"
-                >
-                  <Option
-                    v-for="(item, index) in adMaterialSizeArr"
-                    :value="item.ratio"
-                    :key="item.ratio + index + '尺寸'"
-                    >{{ item.ratio }}({{ item.scale }})</Option
-                  >
+                <Select class="editSelect" v-model="modalForm.sizeRatio" placeholder="请选择" @on-change="sizeChange()">
+                  <Option v-for="(item, index) in adMaterialSizeArr" :value="item.ratio" :key="item.ratio + index + '尺寸'">
+                    {{ item.ratio }}({{ item.scale }})</Option>
                 </Select>
                 <div class="size_diff" v-if="setModalFlag">
                   <i class="size_value">{{ sizeProportion }}</i>
-                  <template v-if="ratioErrSlotList.length"
-                    >不匹配的广告位有</template
-                  >
-                  <Poptip
-                    placement="bottom-end"
-                    trigger="hover"
-                    popper-class="slot-contact-pop"
-                    padding="8px"
-                    :width="340"
-                    :transfer="true"
-                  >
-                    <span
-                      style="
+                  <template v-if="ratioErrSlotList.length">不匹配的广告位有</template>
+                  <Poptip placement="bottom-end" trigger="hover" popper-class="slot-contact-pop" padding="8px"
+                    :width="340" :transfer="true">
+                    <span style="
                         cursor: pointer;
                         color: #4083f8;
                         font-weight: bold;
                         margin: 0 4px;
-                      "
-                      v-if="ratioErrSlotList.length"
-                      >{{ ratioErrSlotList.length }}</span
-                    >
-                    <div
-                      class="slot-contact-card"
-                      slot="content"
-                      v-if="ratioErrSlotList.length"
-                    >
+                      " v-if="ratioErrSlotList.length">{{ ratioErrSlotList.length }}</span>
+                    <div class="slot-contact-card" slot="content" v-if="ratioErrSlotList.length">
                       <dl>
                         <dt>不匹配的广告位有：</dt>
-                        <dd
-                          @click="toAdConfig(item.ssp_slot_id)"
-                          v-for="item in ratioErrSlotList"
-                          :key="item.ssp_slot_id"
-                        >
+                        <dd @click="toAdConfig(item.ssp_slot_id)" v-for="item in ratioErrSlotList"
+                          :key="item.ssp_slot_id">
                           <span class="dd-title" :title="item.ssp_slot_name">{{
                             item.ssp_slot_name
                           }}</span>
@@ -258,157 +169,76 @@
                   <template v-if="ratioErrSlotList.length">个</template>
                 </div>
               </FormItem>
-              <FormItem
-                class="deployText"
-                label="采买类型"
-                prop="pickup_status"
-              >
+              <FormItem class="deployText" label="采买类型" prop="pickup_status">
                 <RadioGroup v-model="modalForm.pickup_status" type="button">
                   <Radio :label="1">联调</Radio>
                   <Radio :label="2">测试</Radio>
                   <Radio :label="3">正式</Radio>
                 </RadioGroup>
               </FormItem>
-              <FormItem
-                class="deployText"
-                label="预算方广告位ID"
-                prop="dsp_slot_code"
-              >
-                <Input
-                  class="editSelect"
-                  :maxlength="50"
-                  v-model.trim="modalForm.dsp_slot_code"
-                />
+              <FormItem class="deployText" label="预算方广告位ID" prop="dsp_slot_code">
+                <Input class="editSelect" :maxlength="50" v-model.trim="modalForm.dsp_slot_code" />
               </FormItem>
 
               <!-- 结算方式 -->
               <FormItem class="deployText" label="结算方式" prop="pay_type">
                 <!-- 1=固价 2=分成 3=RTB -->
                 <RadioGroup v-model="modalForm.pay_type">
-                  <Radio
-                    v-for="item in adPayType"
-                    :label="item.value"
-                    :key="item.value + '结算方式'"
-                  >
+                  <Radio v-for="item in adPayType" :label="item.value" :key="item.value + '结算方式'">
                     {{ item.label }}
                   </Radio>
                 </RadioGroup>
 
                 <div v-if="modalForm.pay_type === 3" style="display: inline-block; vertical-align: middle;">
                   <span slot="label">成交价系数</span>
-                  <InputNumber
-                    :min="0"
-                    :step="1"
-                    :max="100"
-                    :precision="0"
-                    v-model="modalForm.deal_ratio"
-                    :active-change="false"
-                    style="width: 100px"
-                  />%
+                  <InputNumber :min="0" :step="1" :max="100" :precision="0" v-model="modalForm.deal_ratio"
+                    :active-change="false" style="width: 100px" />%
                 </div>
               </FormItem>
 
               <!-- 应用版本号 -->
-              <FormItem
-                class="deployText"
-                label="应用版本号"
-                prop="dsp_app_vc"
-              >
-                <Input
-                  class="editSelect"
-                  :maxlength="1000"
-                  v-model.trim="modalForm.dsp_app_vc"
-                  placeholder="支持多个，英文逗号分隔"
-                />
+              <FormItem class="deployText" label="应用版本号" prop="dsp_app_vc">
+                <Input class="editSelect" :maxlength="1000" v-model.trim="modalForm.dsp_app_vc"
+                  placeholder="支持多个，英文逗号分隔" />
               </FormItem>
 
               <!-- 应用商店版本号 -->
-              <FormItem
-                class="deployText"
-                label="应用商店版本号"
-                prop="dsp_app_store_vc"
-              >
-                <Input
-                  class="editSelect"
-                  :maxlength="1000"
-                  v-model.trim="modalForm.dsp_app_store_vc"
-                  placeholder="支持多个，英文逗号分隔"
-                />
+              <FormItem class="deployText" label="应用商店版本号" prop="dsp_app_store_vc">
+                <Input class="editSelect" :maxlength="1000" v-model.trim="modalForm.dsp_app_store_vc"
+                  placeholder="支持多个，英文逗号分隔" />
               </FormItem>
 
               <!-- 应用商店地址 -->
-              <FormItem
-                class="deployText"
-                label="应用商店地址"
-                prop="dsp_app_store_link"
-              >
-                <Input
-                  class="editSelect"
-                  :maxlength="1000"
-                  v-model.trim="modalForm.dsp_app_store_link"
-                  placeholder="支持多个，英文逗号分隔"
-                />
+              <FormItem class="deployText" label="应用商店地址" prop="dsp_app_store_link">
+                <Input class="editSelect" :maxlength="1000" v-model.trim="modalForm.dsp_app_store_link"
+                  placeholder="支持多个，英文逗号分隔" />
               </FormItem>
 
               <FormItem class="deployText" label="预算端appkey">
-                <Input
-                  class="editSelect"
-                  :maxlength="50"
-                  v-model.trim="modalForm.dsp_app_key"
-                />
+                <Input class="editSelect" :maxlength="50" v-model.trim="modalForm.dsp_app_key" />
               </FormItem>
               <FormItem class="deployText" label="直投URL">
-                <Input
-                  class="editSelect"
-                  :max="inputMaxNumber"
-                  v-model.trim="modalForm.dsp_slot_request_url"
-                  placeholder="仅限交互通使用，其他预算方请勿填写"
-                />
+                <Input class="editSelect" :max="inputMaxNumber" v-model.trim="modalForm.dsp_slot_request_url"
+                  placeholder="仅限交互通使用，其他预算方请勿填写" />
               </FormItem>
               <FormItem class="deployText" label="预算端appsecret">
-                <Input
-                  class="editSelect"
-                  :maxlength="50"
-                  v-model.trim="modalForm.dsp_app_secret"
-                />
+                <Input class="editSelect" :maxlength="50" v-model.trim="modalForm.dsp_app_secret" />
               </FormItem>
               <FormItem class="deployText" label="扩展参数">
-                <Input
-                  class="editSelect"
-                  :maxlength="50"
-                  v-model.trim="modalForm.rta_ext"
-                />
+                <Input class="editSelect" :maxlength="50" v-model.trim="modalForm.rta_ext" />
               </FormItem>
               <FormItem class="deployText" label="预算端appid">
-                <Input
-                  class="editSelect"
-                  :maxlength="50"
-                  v-model.trim="modalForm.dsp_app_id"
-                />
+                <Input class="editSelect" :maxlength="50" v-model.trim="modalForm.dsp_app_id" />
               </FormItem>
               <FormItem class="deployText" label="备注">
-                <Input
-                  class="editSelect"
-                  :maxlength="100"
-                  show-word-limit
-                  type="textarea"
-                  :rows="4"
-                  v-model.trim="modalForm.dsp_slot_alias"
-                />
+                <Input class="editSelect" :maxlength="100" show-word-limit type="textarea" :rows="4"
+                  v-model.trim="modalForm.dsp_slot_alias" />
               </FormItem>
               <FormItem class="deployText" label="预算端包名">
-                <Input
-                  class="editSelect"
-                  :maxlength="50"
-                  v-model.trim="modalForm.dsp_app_pkg_name"
-                />
+                <Input class="editSelect" :maxlength="50" v-model.trim="modalForm.dsp_app_pkg_name" />
               </FormItem>
-              <FormItem
-                class="deployText ivu-form-item-required"
-                prop="interact_mode"
-                label="属性"
-                v-show="modalForm.pickup_status === 1"
-              >
+              <FormItem class="deployText ivu-form-item-required" prop="interact_mode" label="属性"
+                v-show="modalForm.pickup_status === 1">
                 <RadioGroup v-model="modalForm.interact_mode">
                   <Radio :label="1">跳转落地页</Radio>
                   <Radio :label="2">直接下载</Radio>
@@ -417,12 +247,8 @@
                   <Radio :label="5">一键加群</Radio>
                 </RadioGroup>
               </FormItem>
-              <FormItem
-                class="deployText ivu-form-item-required"
-                label="素材类型"
-                prop="material_type"
-                v-show="modalForm.pickup_status === 1"
-              >
+              <FormItem class="deployText ivu-form-item-required" label="素材类型" prop="material_type"
+                v-show="modalForm.pickup_status === 1">
                 <RadioGroup v-model="modalForm.material_type">
                   <Radio :label="1">图片</Radio>
                   <Radio :label="2">视频</Radio>
@@ -437,62 +263,40 @@
             <div>
               <div class="action" @click="changeState(2)">
                 <p v-show="putDSPStatus === 1">
-                  收起<span> <Icon type="ios-arrow-down" /></span>
+                  收起<span>
+                    <Icon type="ios-arrow-down" />
+                  </span>
                 </p>
                 <p v-show="putDSPStatus === 2">
-                  展开<span> <Icon type="ios-arrow-up" /></span>
+                  展开<span>
+                    <Icon type="ios-arrow-up" />
+                  </span>
                 </p>
               </div>
             </div>
           </div>
           <div style="margin-top: 15px" v-show="putDSPStatus === 1">
-            <Button
-              @click="addSelfAdv()"
-              style="color: #3f83f7; border: 1px solid #4083f8"
-              icon="md-add"
-            >
+            <Button @click="addSelfAdv()" style="color: #3f83f7; border: 1px solid #4083f8" icon="md-add">
               增加广告位
             </Button>
             <FormItem class="deployForm deployText" :label-width="0">
               <!--  eCPM自动的流量分配-->
               <div class="self_table">
-                <div
-                  class="deploy_list"
-                  v-for="(it, i) in infos.flowData"
-                  :key="'selfActionData' + i"
-                >
+                <div class="deploy_list" v-for="(it, i) in infos.flowData" :key="'selfActionData' + i">
                   <!--  eCPM头部的内容-->
                   <div class="deploy_header">
                     <div class="deploy_headerText" @click="unfold(i)">
                       <div class="deploy_title">
                         <div class="header_left">
-                          <span class="deploy_text"
-                            >{{ it.ssp_slot_name }}
-                            <span class="deploy_des" v-show="it.title"
-                              >({{ it.title }})</span
-                            >
+                          <span class="deploy_text">{{ it.ssp_slot_name }}
+                            <span class="deploy_des" v-show="it.title">({{ it.title }})</span>
                           </span>
                           <span>
-                            <Tooltip
-                              placement="right-start"
-                              :transfer="true"
-                              max-width="700"
-                            >
-                              <Icon
-                                v-if="it.budget_status === 1"
-                                type="ios-checkmark-circle"
-                                style="color: #339900"
-                              />
-                              <Icon
-                                v-else
-                                type="ios-close-circle"
-                                style="color: #f72d17"
-                              />
+                            <Tooltip placement="right-start" :transfer="true" max-width="700">
+                              <Icon v-if="it.budget_status === 1" type="ios-checkmark-circle" style="color: #339900" />
+                              <Icon v-else type="ios-close-circle" style="color: #f72d17" />
                               <div slot="content">
-                                <p
-                                  v-if="it.budget_status === 1"
-                                  style="font-size: 12px"
-                                >
+                                <p v-if="it.budget_status === 1" style="font-size: 12px">
                                   广告位状态正常,可投放
                                 </p>
                                 <p v-else style="font-size: 12px">
@@ -507,62 +311,44 @@
                         <div class="classify_list" style="width: 26%">
                           <p class="classify_text">
                             <span class="classify_name">媒体CPM:</span>
-                            <span class="classify_con classify_num"
-                              >{{ number2ThousandNumber(it.last_ecpm) }}元</span
-                            >
+                            <span class="classify_con classify_num">{{ number2ThousandNumber(it.last_ecpm) }}元</span>
                           </p>
                           <p class="classify_text">
                             <span class="classify_name">媒体CPC:</span>
-                            <span class="classify_con classify_num"
-                              >{{ number2ThousandNumber(it.last_cpc) }}元</span
-                            >
+                            <span class="classify_con classify_num">{{ number2ThousandNumber(it.last_cpc) }}元</span>
                           </p>
                           <p class="classify_text">
                             <span class="classify_name">CTR:</span>
-                            <span class="classify_con classify_num"
-                              >{{ number2ThousandNumber(it.ctr) }}%</span
-                            >
+                            <span class="classify_con classify_num">{{ number2ThousandNumber(it.ctr) }}%</span>
                           </p>
                         </div>
                         <div class="classify_list" style="width: 30%">
                           <p class="classify_text">
                             <span class="classify_name">请求控制:</span>
-                            <span class="classify_con classify_num"
-                              >{{
-                                number2ThousandNumber(it.control_req_day)
-                              }}次/天</span
-                            >
+                            <span class="classify_con classify_num">{{
+                              number2ThousandNumber(it.control_req_day)
+                            }}次/天</span>
                           </p>
                           <p class="classify_text">
                             <span class="classify_name">展现控制:</span>
-                            <span class="classify_con classify_num"
-                              >{{
-                                number2ThousandNumber(it.control_show_day)
-                              }}次/天</span
-                            >
+                            <span class="classify_con classify_num">{{
+                              number2ThousandNumber(it.control_show_day)
+                            }}次/天</span>
                           </p>
                           <p class="classify_text">
                             <span class="classify_name">点击控制:</span>
-                            <span class="classify_con classify_num"
-                              >{{
-                                number2ThousandNumber(it.control_click_day)
-                              }}次/天</span
-                            >
+                            <span class="classify_con classify_num">{{
+                              number2ThousandNumber(it.control_click_day)
+                            }}次/天</span>
                           </p>
                         </div>
                         <div class="classify_list" style="width: 22%">
                           <p class="classify_text">
                             <span class="classify_name">投放时段:</span>
                             <span class="classify_con classify_zoom">
-                              <span v-if="it.control_time_type === 2"
-                                >全时段</span
-                              >
+                              <span v-if="it.control_time_type === 2">全时段</span>
                               <span v-else>
-                                <Tooltip
-                                  placement="bottom"
-                                  :transfer="true"
-                                  max-width="300"
-                                >
+                                <Tooltip placement="bottom" :transfer="true" max-width="300">
                                   <span class="underline">自定义</span>
                                   <div slot="content">
                                     {{ hourData(it.control_time_custom) }}
@@ -574,43 +360,23 @@
                           <p class="classify_text">
                             <span class="classify_name">人群定向:</span>
                             <span class="classify_con classify_zoom">
-                              <span v-if="it.defaultCrowd.tag_orientation === 0"
-                                >不限</span
-                              >
+                              <span v-if="it.defaultCrowd.tag_orientation === 0">不限</span>
                               <span v-else>
-                                <Tooltip
-                                  placement="bottom"
-                                  :transfer="true"
-                                  max-width="300"
-                                >
-                                  <span
-                                    class="underline"
-                                    v-if="it.defaultCrowd.tag_orientation === 1"
-                                    >定向</span
-                                  >
-                                  <span
-                                    class="underline"
-                                    v-if="it.defaultCrowd.tag_orientation === 2"
-                                    >排除</span
-                                  >
-                                  <div
-                                    v-if="it.defaultCrowd.tag_orientation === 1"
-                                    slot="content"
-                                  >
+                                <Tooltip placement="bottom" :transfer="true" max-width="300">
+                                  <span class="underline" v-if="it.defaultCrowd.tag_orientation === 1">定向</span>
+                                  <span class="underline" v-if="it.defaultCrowd.tag_orientation === 2">排除</span>
+                                  <div v-if="it.defaultCrowd.tag_orientation === 1" slot="content">
                                     定向外流量占比：{{
                                       it.defaultCrowd.tag_proportion
                                     }}%；逻辑关系：{{
-                                      it.defaultCrowd.tag_relation === 1
-                                        ? "满足其一"
-                                        : "全部满足"
-                                    }}；人群标签：{{
-                                      tagTextData(it.defaultCrowd.tag_list)
-                                    }}
+  it.defaultCrowd.tag_relation === 1
+  ? "满足其一"
+  : "全部满足"
+}}；人群标签：{{
+  tagTextData(it.defaultCrowd.tag_list)
+}}
                                   </div>
-                                  <div
-                                    v-if="it.defaultCrowd.tag_orientation === 2"
-                                    slot="content"
-                                  >
+                                  <div v-if="it.defaultCrowd.tag_orientation === 2" slot="content">
                                     人群标签：{{
                                       tagTextData(it.defaultCrowd.tag_list)
                                     }}
@@ -624,21 +390,9 @@
                             <span class="classify_con classify_zoom">
                               <span v-if="it.area_type === -1">不限</span>
                               <span v-else>
-                                <Tooltip
-                                  placement="bottom"
-                                  :transfer="true"
-                                  max-width="300"
-                                >
-                                  <span
-                                    v-if="it.area_type === 1"
-                                    class="underline"
-                                    >定向</span
-                                  >
-                                  <span
-                                    v-if="it.area_type === 2"
-                                    class="underline"
-                                    >排除</span
-                                  >
+                                <Tooltip placement="bottom" :transfer="true" max-width="300">
+                                  <span v-if="it.area_type === 1" class="underline">定向</span>
+                                  <span v-if="it.area_type === 2" class="underline">排除</span>
                                   <div slot="content">
                                     {{ areaData(it.cityList) }}
                                   </div>
@@ -653,21 +407,9 @@
                             <span class="classify_con classify_zoom">
                               <span v-if="it.brand_type === -1">不限</span>
                               <span v-else>
-                                <Tooltip
-                                  placement="bottom"
-                                  :transfer="true"
-                                  max-width="300"
-                                >
-                                  <span
-                                    v-if="it.brand_type === 1"
-                                    class="underline"
-                                    >定向</span
-                                  >
-                                  <span
-                                    v-if="it.brand_type === 2"
-                                    class="underline"
-                                    >排除</span
-                                  >
+                                <Tooltip placement="bottom" :transfer="true" max-width="300">
+                                  <span v-if="it.brand_type === 1" class="underline">定向</span>
+                                  <span v-if="it.brand_type === 2" class="underline">排除</span>
                                   <div slot="content">
                                     {{ brandData(it.phoneList) }}
                                   </div>
@@ -675,10 +417,7 @@
                               </span>
                             </span>
                           </p>
-                          <p
-                            class="classify_text"
-                            v-show="modalForm.os_type !== 2"
-                          >
+                          <p class="classify_text" v-show="modalForm.os_type !== 2">
                             <span class="classify_name">老旧机型:</span>
                             <span class="classify_con classify_zoom">
                               <span v-if="it.checkPhone === -1">不限</span>
@@ -691,11 +430,7 @@
                           <!-- 结算方式 -->
                           <p class="classify_text">
                             <span class="classify_name">结算方式:</span>
-                            <span
-                              class="classify_con classify_zoom"
-                              style="max-width: 120px"
-                              :title="it.pay_type"
-                            >
+                            <span class="classify_con classify_zoom" style="max-width: 120px" :title="it.pay_type">
                               <!-- {{it.pay_type}} -->
                               <template v-if="it.pay_type === 1">固价</template>
                               <template v-else-if="it.pay_type === 2">分成</template>
@@ -706,20 +441,9 @@
                         <div class="classify_list">
                           <p class="classify_text">
                             <span class="classify_name">尺寸比例检验:</span>
-                            <span
-                              class="classify_con classify_zoom"
-                              :title="it.ad_ratio | filterAdRatio"
-                            >
-                              <Icon
-                                v-if="it.ratio_is_ok === -1"
-                                type="ios-close-circle"
-                                style="color: #f72d17"
-                              />
-                              <Icon
-                                v-else
-                                type="ios-checkmark-circle"
-                                style="color: #339900"
-                              />
+                            <span class="classify_con classify_zoom" :title="it.ad_ratio | filterAdRatio">
+                              <Icon v-if="it.ratio_is_ok === -1" type="ios-close-circle" style="color: #f72d17" />
+                              <Icon v-else type="ios-checkmark-circle" style="color: #339900" />
                               {{ it.ad_ratio | filterAdRatio }}
                             </span>
                           </p>
@@ -744,10 +468,7 @@
                         </div>
                       </div>
                       <div class="deploy_status">
-                        <Icon
-                          v-if="it.downStatus === 1"
-                          type="ios-arrow-forward"
-                        />
+                        <Icon v-if="it.downStatus === 1" type="ios-arrow-forward" />
                         <Icon v-else type="ios-arrow-down" />
                       </div>
                     </div>
@@ -755,21 +476,13 @@
                       删除
                     </div>
                   </div>
-                  <Form
-                    :ref="'flowData' + i"
-                    :model="it"
-                    :rules="infos.ruleValidate"
-                    :label-width="0"
-                  >
+                  <Form :ref="'flowData' + i" :model="it" :rules="infos.ruleValidate" :label-width="0">
                     <!--  eCPM的展开操作部分-->
-                    <FormItem
-                      prop="flowDataList"
-                      :rules="{
-                        required: true,
-                        index: i,
-                        validator: flowDataListRule,
-                      }"
-                    >
+                    <FormItem prop="flowDataList" :rules="{
+                      required: true,
+                      index: i,
+                      validator: flowDataListRule,
+                    }">
                       <div class="deploy_content" v-show="it.downStatus === 2">
                         <div class="deploy_box">
                           <div class="box_list" style="width: 31%">
@@ -777,25 +490,13 @@
                             <span class="slot_name">{{
                               it.ssp_slot_name
                             }}</span>
-                            <Button
-                              class="slot_select"
-                              type="primary"
-                              @click="slotSelect(it['ssp_slot_id'], i)"
-                              >选择
+                            <Button class="slot_select" type="primary" @click="slotSelect(it['ssp_slot_id'], i)">选择
                             </Button>
                           </div>
                           <div class="box_list" style="width: 31%">
-                            <span class="deploy_slot"
-                              >尺寸比例检验
-                              <Tooltip
-                                placement="top"
-                                :transfer="true"
-                                max-width="300"
-                              >
-                                <Icon
-                                  type="md-help-circle"
-                                  style="color: #c8c8c8; font-size: 16px"
-                                />：
+                            <span class="deploy_slot">尺寸比例检验
+                              <Tooltip placement="top" :transfer="true" max-width="300">
+                                <Icon type="md-help-circle" style="color: #c8c8c8; font-size: 16px" />：
                                 <div slot="content">
                                   <p style="font-size: 12px">
                                     指所选预算位与当前广告位尺寸比例需要一致，且可以有上下5%的比例浮动，超过5%，则不匹配，无法提交
@@ -805,26 +506,11 @@
                             </span>
                             {{ it.ad_ratio | filterAdRatio }}
                             <span>
-                              <Tooltip
-                                placement="right-start"
-                                :transfer="true"
-                                max-width="700"
-                              >
-                                <Icon
-                                  v-if="it.ratio_is_ok === -1"
-                                  type="ios-close-circle"
-                                  style="color: #f72d17"
-                                />
-                                <Icon
-                                  v-else
-                                  type="ios-checkmark-circle"
-                                  style="color: #339900"
-                                />
+                              <Tooltip placement="right-start" :transfer="true" max-width="700">
+                                <Icon v-if="it.ratio_is_ok === -1" type="ios-close-circle" style="color: #f72d17" />
+                                <Icon v-else type="ios-checkmark-circle" style="color: #339900" />
                                 <div slot="content">
-                                  <p
-                                    v-if="it.ratio_is_ok === 1"
-                                    style="font-size: 12px"
-                                  >
+                                  <p v-if="it.ratio_is_ok === 1" style="font-size: 12px">
                                     表示广告位与预算位尺寸匹配
                                   </p>
                                   <p v-else style="font-size: 12px">
@@ -869,17 +555,9 @@
                         </div>
                         <div class="deploy_box">
                           <div class="box_list" style="width: 31%">
-                            <span class="deploy_slot"
-                              >请求控制
-                              <Tooltip
-                                placement="top"
-                                :transfer="true"
-                                max-width="300"
-                              >
-                                <Icon
-                                  type="md-help-circle"
-                                  style="color: #c8c8c8; font-size: 16px"
-                                />：
+                            <span class="deploy_slot">请求控制
+                              <Tooltip placement="top" :transfer="true" max-width="300">
+                                <Icon type="md-help-circle" style="color: #c8c8c8; font-size: 16px" />：
                                 <div slot="content">
                                   <p style="font-size: 12px">
                                     指该广告位与预算位关系上的请求最大限制，大于该限制，不再向预算位发起请求；默认0，表示不控制
@@ -888,11 +566,7 @@
                               </Tooltip>
                             </span>
                             <Poptip trigger="focus">
-                              <InputNumber
-                                :min="0"
-                                v-model="it.control_req_day"
-                                style="width: 150px"
-                              />
+                              <InputNumber :min="0" v-model="it.control_req_day" style="width: 150px" />
                               <span style="font-size: 13px">次/天</span>
                               <div slot="content">
                                 {{ formatNumber(it.control_req_day) }}
@@ -900,17 +574,9 @@
                             </Poptip>
                           </div>
                           <div class="box_list" style="width: 31%">
-                            <span class="deploy_slot"
-                              >展现控制
-                              <Tooltip
-                                placement="top"
-                                :transfer="true"
-                                max-width="300"
-                              >
-                                <Icon
-                                  type="md-help-circle"
-                                  style="color: #c8c8c8; font-size: 16px"
-                                />：
+                            <span class="deploy_slot">展现控制
+                              <Tooltip placement="top" :transfer="true" max-width="300">
+                                <Icon type="md-help-circle" style="color: #c8c8c8; font-size: 16px" />：
                                 <div slot="content">
                                   <p style="font-size: 12px">
                                     指该广告位与预算位关系上的展现最大限制，大于该限制，不再向预算位发起请求；默认0，表示不控制
@@ -919,11 +585,7 @@
                               </Tooltip>
                             </span>
                             <Poptip trigger="focus">
-                              <InputNumber
-                                :min="0"
-                                v-model="it.control_show_day"
-                                style="width: 150px"
-                              />
+                              <InputNumber :min="0" v-model="it.control_show_day" style="width: 150px" />
                               <span style="font-size: 13px">次/天</span>
                               <div slot="content">
                                 {{ formatNumber(it.control_show_day) }}
@@ -931,17 +593,9 @@
                             </Poptip>
                           </div>
                           <div class="box_list" style="width: 38%">
-                            <span class="deploy_slot"
-                              >点击控制
-                              <Tooltip
-                                placement="top"
-                                :transfer="true"
-                                max-width="300"
-                              >
-                                <Icon
-                                  type="md-help-circle"
-                                  style="color: #c8c8c8; font-size: 16px"
-                                />：
+                            <span class="deploy_slot">点击控制
+                              <Tooltip placement="top" :transfer="true" max-width="300">
+                                <Icon type="md-help-circle" style="color: #c8c8c8; font-size: 16px" />：
                                 <div slot="content">
                                   <p style="font-size: 12px">
                                     指该广告位与预算位关系上的点击最大限制，大于该限制，不再向预算位发起请求；默认0，表示不控制
@@ -950,11 +604,7 @@
                               </Tooltip>
                             </span>
                             <Poptip trigger="focus">
-                              <InputNumber
-                                :min="0"
-                                v-model="it.control_click_day"
-                                style="width: 150px"
-                              />
+                              <InputNumber :min="0" v-model="it.control_click_day" style="width: 150px" />
                               <span style="font-size: 13px">次/天</span>
                               <div slot="content">
                                 {{ formatNumber(it.control_click_day) }}
@@ -971,14 +621,8 @@
                           <!-- 利润系数  当[预算位结算方式 & 广告位结算方式]同时为RTB 显示-->
                           <div class="box_list" style="width: 31%" v-if="modalForm.pay_type === 3 && it.pay_type === 3">
                             <span class="deploy_slot">利润系数: </span>
-                            <InputNumber
-                              :min="0"
-                              :step="1"
-                              :max="100"
-                              :precision="0"
-                              v-model="it.profit_ratio"
-                              style="width: 150px"
-                            />
+                            <InputNumber :min="0" :step="1" :max="100" :precision="0" v-model="it.profit_ratio"
+                              style="width: 150px" />
                             &nbsp;&nbsp;%
                           </div>
 
@@ -987,14 +631,8 @@
                           <!-- 1=固价 2=分成 3=RTB -->
                           <div class="box_list" style="width: 31%" v-if="modalForm.pay_type === 3 && it.pay_type !== 3">
                             <span class="deploy_slot">底价:</span>
-                            <InputNumber
-                              :min="0"
-                              :step="0.01"
-                              :precision="2"
-                              v-model="it.floor_price"
-                              :active-change="false"
-                              style="width: 150px"
-                            />
+                            <InputNumber :min="0" :step="0.01" :precision="2" v-model="it.floor_price"
+                              :active-change="false" style="width: 150px" />
                             &nbsp;&nbsp;元
                           </div>
                         </div>
@@ -1040,7 +678,7 @@
                             >
                           </div>
                         </div> -->
-                        
+
                         <div class="deploy_box deploy_line">
                           <div class="xuan_title">投放时段:</div>
                           <div class="xuan_content">
@@ -1050,107 +688,58 @@
                               </Radio>
                               <Radio :label="1"> 自定义 </Radio>
                             </RadioGroup>
-                            <div
-                              v-show="it.control_time_type === 1"
-                              style="margin-top: 10px"
-                            >
-                              <ry-time-sheet
-                                :id="it.timeID"
-                                v-model="it.control_time_custom"
-                              />
+                            <div v-show="it.control_time_type === 1" style="margin-top: 10px">
+                              <ry-time-sheet :id="it.timeID" v-model="it.control_time_custom" />
                             </div>
                           </div>
                         </div>
                         <div class="deploy_box deploy_line">
                           <div class="xuan_title">人群定向:</div>
                           <div class="xuan_content" style="width: 100%">
-                            <crowd-control
-                              :errShow="false"
-                              :defaultCrowd="it.defaultCrowd"
-                              :crowdTagArr="tagListData"
-                              @on-form-validate="getCrowdControl($event, i)"
-                            ></crowd-control>
+                            <crowd-control :errShow="false" :defaultCrowd="it.defaultCrowd" :crowdTagArr="tagListData"
+                              @on-form-validate="getCrowdControl($event, i)"></crowd-control>
                           </div>
                         </div>
                         <div class="deploy_box deploy_line">
                           <div class="xuan_title">品牌定向:</div>
                           <div class="xuan_content">
-                            <RadioGroup
-                              v-model="it.brand_type"
-                              @on-change="statusChange"
-                            >
+                            <RadioGroup v-model="it.brand_type" @on-change="statusChange">
                               <Radio :label="-1">不限</Radio>
                               <Radio :label="1">定向</Radio>
                               <Radio :label="2">排除</Radio>
                             </RadioGroup>
-                            <div
-                              v-show="it.brand_type !== -1"
-                              style="margin-top: 10px"
-                            >
-                              <retarget-muti-cascader-ad-slot
-                                ref="proCity"
-                                class="m-l-20"
-                                v-model="it.brand_ids"
-                                :datas="it.phoneList"
-                                :title="phoneString"
-                                :order="orderText"
-                                :childrenTitle="phoneString"
-                                @input="updateCity"
-                                @name="updateCityName"
-                              />
+                            <div v-show="it.brand_type !== -1" style="margin-top: 10px">
+                              <retarget-muti-cascader-ad-slot ref="proCity" class="m-l-20" v-model="it.brand_ids"
+                                :datas="it.phoneList" :title="phoneString" :order="orderText" :childrenTitle="phoneString"
+                                @input="updateCity" @name="updateCityName" />
                             </div>
                           </div>
                         </div>
-                        <div
-                          :class="
-                            modalForm.os_type !== 2
-                              ? 'deploy_box deploy_line'
-                              : 'deploy_box'
-                          "
-                        >
+                        <div :class="modalForm.os_type !== 2
+                            ? 'deploy_box deploy_line'
+                            : 'deploy_box'
+                          ">
                           <div class="xuan_title">地域定向:</div>
                           <div class="xuan_content">
-                            <RadioGroup
-                              v-model="it.area_type"
-                              @on-change="statusChange"
-                            >
+                            <RadioGroup v-model="it.area_type" @on-change="statusChange">
                               <Radio :label="-1">不限</Radio>
                               <Radio :label="1">定向</Radio>
                               <Radio :label="2">排除</Radio>
                             </RadioGroup>
-                            <div
-                              v-show="it.area_type !== -1"
-                              style="margin-top: 10px"
-                            >
-                              <retarget-muti-cascader-ad-slot
-                                ref="proCity"
-                                class="m-l-20"
-                                v-model="it.area_codes"
-                                :datas="it.cityList"
-                                :title="cityString"
-                                :order="orderText"
-                                :childrenTitle="cityChildren"
-                                @input="updateCity"
-                                @name="updateCityName"
-                              />
+                            <div v-show="it.area_type !== -1" style="margin-top: 10px">
+                              <retarget-muti-cascader-ad-slot ref="proCity" class="m-l-20" v-model="it.area_codes"
+                                :datas="it.cityList" :title="cityString" :order="orderText" :childrenTitle="cityChildren"
+                                @input="updateCity" @name="updateCityName" />
                             </div>
                           </div>
                         </div>
-                        <div
-                          class="deploy_box"
-                          v-show="modalForm.os_type !== 2"
-                        >
+                        <div class="deploy_box" v-show="modalForm.os_type !== 2">
                           <div class="xuan_title">老旧机型:</div>
-                          <RadioGroup
-                            v-model="it.checkPhone"
-                            @on-change="statusChange"
-                          >
+                          <RadioGroup v-model="it.checkPhone" @on-change="statusChange">
                             <Radio :label="-1">不限</Radio>
                             <Radio :label="1">屏蔽</Radio>
                           </RadioGroup>
-                          <span style="color: #999999"
-                            >( 老旧机型为机型覆盖率排名top100+的机型 )</span
-                          >
+                          <span style="color: #999999">( 老旧机型为机型覆盖率排名top100+的机型 )</span>
                         </div>
                       </div>
                     </FormItem>
@@ -1162,12 +751,7 @@
         </div>
         <FormItem class="deployForm configBottom">
           <Button @click="goBack">取消</Button>
-          <Button
-            v-if="modalForm.status !== 4"
-            type="primary"
-            :loading="submitClock"
-            @click="submitDspSlot('modalForm')"
-          >
+          <Button v-if="modalForm.status !== 4" type="primary" :loading="submitClock" @click="submitDspSlot('modalForm')">
             <span v-if="!submitClock">提交</span>
             <span v-else>提交中...</span>
           </Button>
@@ -1176,52 +760,24 @@
     </div>
 
     <!-- 选择广告位 -->
-    <selectAdvertising
-      v-model="modalSelect"
-      :dataList="modalForm"
-      :ids="Number(selected_id)"
-      :std="Number(selectSstd)"
-      :deleteArr="except_ssp_slot_id"
-      @name="selectSuccess"
-      @see="seeDetailFn"
-    />
-    <Drawer
-      v-model="flowModalFlag"
-      :mask-closable="false"
-      title="流量拆分名称详情"
-      class="newBatch"
-      width="600"
-      :styles="drawStyles"
-    >
+    <selectAdvertising v-model="modalSelect" :dataList="modalForm" :ids="Number(selected_id)" :std="Number(selectSstd)"
+      :deleteArr="except_ssp_slot_id" @name="selectSuccess" @see="seeDetailFn" />
+    <Drawer v-model="flowModalFlag" :mask-closable="false" title="流量拆分名称详情" class="newBatch" width="600"
+      :styles="drawStyles">
       <Form ref="spilt" :label-width="80" :label-colon="true">
         <FormItem label="广告位">
-          <P
-            >{{ flowSplitData.ssp_slot_name }}({{
-              flowSplitData.ssp_slot_id
-            }})</P
-          >
+          <P>{{ flowSplitData.ssp_slot_name }}({{
+            flowSplitData.ssp_slot_id
+          }})</P>
         </FormItem>
         <FormItem label="流量拆分">
-          <div
-            v-if="
-              flowSplitData.divide_list && flowSplitData.divide_list.length > 0
-            "
-          >
+          <div v-if="flowSplitData.divide_list && flowSplitData.divide_list.length > 0
+              ">
             <RadioGroup v-model="flowSplitData.sstd_id">
-              <div
-                v-for="(item, index) in flowSplitData.divide_list"
-                :key="flowSplitData.ssp_slot_id + index"
-              >
-                <Radio :label="item.sstd_id"
-                  >{{ item.name }}({{ item.proportion }}%)
+              <div v-for="(item, index) in flowSplitData.divide_list" :key="flowSplitData.ssp_slot_id + index">
+                <Radio :label="item.sstd_id">{{ item.name }}({{ item.proportion }}%)
                 </Radio>
-                <Table
-                  highlight-row
-                  stripe
-                  border
-                  :columns="splitCol"
-                  :data="item.controller_list"
-                >
+                <Table highlight-row stripe border :columns="splitCol" :data="item.controller_list">
                   <!--预算位位名称/ID-->
                   <template slot-scope="{ row }" slot="dsp_slot_id">
                     <p class="name-row-ellipsis" :title="row.dsp_slot_name">
@@ -1250,12 +806,8 @@
             </RadioGroup>
           </div>
         </FormItem>
-        <div
-          v-if="
-            !flowSplitData.divide_list || flowSplitData.divide_list.length === 0
-          "
-          style="text-align: center; margin-top: 120px"
-        >
+        <div v-if="!flowSplitData.divide_list || flowSplitData.divide_list.length === 0
+          " style="text-align: center; margin-top: 120px">
           <img src="~@/assets/image/noflowSpilt.png" alt="" />
           <p>暂无配置</p>
         </div>
@@ -1585,9 +1137,9 @@ export default {
       let resArr = storeUser.allDspCompanyArr.length
         ? storeUser.allDspCompanyArr
         : await this.getDspCompanyList({
-            page_size: 0,
-            page_num: 1,
-          });
+          page_size: 0,
+          page_num: 1,
+        });
 
       this.dspCompanyList = resArr;
     },
@@ -1674,7 +1226,7 @@ export default {
       if (dateItem.ratio_is_ok === -1 || dateItem.ratio_is_ok === "-1") {
         showTxt = "尺寸比例检验不通过";
       }
-      
+
       // if (
       //   dateItem.price_float <= 0 ||
       //   dateItem.price_float > 200 ||
@@ -1793,11 +1345,9 @@ export default {
               row.dsp_slot_ratio && row.dsp_slot_ratio.length
                 ? row.dsp_slot_ratio[row.dsp_slot_ratio.length - 1].height_ratio
                 : 0,
-            sizeRatio: `${
-              row.dsp_slot_ratio[row.dsp_slot_ratio.length - 1].width_ratio
-            }:${
-              row.dsp_slot_ratio[row.dsp_slot_ratio.length - 1].height_ratio
-            }`,
+            sizeRatio: `${row.dsp_slot_ratio[row.dsp_slot_ratio.length - 1].width_ratio
+              }:${row.dsp_slot_ratio[row.dsp_slot_ratio.length - 1].height_ratio
+              }`,
             rta_ext: row.rta_ext, // RTA扩展
             last_cpc: row.last_cpc, // cpc最近三天
             last_ecpm: row.last_ecpm, // cpm最近三天
@@ -1851,8 +1401,8 @@ export default {
           item.ssp_slot.app_os_type_text === "Android"
             ? 1
             : item.ssp_slot.app_os_type_text === "iOS"
-            ? 2
-            : 0;
+              ? 2
+              : 0;
         let dealList = []; // deal组
         this.dealList.map((it) => {
           if (it.ids.includes(item.ssp_slot_id)) {
@@ -1991,8 +1541,8 @@ export default {
         selectedData.app_os_type === "Android"
           ? 1
           : selectedData.app_os_type === "iOS"
-          ? 2
-          : 0;
+            ? 2
+            : 0;
       listData.dsp_slot_name = selectedData.dsp_slot_name; // 预算位的名称
       listData.os_type = type; // 预算位的操作系统
       listData.ad_type_text = selectedData.ad_type; // 预算位的样式文本
@@ -2245,8 +1795,8 @@ export default {
       let data = [...this.infos.flowData];
       this.infos.flowData = data;
     },
-    updateCity() {},
-    updateCityName(val) {},
+    updateCity() { },
+    updateCityName(val) { },
     /**
      * [getPhoneList 获取手机品牌]
      * @return {[type]} [description]
@@ -2520,8 +2070,8 @@ export default {
 
       // 成交价系数[结算方式=3=RTB时]
       params.deal_ratio = this.modalForm.pay_type === 3
-          ? this.modalForm.deal_ratio
-          : 0;
+        ? this.modalForm.deal_ratio
+        : 0;
 
       // 格式化[应用版本号 + 应用商店版本号 + 应用商店地址]
       params.dsp_app_vc = params.dsp_app_vc ? params.dsp_app_vc.split(',') : [] // 应用版本号

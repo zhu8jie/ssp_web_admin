@@ -197,6 +197,49 @@ export const getBitColumn = (self) => {
 	]
 }
 
+export const getCompanyColumns = (self) => {
+	return [
+		{
+			type: 'index',
+			width: 36,
+			align: 'center',
+		},
+		{
+			title: '预算位名称/ID',
+			slot: 'company_name',
+			width: 250
+		},
+		{
+			title: '预算位公司简称全拼',
+			key: 'dsp_code',
+			width: 250
+		},
+		{
+			title: '预算位广告请求地址',
+			key: 'dsp_request_url'
+		},
+		{
+			title: '预算位价格',
+			key: 'dsp_request_price'
+		},
+		{
+			title: '预算位过滤',
+			key: 'dsp_request_filter'
+		},
+		{
+			title: '预算位广告请求方式',
+			slot: 'dsp_request_method',
+			width: 150
+		},
+		{
+			title: '操作',
+			slot: 'action',
+			width: 60
+		}
+	]
+}
+
+
 /**
  * [公司Column]
  * @param  {[type]} self [description]

@@ -315,6 +315,27 @@ export const asyncRouterMap = [
 				},
 				component: resolve => require(['@/view/dsp/dsp-slot-manage'], resolve)
 			},
+			//  {
+			// 	path: '/dsp/test/manage',
+			// 	name: 'dsp',
+			// 	meta: {
+			// 		keepAlive: true,
+			// 		title: '预算管理',
+			// 		isShowAccess: true,
+			// 		inPageAccess: {'viewIndex': '首页', 'modify': '修改'} // 页面内权限
+			// 	},
+			// 	component: resolve => require(['@/view/dsp/dsp-sour-me'], resolve)
+			// },
+			// {
+			// 	path: '/dsp/third/manage',
+			// 	name: 'third-account-manage',
+			// 	meta: {
+			// 		title: '第三方平台账号管理',
+			// 		isShowAccess: true,
+			// 		inPageAccess: {'viewIndex': '首页', 'addNewAccount': '新建账号', 'modify': '修改'} // 页面内权限
+			// 	},
+			// 	component: resolve => require(['@/view/dsp/dsp-test-manage'], resolve)
+			// },
 			{
 				path: '/dsp/slot/edit',
 				name: 'dsp-slot-edit',
@@ -338,6 +359,7 @@ export const asyncRouterMap = [
 			}*/
 		]
 	},
+	
 	{
 		path: '/data', // 数据管理
 		name: 'data',

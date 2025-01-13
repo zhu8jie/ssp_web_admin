@@ -626,8 +626,6 @@ export default {
 
 			Promise.all(validPromiseArr).then(res => {
 
-				console.log(res)
-
 				if(!(res.toString().indexOf('false') > -1)) {
 					let form = {...this.formBase}
 

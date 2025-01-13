@@ -21,7 +21,7 @@ export const columnFn = {
          * [getTableColumns 获取自定义列表]
          * @return {[type]} [description]
          */
-        getTableColumns() {
+        getTableColumns() {   
             let _local = localRead(this.$route.name.toUpperCase())
             let resultArr = []
 

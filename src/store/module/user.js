@@ -111,6 +111,8 @@ export default {
 			state.userInfo = info
 		},
 		setUserRole(state, info) { // 用户权限
+			console.log("state",state)
+			console.log("info",info)
 			let role = info.role
 			state.userRoute = !!role && !!role.models && role.models.length ? role.models : [] // 用户路由
 			state.userDspFields = !!role && !!role.dsp_fields && role.dsp_fields.length ? role.dsp_fields : [] // 用户dsp自定义权限 - 预算表格

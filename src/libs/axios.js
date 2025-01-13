@@ -114,7 +114,7 @@ class HttpRequest {
         let errMes = '连接服务器失败!'
 
         switch (code) {
-            case 400: errMes = '参数错误(400)'; break
+            case 400: errMes = '表单参数错误(400)'; break
             case 401: errMes = '未授权，请重新登录(401)'; break
             case 403: errMes = '暂无权限(403)'; break
             case 404: errMes = '请求出错(404)'; break

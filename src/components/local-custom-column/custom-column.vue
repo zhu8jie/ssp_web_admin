@@ -76,10 +76,12 @@
        * @return {[type]} [description]
        */
       toggleDrawer() {
+
         this.drawerModalFlag = !this.drawerModalFlag
 
         // 打开时判断选择情况 回显
         if (this.drawerModalFlag) {
+          // 获取userid 
           let _local = localRead(this.$route.name.toUpperCase())
 
           let _arr = []

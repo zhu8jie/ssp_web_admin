@@ -18,12 +18,24 @@
 					<Option :value="-1">预算方</Option>
 					<Option v-for="item in platform3rdList" :value="item.id" :key="'预算方'+item.name">{{ item.name }}</Option>
 				</Select>
-				<Select class="i-margin-right-11 i-width-input" v-show="dspStatus === 1" v-model="search.dsp_company_id" placeholder="账号/公司名称" clearable>
+				<Select 
+                class="i-margin-right-11 i-width-input"
+                    filterable 
+                    v-model="search.dsp_company_id" 
+                    @on-change="getProductList"
+                    placeholder="公司名称/ID">
+                  <Option 
+                    v-for="item in companyDataList" 
+                    :value="item.id" 
+                    :key="item.id">{{ item.company_name }} (ID:{{ item.id }})</Option>
+                </Select>
+
+				<!-- <Select class="i-margin-right-11 i-width-input" v-show="dspStatus === 1" v-model="search.dsp_company_id" placeholder="账号/公司名称" clearable>
 					<Option v-for="item in companyDataList" :value="item.id" :key="'公司'+item.company_name">{{ item.company_name }}</Option>
 				</Select>
-				<Select class="i-margin-right-11 i-width-input" v-show="dspStatus === 2" v-model="search.account" placeholder="账号/公司名称" clearable>
+				<Select class="i-margin-right-11 i-width-input" v-show="dspStatus === 2" v-model="search.account"    placeholder="账号/公司名称" clearable>
 					<Option v-for="item in platformList" :value="item.account" :key="'账号'+item.account">{{ item.account }}</Option>
-				</Select>
+				</Select> -->
 				<Button type="primary" @click="doFilterList">查询</Button>
 			</div>
 			<div class="console-table">

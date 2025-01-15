@@ -198,134 +198,162 @@
 																</div>
 															</FormItem>
 															<FormItem v-if="item.ctl_type === 1">
-																<Input  placeholder="请输入放量次数(单位:万)" v-model.number="item.qpd" ></Input>
+																<Input  placeholder="请输入放量次数(单位:单次)" v-model.number="item.qpd" ></Input>
 															</FormItem>
 															<FormItem v-if="item.ctl_type === 2">
 																<FormItem>
 																	<div class="dau-flex">
 																		<div class="dau-child">
-																			<Input maxlength="50" v-model.number="item.qp0hour" type="number"
-																	   			placeholder="请输入00点放量次数(单位:万)"></Input>
+																			<label>0&nbsp;&nbsp;点:</label>
+																			<Input maxlength="20"  v-model.number="item.qp0hour" type="number"
+																				   style="width: 160px"
+																	   			placeholder="请输入00点放量次数(单位:单次)"></Input>
 																		</div>
 																		<div class="dau-child">
+																			<label>1&nbsp;&nbsp;点:</label>
 																			<Input maxlength="50" v-model.number="item.qp1hour" type="number"
-																	   			placeholder="请输入01点放量次数(单位:万)"></Input>
+																				   style="width: 160px"
+																	   			placeholder="请输入01点放量次数(单位:单次)"></Input>
 																		</div>
 																		<div class="dau-child">
+																			<label>2&nbsp;&nbsp;点:</label>
 																			<Input maxlength="50" v-model.number="item.qp2hour" type="number"
-																	   		placeholder="请输入02点放量次数(单位:万)"></Input>
+																				   style="width: 155px"
+																	   		placeholder="请输入02点放量次数(单位:单次)"></Input>
 																		</div>
 																	</div>
 																</FormItem>
 																<FormItem>
 																	<div class="dau-flex">
 																		<div class="dau-child">
+																			<label>3&nbsp;&nbsp;点:</label>
 																			<Input maxlength="50" v-model.number="item.qp3hour" type="number"
-																	   			placeholder="请输入03点放量次数(单位:万)"></Input>
+																				   style="width: 160px"
+																	   			placeholder="请输入03点放量次数(单位:单次)"></Input>
 																		</div>
 																		<div class="dau-child">
-																			<Input maxlength="50" v-model.number="item.qp4hour" type="number"
-																	   			placeholder="请输入04点放量次数(单位:万)"></Input>
+																			<label>4&nbsp;&nbsp;点:</label>
+																			<Input maxlength="50" v-model.number="item.qp4hour" type="number"  style="width: 160px"
+																	   			placeholder="请输入04点放量次数(单位:单次)"></Input>
 																		</div>
 																		<div class="dau-child">
-																			<Input maxlength="50" v-model.number="item.qp5hour" type="number"
-																	   		placeholder="请输入05点放量次数(单位:万)"></Input>
+																			<label>5&nbsp;&nbsp;点:</label>
+																			<Input maxlength="50" v-model.number="item.qp5hour" type="number"  style="width: 155px"
+																	   		placeholder="请输入05点放量次数(单位:单次)"></Input>
 																		</div>
 																		</div>
 																</FormItem>
 																<FormItem>
 																	<div class="dau-flex">
 																		<div class="dau-child">
-																			<Input maxlength="50" v-model.number="item.qp6hour" type="number"
-																	   			placeholder="请输入06点放量次数(单位:万)"></Input>
+																			<label>6&nbsp;&nbsp;点:</label>
+																			<Input maxlength="50" v-model.number="item.qp6hour" type="number"  style="width: 160px"
+																	   			placeholder="请输入06点放量次数(单位:单次)"></Input>
 																		</div>
 																	<div class="dau-child">
-																		<Input maxlength="50" v-model.number="item.qp7hour" type="number"
-																	  	 placeholder="请输入07点放量次数(单位:万)"></Input>
+																		<label>7&nbsp;&nbsp;点:</label>
+																		<Input maxlength="50" v-model.number="item.qp7hour" type="number"  style="width: 160px"
+																	  	 placeholder="请输入07点放量次数(单位:单次)"></Input>
 																	</div>
 																	<div class="dau-child">
-																		<Input maxlength="50" v-model.number="item.qp8hour" type="number"
-																	   placeholder="请输入08点放量次数(单位:万)"></Input>
+																		<label>8&nbsp;&nbsp;点:</label>
+																		<Input maxlength="50" v-model.number="item.qp8hour" type="number"  style="width: 155px"
+																	   placeholder="请输入08点放量次数(单位:单次)"></Input>
 																	</div>
 																	</div>
 																</FormItem>
 																<FormItem>
 																	<div class="dau-flex">
 																		<div class="dau-child">
-																			<Input maxlength="50" v-model.number="item.qp9hour" type="number"
-																	   	placeholder="请输入09点放量次数(单位:万)"></Input>
+																			<label>9&nbsp;&nbsp;点:</label>
+																			<Input maxlength="50" v-model.number="item.qp9hour" type="number"  style="width: 160px"
+																	   	placeholder="请输入09点放量次数(单位:单次)"></Input>
 																		</div>
 																		<div class="dau-child">
-																		<Input maxlength="50" v-model.number="item.qp10hour" type="number"
-																	   	placeholder="请输入10点放量次数(单位:万)"></Input>
+																			<label>10点:</label>
+																		<Input maxlength="50" v-model.number="item.qp10hour" type="number"  style="width: 160px"
+																	   	placeholder="请输入10点放量次数(单位:单次)"></Input>
 																		</div>
 																		<div class="dau-child">
-																			<Input maxlength="50" v-model.number="item.qp11hour" type="number"
-																	   		placeholder="请输入11点放量次数(单位:万)"></Input>
-																		</div>
-																	</div>
-																</FormItem>
-																<FormItem>
-																	<div class="dau-flex">
-																		<div class="dau-child">
-																			<Input maxlength="50" v-model.number="item.qp12hour" type="number"
-																	   placeholder="请输入12点放量次数(单位:万)"></Input>
-																	</div>
-																	<div class="dau-child">
-																		<Input maxlength="50" v-model.number="item.qp13hour" type="number"
-																	   placeholder="请输入13点放量次数(单位:万)"></Input>
-																	</div>
-																	<div class="dau-child">
-																		<Input maxlength="50"  v-model.number="item.qp14hour" type="number"
-																	   placeholder="请输入14点放量次数(单位:万)"></Input>
-																	</div>
-																	</div>
-																</FormItem>
-																<FormItem>
-																	<div class="dau-flex">
-																		<div class="dau-child">
-																			<Input maxlength="50"  v-model.number="item.qp15hour" type="number"
-																	   placeholder="请输入15点放量次数(单位:万)"></Input>
-																		</div>
-																	<div class="dau-child">
-																			<Input maxlength="50"  v-model.number="item.qp16hour" type="number"
-																	   placeholder="请输入16点放量次数(单位:万)"></Input>
-																	</div>
-																	<div class="dau-child">
-																		<Input maxlength="50"  v-model.number="item.qp17hour" type="number"
-																	   placeholder="请输入17点放量次数(单位:万)"></Input>
-																	</div>
-																	</div>
-																</FormItem>
-																<FormItem>
-																	<div class="dau-flex">
-																		<div class="dau-child">
-																			<Input maxlength="50"  v-model.number="item.qp18hour" type="number"
-																	   	placeholder="请输入18点放量次数(单位:万)"></Input>
-																		</div>
-																		<div class="dau-child">
-																		<Input maxlength="50"  v-model.number="item.qp19hour" type="number"
-																	   placeholder="请输入19点放量次数(单位:万)"></Input>
-																		</div>
-																		<div class="dau-child">
-																		<Input maxlength="50"  v-model.number="item.qp20hour" type="number"
-																	   placeholder="请输入20点放量次数(单位:万)"></Input>
+																			<label>11点:</label>
+																			<Input maxlength="50" v-model.number="item.qp11hour" type="number"  style="width: 155px"
+																	   		placeholder="请输入11点放量次数(单位:单次)"></Input>
 																		</div>
 																	</div>
 																</FormItem>
 																<FormItem>
 																	<div class="dau-flex">
 																		<div class="dau-child">
-																		<Input maxlength="50"  v-model.number="item.qp21hour" type="number"
-																	   placeholder="请输入21点放量次数(单位:万)"></Input>
+																			<label>12点:</label>
+																			<Input maxlength="50" v-model.number="item.qp12hour" type="number"  style="width: 160px"
+																	   placeholder="请输入12点放量次数(单位:单次)"></Input>
 																	</div>
 																	<div class="dau-child">
-																			<Input maxlength="50"  v-model.number="item.qp22hour" type="number"
-																	   placeholder="请输入22点放量次数(单位:万)"></Input>
+																		<label>13点:</label>
+																		<Input maxlength="50" v-model.number="item.qp13hour" type="number"  style="width: 160px"
+																	   placeholder="请输入13点放量次数(单位:单次)"></Input>
+																	</div>
+																	<div class="dau-child">
+																		<label>14点:</label>
+																		<Input maxlength="50"  v-model.number="item.qp14hour" type="number"  style="width: 155px"
+																	   placeholder="请输入14点放量次数(单位:单次)"></Input>
+																	</div>
+																	</div>
+																</FormItem>
+																<FormItem>
+																	<div class="dau-flex">
+																		<div class="dau-child">
+																			<label>15点:</label>
+																			<Input maxlength="50"  v-model.number="item.qp15hour" type="number"  style="width: 160px"
+																	   placeholder="请输入15点放量次数(单位:单次)"></Input>
+																		</div>
+																	<div class="dau-child">
+																		<label>16点:</label>
+																			<Input maxlength="50"  v-model.number="item.qp16hour" type="number"  style="width: 160px"
+																	   placeholder="请输入16点放量次数(单位:单次)"></Input>
+																	</div>
+																	<div class="dau-child">
+																		<label>17点:</label>
+																		<Input maxlength="50"  v-model.number="item.qp17hour" type="number"  style="width: 155px"
+																	   placeholder="请输入17点放量次数(单位:单次)"></Input>
+																	</div>
+																	</div>
+																</FormItem>
+																<FormItem>
+																	<div class="dau-flex">
+																		<div class="dau-child">
+																			<label>18点:</label>
+																			<Input maxlength="50"  v-model.number="item.qp18hour" type="number"  style="width: 160px"
+																	   	placeholder="请输入18点放量次数(单位:单次)"></Input>
 																		</div>
 																		<div class="dau-child">
-																		<Input maxlength="50"  v-model.number="item.qp23hour" type="number"
-																	   placeholder="请输入23点放量次数(单位:万)"></Input>
+																			<label>19点:</label>
+																		<Input maxlength="50"  v-model.number="item.qp19hour" type="number"  style="width: 160px"
+																	   placeholder="请输入19点放量次数(单位:单次)"></Input>
+																		</div>
+																		<div class="dau-child">
+																			<label>20点:</label>
+																		<Input maxlength="50"  v-model.number="item.qp20hour" type="number"  style="width: 155px"
+																	   placeholder="请输入20点放量次数(单位:单次)"></Input>
+																		</div>
+																	</div>
+																</FormItem>
+																<FormItem>
+																	<div class="dau-flex">
+																		<div class="dau-child">
+																			<label>21点:</label>
+																		<Input maxlength="50"  v-model.number="item.qp21hour" type="number"  style="width: 160px"
+																	   placeholder="请输入21点放量次数(单位:单次)"></Input>
+																	</div>
+																	<div class="dau-child">
+																		<label>22点:</label>
+																			<Input maxlength="50"  v-model.number="item.qp22hour" type="number"  style="width: 160px"
+																	   placeholder="请输入22点放量次数(单位:单次)"></Input>
+																		</div>
+																		<div class="dau-child">
+																			<label>23点:</label>
+																		<Input maxlength="50"  v-model.number="item.qp23hour" type="number"  style="width: 155px"
+																	   placeholder="请输入23点放量次数(单位:单次)"></Input>
 																		</div>
 																		</div>
 																</FormItem>
@@ -390,267 +418,10 @@
 							</div>
 
 						</FormItem>
-						<FormItem>
-							<div v-for="(item,index) in newCtl_list" :key="index">
-								<el-timeline v-if="item.ctl_type == 1">
-									<el-timeline-item :timestamp="formatTimestamp(item)" placement="top">
-										<el-card>
-											<Form>
-												<FormItem label="控量类型">
-													<div class="dau-flex">
-														<div class="dau-child">
-															<input type="radio"  name="radio" v-model.number="item.ctl_type" value=1 v-on:click="radio_dayss">
-															按天控量
-														</div>
-														<div class="dau-child">
-															<input type="radio" style="margin-left: -110px" name="radio" v-model.number="item.ctl_type" value=2 v-on:click="radio_timess">
-															按小时控量
-														</div>
-													</div>
-												</FormItem>
-												<FormItem>
-													<div class="dau-flex">
-															<Input placeholder="请输入放量次数(单位:万)" style="width: 450px"  v-model.number="item.qpd" ></Input>
-													</div>
-												</FormItem>
-												<FormItem>
-													<div class="dau-flex">
-														<div class="dau-child">
-															<el-form>
-																<el-form-item >
-															<el-date-picker
-																:key="datePickerKey"
-																v-model="item.start_at"
-																type="datetime"
-																value-format="yyyy-MM-dd HH:mm:ss"
-																placeholder="选择开始日期时间"
 
-																@change="handleDateChangeEnd(item)"
-																default-time="12:00:00">
-															</el-date-picker>
-																</el-form-item>
-															</el-form>
-														</div>
-														<div class="dau-child" style="margin-left: 15px">
-															<el-form>
-																<el-form-item >
-															<el-date-picker
-																:key="datePickerKey"
-																v-model="item.end_at"
-																type="datetime"
-																value-format="yyyy-MM-dd HH:mm:ss"
-																placeholder="选择结束日期时间"
-																@change="handleDateChangeStart(item)"
-																default-time="12:00:00">
-															</el-date-picker>
-																</el-form-item>
-															</el-form>
-														</div>
-														<div class="dau-child">
-															<Button v-if="index !== -1" type="primary" size="mini"
-																	style="margin-left: 30px; height: 36px"
-																	@click="deleteItemFu(item, index)">删除</Button>
-														</div>
-													</div>
-												</FormItem>
-											</Form>
-										</el-card>
-									</el-timeline-item>
-								</el-timeline>
-								<el-timeline v-if="item.ctl_type === 2">
-									<el-timeline-item :timestamp="formatTimestamp(item)" placement="top">
-										<el-card>
-											<Form>
-												<FormItem label="控量类型">
-													<div class="dau-flex">
-														<div class="dau-child">
-															<input type="radio" name="radio1" v-model.number="item.ctl_type" value=1 v-on:click="radio_days">
-															按天控量
-														</div>
-														<div class="dau-child">
-															<input type="radio" style="margin-left: -110px" name="radio1" v-model.number="item.ctl_type" value=2 v-on:click="radio_times">
-															按小时控量
-														</div>
-													</div>
-												</FormItem>
-												<FormItem>
-													<FormItem>
-														<div class="dau-flex">
-															<div class="dau-child">
-																<Input maxlength="50" v-model.number="item.qp0hour" type="number"
-																	   placeholder="请输入00点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50" v-model.number="item.qp1hour" type="number"
-																	   placeholder="请输入01点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50" v-model.number="item.qp2hour" type="number"
-																	   placeholder="请输入02点放量次数(单位:万)"></Input>
-															</div>
-														</div>
-													</FormItem>
-													<FormItem>
-														<div class="dau-flex">
-															<div class="dau-child">
-																<Input maxlength="50" v-model.number="item.qp3hour" type="number"
-																	   placeholder="请输入03点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50" v-model.number="item.qp4hour" type="number"
-																	   placeholder="请输入04点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50" v-model.number="item.qp5hour" type="number"
-																	   placeholder="请输入05点放量次数(单位:万)"></Input>
-															</div>
-														</div>
-													</FormItem>
-													<FormItem>
-														<div class="dau-flex">
-															<div class="dau-child">
-																<Input maxlength="50" v-model.number="item.qp6hour" type="number"
-																	   placeholder="请输入06点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50" v-model.number="item.qp7hour" type="number"
-																	   placeholder="请输入07点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50" v-model.number="item.qp8hour" type="number"
-																	   placeholder="请输入08点放量次数(单位:万)"></Input>
-															</div>
-														</div>
-													</FormItem>
-													<FormItem>
-														<div class="dau-flex">
-															<div class="dau-child">
-																<Input maxlength="50" v-model.number="item.qp9hour" type="number"
-																	   placeholder="请输入09点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50" v-model.number="item.qp10hour" type="number"
-																	   placeholder="请输入10点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50" v-model.number="item.qp11hour" type="number"
-																	   placeholder="请输入11点放量次数(单位:万)"></Input>
-															</div>
-														</div>
-													</FormItem>
-													<FormItem>
-														<div class="dau-flex">
-															<div class="dau-child">
-																<Input maxlength="50" v-model.number="item.qp12hour" type="number"
-																	   placeholder="请输入12点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50" v-model.number="item.qp13hour" type="number"
-																	   placeholder="请输入13点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50"  v-model.number="item.qp14hour" type="number"
-																	   placeholder="请输入14点放量次数(单位:万)"></Input>
-															</div>
-														</div>
-													</FormItem>
-													<FormItem>
-														<div class="dau-flex">
-															<div class="dau-child">
-																<Input maxlength="50"  v-model.number="item.qp15hour" type="number"
-																	   placeholder="请输入15点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50"  v-model.number="item.qp16hour" type="number"
-																	   placeholder="请输入16点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50"  v-model.number="item.qp17hour" type="number"
-																	   placeholder="请输入17点放量次数(单位:万)"></Input>
-															</div>
-														</div>
-													</FormItem>
-													<FormItem>
-														<div class="dau-flex">
-															<div class="dau-child">
-																<Input maxlength="50"  v-model.number="item.qp18hour" type="number"
-																	   placeholder="请输入18点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50"  v-model.number="item.qp19hour" type="number"
-																	   placeholder="请输入19点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50"  v-model.number="item.qp20hour" type="number"
-																	   placeholder="请输入20点放量次数(单位:万)"></Input>
-															</div>
-														</div>
-													</FormItem>
-													<FormItem>
-														<div class="dau-flex">
-															<div class="dau-child">
-																<Input maxlength="50"  v-model.number="item.qp21hour" type="number"
-																	   placeholder="请输入21点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50"  v-model.number="item.qp22hour" type="number"
-																	   placeholder="请输入22点放量次数(单位:万)"></Input>
-															</div>
-															<div class="dau-child">
-																<Input maxlength="50"  v-model.number="item.qp23hour" type="number"
-																	   placeholder="请输入23点放量次数(单位:万)"></Input>
-															</div>
-														</div>
-													</FormItem>
-												</FormItem>
-												<FormItem>
-													<div class="dau-flex">
-														<div class="dau-child" style="margin-left: 15px">
-															<el-form >
-																<el-form-item>
-																	<el-date-picker
-																		:key="datePickerKey"
-																		v-model="item.start_at"
-																		type="datetime"
-																		value-format="yyyy-MM-dd HH:mm:ss"
-																		format="yyyy-MM-dd HH:mm:ss"
-																		placeholder="选择开始日期时间"
-																		default-time="12:00:00">
-																	</el-date-picker>
-																</el-form-item>
-															</el-form>
-
-														</div>
-														<div class="dau-child" style="margin-left: 15px">
-															<el-form>
-																<el-form-item >
-															<el-date-picker
-																:key="datePickerKey"
-																v-model="item.end_at"
-																type="datetime"
-																value-format="yyyy-MM-dd HH:mm:ss"
-																placeholder="选择结束日期时间"
-																default-time="12:00:00">
-															</el-date-picker>
-																</el-form-item>
-															</el-form>
-														</div>
-														<div class="dau-child">
-															<Button v-if="index !== -1" type="primary" size="mini"
-																	style="margin-left: 30px; height: 36px"
-																	@click="deleteItemFu(item, index)">删除</Button>
-														</div>
-													</div>
-												</FormItem>
-											</Form>
-										</el-card>
-									</el-timeline-item>
-								</el-timeline>
-							</div>
-						</FormItem>
 						<FormItem v-if="formBase.app_id" class="edit-save-formItem">
 							<Button size="large" @click="goBack">取消</Button>
-							<Button size="large" type="primary" :loading="submitClock" @click="submitFormData('formBase')">
+							<Button size="large" type="primary" :loading="submitClock" @click.prevent="submitFormData('formBase')">
 							{{!submitClock ? '提交' : '提交中...'}}
 
 							</Button>
@@ -691,6 +462,8 @@ export default {
 	},
 	data() {
 		return {
+
+			loading: false,
 			datePickerKey: 0, // 用于强制重新渲染的 key
 			showButton : 1, // 1 显示 0 关闭
 			isShow: 0, // 当有放量规则数据时
@@ -856,6 +629,10 @@ export default {
 
 	},
 	methods: {
+		isDecimal(num) {
+			return typeof num === 'number' && !Number.isInteger(num);
+		},
+
 		// 刷新时间组件
 		resetDate() {
 			this.$nextTick(()=> {
@@ -1004,6 +781,8 @@ export default {
 							end_at:i.end_at > 0?dayjs.unix(i.end_at).format("YYYY-MM-DD HH:mm:ss"):''
 						}
 					})
+
+
 					// this.ctl_form = []
 					// // 然后判断数据是否是当前规则，是加入到新集合中,加入后退出
 					// for(let element of this.newCtl_list) {
@@ -1012,8 +791,85 @@ export default {
 					// }
 					console.log("this.ctl_form:::::::::::::::::::::::",this.ctl_form)
 
-					// 剔除第一个在当前放量显示
-					// this.newCtl_list.shift()
+					this.ctl_form.map(item=>{
+						if(item.ctl_type === 1 && item.qpd > 0) {
+							item.qpd = item.qpd / 10000
+						}
+						if(item.ctl_type === 2) {
+							if(item.qp0hour > 0) {
+								item.qp0hour = item.qp0hour / 10000
+							}
+							if(item.qp1hour > 0) {
+								item.qp1hour = item.qp1hour / 10000
+							}
+							if(item.qp2hour > 0) {
+								item.qp2hour = item.qp2hour / 10000
+							}
+							if(item.qp3hour > 0) {
+								item.qp3hour = item.qp3hour / 10000
+							}
+							if(item.qp4hour > 0) {
+								item.qp4hour = item.qp4hour / 10000
+							}
+							if(item.qp5hour > 0) {
+								item.qp5hour = item.qp5hour / 10000
+							}
+							if(item.qp6hour > 0) {
+								item.qp6hour = item.qp6hour / 10000
+							}
+							if(item.qp7hour > 0) {
+								item.qp7hour = item.qp7hour / 10000
+							}
+							if(item.qp8hour > 0) {
+								item.qp8hour = item.qp8hour / 10000
+							}
+							if(item.qp9hour > 0) {
+								item.qp9hour = item.qp9hour / 10000
+							}
+							if(item.qp10hour > 0) {
+								item.qp10hour = item.qp10hour / 10000
+							}
+							if(item.qp11hour > 0) {
+								item.qp11hour = item.qp11hour / 10000
+							}
+							if(item.qp12hour > 0) {
+								item.qp12hour = item.qp12hour / 10000
+							}
+							if(item.qp13hour > 0) {
+								item.qp13hour = item.qp13hour / 10000
+							}
+							if(item.qp14hour > 0) {
+								item.qp14hour = item.qp14hour / 10000
+							}
+							if(item.qp15hour > 0) {
+								item.qp15hour = item.qp15hour / 10000
+							}
+							if(item.qp16hour > 0) {
+								item.qp16hour = item.qp16hour / 10000
+							}
+							if(item.qp17hour > 0) {
+								item.qp17hour = item.qp17hour / 10000
+							}
+							if(item.qp18hour > 0) {
+								item.qp18hour = item.qp18hour / 10000
+							}
+							if(item.qp19hour > 0) {
+								item.qp19hour = item.qp19hour / 10000
+							}
+							if(item.qp20hour > 0) {
+								item.qp20hour = item.qp20hour / 10000
+							}
+							if(item.qp21hour > 0) {
+								item.qp21hour = item.qp21hour / 10000
+							}
+							if(item.qp22hour > 0) {
+								item.qp22hour = item.qp22hour / 10000
+							}
+							if(item.qp23hour > 0) {
+								item.qp23hour = item.qp23hour / 10000
+							}
+						}
+					})
 
 
 					console.log("当前放量:============================================",this.ctl_form)
@@ -1397,7 +1253,7 @@ export default {
 		submitFormData(name) {
 			this.$refs[name].validate((valid) => {
 				if (valid) {
-
+					this.submitClock = false
 					let form = {...this.formBase}
 
 					// 处理特殊情况
@@ -1509,7 +1365,89 @@ export default {
 					})
 					console.log("current_ctl::::::::",current_ctl)
 					console.log("current_data_ctl::::::::",current_data_ctl)
+
 					this.newCtl_list = []
+					current_data_ctl.map(item=> {
+						if(item.ctl_type === 1) {
+							item.qpd = item.qpd * 10000
+						}
+						if(item.ctl_type === 2) {
+							if(item.qp0hour != 0) {
+								item.qp0hour = item.qp0hour * 10000
+							}
+							if(item.qp1hour != 0) {
+								item.qp1hour = item.qp1hour * 10000
+							}
+							if(item.qp2hour != 0) {
+								item.qp2hour = item.qp2hour * 10000
+							}
+							if(item.qp3hour != 0) {
+								item.qp3hour = item.qp3hour * 10000
+							}
+							if(item.qp4hour != 0) {
+								item.qp4hour = item.qp4hour * 10000
+							}
+							if(item.qp5hour != 0) {
+								item.qp5hour = item.qp5hour * 10000
+							}
+							if(item.qp6hour != 0) {
+								item.qp6hour = item.qp6hour * 10000
+							}
+							if(item.qp7hour != 0) {
+								item.qp7hour = item.qp7hour * 10000
+							}
+							if(item.qp8hour != 0) {
+								item.qp8hour = item.qp8hour * 10000
+							}
+							if(item.qp9hour != 0) {
+								item.qp9hour = item.qp9hour * 10000
+							}
+							if(item.qp10hour != 0) {
+								item.qp10hour = item.qp10hour * 10000
+							}
+							if(item.qp11hour != 0) {
+								item.qp11hour = item.qp11hour * 10000
+							}
+							if(item.qp12hour != 0) {
+								item.qp12hour = item.qp12hour * 10000
+							}
+							if(item.qp13hour != 0) {
+								item.qp13hour = item.qp13hour * 10000
+							}
+							if(item.qp14hour != 0) {
+								item.qp14hour = item.qp14hour * 10000
+							}
+							if(item.qp15hour != 0) {
+								item.qp15hour = item.qp15hour * 10000
+							}
+							if(item.qp16hour != 0) {
+								item.qp16hour = item.qp16hour * 10000
+							}
+							if(item.qp17hour != 0) {
+								item.qp17hour = item.qp17hour * 10000
+							}
+							if(item.qp18hour != 0) {
+								item.qp18hour = item.qp18hour * 10000
+							}
+							if(item.qp19hour != 0) {
+								item.qp19hour = item.qp19hour * 10000
+							}
+							if(item.qp20hour != 0) {
+								item.qp20hour = item.qp20hour * 10000
+							}
+							if(item.qp21hour != 0) {
+								item.qp21hour = item.qp21hour * 10000
+							}
+							if(item.qp22hour != 0) {
+								item.qp22hour = item.qp22hour * 10000
+							}
+							if(item.qp23hour != 0) {
+								item.qp23hour = item.qp23hour * 10000
+							}
+						}
+
+					})
+					this.loading = true
 
 					this.history_list = current_data_ctl
 					// 解决提交时的弹框问题

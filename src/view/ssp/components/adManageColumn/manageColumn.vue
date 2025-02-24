@@ -189,7 +189,7 @@
        * @return {[type]} [description]
        */
       getDspProductList() {
-        let params = {page_num: 1, page_size: 0}
+        let params = {page_num: 1, page_size: 10}
         getDspProductList(params).then(res => {
           if (res.code === 200) {
             let listData = res.data.list

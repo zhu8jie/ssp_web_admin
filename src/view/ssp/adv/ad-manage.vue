@@ -700,6 +700,8 @@
   import manageColumn from '../components/adManageColumn'
   import noteTable from '../components/noteTable' // 备注
   import Clipboard from 'clipboard'
+  import dayjs from "dayjs";
+  import {getSspSlotAdList_v2} from "../../../api/ssp";
 
   export default {
     name: 'ad-manage',
@@ -866,6 +868,7 @@
     activated() {
       this.$Bus.$off('sspAdvEmitEvent')
       this.$Bus.$on('sspAdvEmitEvent', (msg) => {
+		  console.log("rrrrrrrrrrrrrrrrrrrrrrr")
         this.getSspSlotAdList() // 默认请求一次媒体列表数据
       })
     },
@@ -979,6 +982,7 @@
         }
       },
       changeNoteTable() {
+		  console.log("eeeeeeeeeeeeeeeeeeeeeeeeeee")
         this.getSspSlotAdList()
       },
       /**
@@ -1074,8 +1078,9 @@
           this.tableColList = resultArr.concat(dataCol)
         }
         this.colDatList = []
-        this.getSspSlotAdList()
-        this.initTableHeight({'search-line': {isAutoCalc: true, isInclude: true}, 'nav-handle-group': true})
+		  console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+		  this.getSspSlotAdList()
+		  this.initTableHeight({'search-line': {isAutoCalc: true, isInclude: true}, 'nav-handle-group': true})
       },
 
       /**
@@ -1091,12 +1096,12 @@
        */
       getProductList() {
         let params = {
-          page_size: 0,
+          page_size: 10,
           page_num: 1
         }
         getDspProductList(params).then(res => {
           if (res.code === 200) {
-            this.productList = res.data.list
+            // this.productList = res.data.list
           }
           this.getAdManageCol() // 获取广告列表
         })
@@ -1125,6 +1130,7 @@
               if (res.code === 200) {
                 this.$Message.success({content: '操作成功', duration: 3})
                 this.selectID = []
+
                 this.getSspSlotAdList() // 刷新列表
               }
             })
@@ -1188,9 +1194,12 @@
        * @return {[type]} [description]
        */
       initLinkage() {
+		  console.log("开局")
         this.getProductList() // 获取产品列表
         this.getSspAppList() // 应用列表列表
-        this.getSspSlotList() // 广告位列表
+		  console.log("wanhcegn ")
+		  // this.getSspSlotAdList()
+        // this.getSspSlotList() // 广告位列表
       },
       // 配置弹框的展示
       configShow(row) {
@@ -1198,6 +1207,7 @@
         this.showConfig = !this.showConfig
       },
       search() {
+		  console.log("search----------------------")
         this.getSspSlotAdList()
       },
       /**
@@ -1300,8 +1310,12 @@
 
           if (res.code === 200) {
             this.$Message.success({content: '操作成功', duration: 3})
-            this.getSspSlotAdList() // 刷新列表
-          }
+
+			  console.log("刷新了：",dayjs().unix())
+			  this.getSspSlotAdList() // 刷新列表
+
+			  console.log("之和：",s2 -s1)
+		  }
         }, error => {
           this.submitClock = false
         })
@@ -1357,23 +1371,31 @@
        * [getSspSlotAdList 获取广告位的列表]
        * @return {[type]} [description]
        */
+
       getSspSlotAdList() {
-        // 参数
+        // // 参数
         let params = this.getAxiosParams()
+
         params.page_num = this.currentPage
         params.page_size = this.pageSize
-
-        console.log(params)
-
         this.tableLoadFlag = true
+		  const dayjs = require('dayjs'); // 如果是在Node.js环境中使用的话
+		  let timestamp = dayjs().unix(); // 获取当前时间的时间戳，单位是秒
+		  console.log("***********************************************************",timestamp)
+		//   console.log("------------------------------------------------------------",timestamp-timestamp2)
 
-        getMediaSspSlotAdList(params).then(res => {
-          this.tableLoadFlag = false
+		  getMediaSspSlotAdList(params).then(res=> {
+			  this.tableLoadFlag = false
+			  	const dayjs = require('dayjs'); // 如果是在Node.js环境中使用的话
+			  	let timestamp1 = dayjs().unix(); // 获取当前时间的时间戳，单位是秒
+			  	console.log("----------------------------------------------------------",timestamp1)
+			  	console.log("::",timestamp1 - timestamp)
+			    let data = res.data
 
-          let data = res.data
+			  if (res.code === 200) {
+				  this.total_count = data.total
 
-          if (res.code === 200) {
-            this.total_count = data.total
+
              // 广告位的状态的个数
             let adStatusList = this.adStatusList
             let status_count = data.status_count
@@ -1541,6 +1563,7 @@
        */
       sizeChange(size) {
         this.pageSize = size
+		  console.log("tttttttttttttt")
         this.getSspSlotAdList()
       },
       /**
@@ -1788,7 +1811,7 @@
             }
           }
         })
-      }, 1000),
+      }, 900),
 
       /**
        * [searchSspSlot 广告位搜索]

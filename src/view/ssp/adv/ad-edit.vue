@@ -463,7 +463,7 @@ export default {
 	data() {
 		return {
 
-			loading: false,
+			// loading: false,
 			datePickerKey: 0, // 用于强制重新渲染的 key
 			showButton : 1, // 1 显示 0 关闭
 			isShow: 0, // 当有放量规则数据时
@@ -1297,8 +1297,6 @@ export default {
 					console.log("this.ctl_form:==============================================================================================",this.ctl_form)
 					console.log("this.newCtl_list000:==============================================================================================",this.newCtl_list)
 
-
-
 					// 遍历集合将数据放入newCtl_list中
 					this.ctl_form.map(item => {
 						if(item.ctl_type === 1 && item.qpd != null){
@@ -1367,94 +1365,99 @@ export default {
 					console.log("current_data_ctl::::::::",current_data_ctl)
 
 					this.newCtl_list = []
+					current_data_ctl = JSON.parse(JSON.stringify(current_data_ctl))
+
 					current_data_ctl.map(item=> {
-						if(item.ctl_type === 1) {
+						if(item.ctl_type === 1 && item.qpd > 0) {
 							item.qpd = item.qpd * 10000
 						}
 						if(item.ctl_type === 2) {
-							if(item.qp0hour != 0) {
+							if(item.qp0hour > 0) {
 								item.qp0hour = item.qp0hour * 10000
 							}
-							if(item.qp1hour != 0) {
+							if(item.qp1hour > 0) {
 								item.qp1hour = item.qp1hour * 10000
 							}
-							if(item.qp2hour != 0) {
+							if(item.qp2hour > 0) {
 								item.qp2hour = item.qp2hour * 10000
 							}
-							if(item.qp3hour != 0) {
+							if(item.qp3hour > 0) {
 								item.qp3hour = item.qp3hour * 10000
 							}
-							if(item.qp4hour != 0) {
+							if(item.qp4hour > 0) {
 								item.qp4hour = item.qp4hour * 10000
 							}
-							if(item.qp5hour != 0) {
+							if(item.qp5hour > 0) {
 								item.qp5hour = item.qp5hour * 10000
 							}
-							if(item.qp6hour != 0) {
+							if(item.qp6hour > 0) {
 								item.qp6hour = item.qp6hour * 10000
 							}
-							if(item.qp7hour != 0) {
+							if(item.qp7hour > 0) {
 								item.qp7hour = item.qp7hour * 10000
 							}
-							if(item.qp8hour != 0) {
+							if(item.qp8hour > 0) {
 								item.qp8hour = item.qp8hour * 10000
 							}
-							if(item.qp9hour != 0) {
+							if(item.qp9hour > 0) {
 								item.qp9hour = item.qp9hour * 10000
 							}
-							if(item.qp10hour != 0) {
+							if(item.qp10hour > 0) {
 								item.qp10hour = item.qp10hour * 10000
 							}
-							if(item.qp11hour != 0) {
+							if(item.qp11hour > 0) {
 								item.qp11hour = item.qp11hour * 10000
 							}
-							if(item.qp12hour != 0) {
+							if(item.qp12hour > 0) {
 								item.qp12hour = item.qp12hour * 10000
 							}
-							if(item.qp13hour != 0) {
+							if(item.qp13hour > 0) {
 								item.qp13hour = item.qp13hour * 10000
 							}
-							if(item.qp14hour != 0) {
+							if(item.qp14hour > 0) {
 								item.qp14hour = item.qp14hour * 10000
 							}
-							if(item.qp15hour != 0) {
+							if(item.qp15hour > 0) {
 								item.qp15hour = item.qp15hour * 10000
 							}
-							if(item.qp16hour != 0) {
+							if(item.qp16hour > 0) {
 								item.qp16hour = item.qp16hour * 10000
 							}
-							if(item.qp17hour != 0) {
+							if(item.qp17hour > 0) {
 								item.qp17hour = item.qp17hour * 10000
 							}
-							if(item.qp18hour != 0) {
+							if(item.qp18hour > 0) {
 								item.qp18hour = item.qp18hour * 10000
 							}
-							if(item.qp19hour != 0) {
+							if(item.qp19hour > 0) {
 								item.qp19hour = item.qp19hour * 10000
 							}
-							if(item.qp20hour != 0) {
+							if(item.qp20hour > 0) {
 								item.qp20hour = item.qp20hour * 10000
 							}
-							if(item.qp21hour != 0) {
+							if(item.qp21hour > 0) {
 								item.qp21hour = item.qp21hour * 10000
 							}
-							if(item.qp22hour != 0) {
+							if(item.qp22hour > 0) {
 								item.qp22hour = item.qp22hour * 10000
 							}
-							if(item.qp23hour != 0) {
+							if(item.qp23hour > 0) {
 								item.qp23hour = item.qp23hour * 10000
 							}
 						}
 
 					})
-					this.loading = true
-
+					// this.loading = false
 					this.history_list = current_data_ctl
+
 					// 解决提交时的弹框问题
 					// this.ctl_form = null
 					form.req_ctl_list = current_data_ctl
+					console.log("打印：formBase::::;;;",this.ctl_form)
+
 					updateSspSlot(form).then(res=> {
 						this.submitClock = false
+						// this.loading = true
 						if(res.code === 200) {
 							this.$Bus.$emit('sspAdvEmitEvent') // ssp-adv
 							this.$Bus.$emit('dspSlotEmitEvent') // dsp-slot
@@ -1469,6 +1472,84 @@ export default {
 							this.history_list.map(item=>{
 								item.end_at = item.endTime
 								item.start_at = item.startTime
+								if(item.ctl_type === 1 && item.qpd > 0) {
+									item.qpd = item.qpd / 10000
+								}
+								if(item.ctl_type === 2) {
+									if (item.qp0hour > 0) {
+										item.qp0hour = item.qp0hour / 10000
+									}
+									if (item.qp1hour > 0) {
+										item.qp1hour = item.qp1hour / 10000
+									}
+									if (item.qp2hour > 0) {
+										item.qp2hour = item.qp2hour / 10000
+									}
+									if (item.qp3hour > 0) {
+										item.qp3hour = item.qp3hour / 10000
+									}
+									if (item.qp4hour > 0) {
+										item.qp4hour = item.qp4hour / 10000
+									}
+									if (item.qp5hour > 0) {
+										item.qp5hour = item.qp5hour / 10000
+									}
+									if (item.qp6hour > 0) {
+										item.qp6hour = item.qp6hour / 10000
+									}
+									if (item.qp7hour > 0) {
+										item.qp7hour = item.qp7hour / 10000
+									}
+									if (item.qp8hour > 0) {
+										item.qp8hour = item.qp8hour / 10000
+									}
+									if (item.qp9hour > 0) {
+										item.qp9hour = item.qp9hour / 10000
+									}
+									if (item.qp10hour > 0) {
+										item.qp10hour = item.qp10hour / 10000
+									}
+									if (item.qp11hour > 0) {
+										item.qp11hour = item.qp11hour / 10000
+									}
+									if (item.qp12hour > 0) {
+										item.qp12hour = item.qp12hour / 10000
+									}
+									if (item.qp13hour > 0) {
+										item.qp13hour = item.qp13hour / 10000
+									}
+									if (item.qp14hour > 0) {
+										item.qp14hour = item.qp14hour / 10000
+									}
+									if (item.qp15hour > 0) {
+										item.qp15hour = item.qp15hour / 10000
+									}
+									if (item.qp16hour > 0) {
+										item.qp16hour = item.qp16hour / 10000
+									}
+									if (item.qp17hour > 0) {
+										item.qp17hour = item.qp17hour / 10000
+									}
+									if (item.qp18hour > 0) {
+										item.qp18hour = item.qp18hour / 10000
+									}
+									if (item.qp19hour > 0) {
+										item.qp19hour = item.qp19hour / 10000
+									}
+									if (item.qp20hour > 0) {
+										item.qp20hour = item.qp20hour / 10000
+									}
+									if (item.qp21hour > 0) {
+										item.qp21hour = item.qp21hour / 10000
+									}
+									if (item.qp22hour > 0) {
+										item.qp22hour = item.qp22hour / 10000
+									}
+									if (item.qp23hour > 0) {
+										item.qp23hour = item.qp23hour / 10000
+									}
+
+								}
 							})
 
 							this.ctl_form = this.history_list

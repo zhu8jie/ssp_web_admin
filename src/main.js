@@ -18,11 +18,13 @@ import '@/assets/stylus/tree-select.styl'
 
 import {UTableColumn, UTable, UxGrid, UxTableColumn} from 'umy-ui'
 import 'umy-ui/lib/theme-chalk/index.css';// 引入样式
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(UTableColumn)
 Vue.use(UTable)
 Vue.use(UxGrid)
 Vue.use(UxTableColumn)
-
+Vue.use(ElementUI);
 // 模拟数据
 /*if (process.env.NODE_ENV !== 'production') {
     require('@/mock/index.js')

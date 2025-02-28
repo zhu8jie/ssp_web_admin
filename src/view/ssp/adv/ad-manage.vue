@@ -1091,7 +1091,7 @@
        */
       getProductList() {
         let params = {
-          page_size: 0,
+          page_size: 10,
           page_num: 1
         }
         getDspProductList(params).then(res => {

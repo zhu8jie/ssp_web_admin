@@ -2,7 +2,8 @@
 	<div class="login">
 		<div class="login_content">
 			<div class="login_left">
-				<p class="left_text"><span>Hello</span>欢迎登录数字欢喜管理平台</p>
+				<p class="left_text"><span>Hello</span>欢迎登录创汇世纪管理平台</p>
+
 				<img src="~@/assets/image/admin_left.png" alt="">
 			</div>
 			<div class="login_right">
@@ -84,7 +85,7 @@ export default {
 		}
 	},
 	created() {
-		this.resetUserRole() // 重置用户角色 
+		this.resetUserRole() // 重置用户角色
 
 		// 因为总出现请求接口401过期，到登陆页面，但是检测到session并没过期，
 		// 所以此处做强制处理，如果是接口拦截器过来不要校验session
@@ -111,7 +112,7 @@ export default {
 			this.$Spin.show()
 
 			this.getSysUserInfo().then(res => {
-				
+
 				this.$Spin.hide()
 
 				if (!!res) {

@@ -9,7 +9,7 @@
 			<div class="login_right">
 				<img class="login_bg" src="~@/assets/image/login-bg.png" alt="">
 				<div class="title">
-					<img src="~@/assets/image/login_logo.png" alt="">
+					<img src="~@/assets/image/login.png" style="width: 88px;height: 86px" alt="">
 				</div>
 				<Form ref="loginForm" :model="form" :rules="rules" style="margin-top: 20px">
 					<FormItem prop="sys_account" class="form_con">

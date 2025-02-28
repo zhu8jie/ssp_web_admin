@@ -171,259 +171,260 @@
 							</RadioGroup>
 						</FormItem>
 
+            <FormItem label="开启放量" v-if="showButton == 1">
+              <Button v-if="showButton == 1" type="primary" style="margin-left: 550px" @click="isShowHandler">放量新增</Button>
+            </FormItem>
 
-						<FormItem label="开启放量" v-if="showButton == 1">
-							<Button v-if="showButton == 1" type="primary" style="margin-left: 550px" @click="isShowHandler">放量新增</Button>
-						</FormItem>
-						<FormItem v-if="isShow == 1" label="放量规则">
-							<div v-for="(item,index) in ctl_form" :key="index">
-								<el-timeline>
-									<el-timeline-item :timestamp="formatTimestampStart_End(item)" placement="top">
+            <FormItem v-if="isShow == 1" label="放量规则">
+              <div v-for="(item,index) in ctl_form" :key="index">
+                <el-timeline>
+                  <el-timeline-item :timestamp="formatTimestampStart_End(item)" placement="top">
 
-										<el-card>
-											<div class="app-edit-tab">
-												<div class="dau-flex">
-													<div class="dau-child dau-child2">
-														<Form>
-															<FormItem label="控量类型">
-																<div class="dau-flex">
-																	<div class="dau-child">
-																		<input type="radio" name="radio" v-model.number="item.ctl_type" value=1 v-on:click="radio_day(item)">
-																		按天控量
-																	</div>
-																	<div class="dau-child">
-																		<input type="radio" name="radio" v-model.number="item.ctl_type" value=2 v-on:click="radio_time(item)">
-																		按小时控量
-																	</div>
-																</div>
-															</FormItem>
-															<FormItem v-if="item.ctl_type === 1">
-																<Input  placeholder="请输入放量次数(单位:单次)" v-model.number="item.qpd" ></Input>
-															</FormItem>
-															<FormItem v-if="item.ctl_type === 2">
-																<FormItem>
-																	<div class="dau-flex">
-																		<div class="dau-child">
-																			<label>0&nbsp;&nbsp;点:</label>
-																			<Input maxlength="20"  v-model.number="item.qp0hour" type="number"
-																				   style="width: 160px"
-																				   placeholder="请输入00点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>1&nbsp;&nbsp;点:</label>
-																			<Input maxlength="50" v-model.number="item.qp1hour" type="number"
-																				   style="width: 160px"
-																				   placeholder="请输入01点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>2&nbsp;&nbsp;点:</label>
-																			<Input maxlength="50" v-model.number="item.qp2hour" type="number"
-																				   style="width: 155px"
-																				   placeholder="请输入02点放量次数(单位:单次)"></Input>
-																		</div>
-																	</div>
-																</FormItem>
-																<FormItem>
-																	<div class="dau-flex">
-																		<div class="dau-child">
-																			<label>3&nbsp;&nbsp;点:</label>
-																			<Input maxlength="50" v-model.number="item.qp3hour" type="number"
-																				   style="width: 160px"
-																				   placeholder="请输入03点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>4&nbsp;&nbsp;点:</label>
-																			<Input maxlength="50" v-model.number="item.qp4hour" type="number"  style="width: 160px"
-																				   placeholder="请输入04点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>5&nbsp;&nbsp;点:</label>
-																			<Input maxlength="50" v-model.number="item.qp5hour" type="number"  style="width: 155px"
-																				   placeholder="请输入05点放量次数(单位:单次)"></Input>
-																		</div>
-																	</div>
-																</FormItem>
-																<FormItem>
-																	<div class="dau-flex">
-																		<div class="dau-child">
-																			<label>6&nbsp;&nbsp;点:</label>
-																			<Input maxlength="50" v-model.number="item.qp6hour" type="number"  style="width: 160px"
-																				   placeholder="请输入06点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>7&nbsp;&nbsp;点:</label>
-																			<Input maxlength="50" v-model.number="item.qp7hour" type="number"  style="width: 160px"
-																				   placeholder="请输入07点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>8&nbsp;&nbsp;点:</label>
-																			<Input maxlength="50" v-model.number="item.qp8hour" type="number"  style="width: 155px"
-																				   placeholder="请输入08点放量次数(单位:单次)"></Input>
-																		</div>
-																	</div>
-																</FormItem>
-																<FormItem>
-																	<div class="dau-flex">
-																		<div class="dau-child">
-																			<label>9&nbsp;&nbsp;点:</label>
-																			<Input maxlength="50" v-model.number="item.qp9hour" type="number"  style="width: 160px"
-																				   placeholder="请输入09点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>10点:</label>
-																			<Input maxlength="50" v-model.number="item.qp10hour" type="number"  style="width: 160px"
-																				   placeholder="请输入10点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>11点:</label>
-																			<Input maxlength="50" v-model.number="item.qp11hour" type="number"  style="width: 155px"
-																				   placeholder="请输入11点放量次数(单位:单次)"></Input>
-																		</div>
-																	</div>
-																</FormItem>
-																<FormItem>
-																	<div class="dau-flex">
-																		<div class="dau-child">
-																			<label>12点:</label>
-																			<Input maxlength="50" v-model.number="item.qp12hour" type="number"  style="width: 160px"
-																				   placeholder="请输入12点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>13点:</label>
-																			<Input maxlength="50" v-model.number="item.qp13hour" type="number"  style="width: 160px"
-																				   placeholder="请输入13点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>14点:</label>
-																			<Input maxlength="50"  v-model.number="item.qp14hour" type="number"  style="width: 155px"
-																				   placeholder="请输入14点放量次数(单位:单次)"></Input>
-																		</div>
-																	</div>
-																</FormItem>
-																<FormItem>
-																	<div class="dau-flex">
-																		<div class="dau-child">
-																			<label>15点:</label>
-																			<Input maxlength="50"  v-model.number="item.qp15hour" type="number"  style="width: 160px"
-																				   placeholder="请输入15点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>16点:</label>
-																			<Input maxlength="50"  v-model.number="item.qp16hour" type="number"  style="width: 160px"
-																				   placeholder="请输入16点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>17点:</label>
-																			<Input maxlength="50"  v-model.number="item.qp17hour" type="number"  style="width: 155px"
-																				   placeholder="请输入17点放量次数(单位:单次)"></Input>
-																		</div>
-																	</div>
-																</FormItem>
-																<FormItem>
-																	<div class="dau-flex">
-																		<div class="dau-child">
-																			<label>18点:</label>
-																			<Input maxlength="50"  v-model.number="item.qp18hour" type="number"  style="width: 160px"
-																				   placeholder="请输入18点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>19点:</label>
-																			<Input maxlength="50"  v-model.number="item.qp19hour" type="number"  style="width: 160px"
-																				   placeholder="请输入19点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>20点:</label>
-																			<Input maxlength="50"  v-model.number="item.qp20hour" type="number"  style="width: 155px"
-																				   placeholder="请输入20点放量次数(单位:单次)"></Input>
-																		</div>
-																	</div>
-																</FormItem>
-																<FormItem>
-																	<div class="dau-flex">
-																		<div class="dau-child">
-																			<label>21点:</label>
-																			<Input maxlength="50"  v-model.number="item.qp21hour" type="number"  style="width: 160px"
-																				   placeholder="请输入21点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>22点:</label>
-																			<Input maxlength="50"  v-model.number="item.qp22hour" type="number"  style="width: 160px"
-																				   placeholder="请输入22点放量次数(单位:单次)"></Input>
-																		</div>
-																		<div class="dau-child">
-																			<label>23点:</label>
-																			<Input maxlength="50"  v-model.number="item.qp23hour" type="number"  style="width: 155px"
-																				   placeholder="请输入23点放量次数(单位:单次)"></Input>
-																		</div>
-																	</div>
-																</FormItem>
-															</FormItem>
-														</Form>
-													</div>
-												</div>
+                    <el-card>
+                      <div class="app-edit-tab">
+                        <div class="dau-flex">
+                          <div class="dau-child dau-child2">
+                            <Form>
+                              <FormItem label="控量类型">
+                                <div class="dau-flex">
+                                  <div class="dau-child">
+                                    <input type="radio" name="radio" v-model.number="item.ctl_type" value=1 v-on:click="radio_day(item)">
+                                    按天控量
+                                  </div>
+                                  <div class="dau-child">
+                                    <input type="radio" name="radio" v-model.number="item.ctl_type" value=2 v-on:click="radio_time(item)">
+                                    按小时控量
+                                  </div>
+                                </div>
+                              </FormItem>
+                              <FormItem v-if="item.ctl_type === 1">
+                                <Input  placeholder="请输入放量次数(单位:单次)" v-model.number="item.qpd" ></Input>
+                              </FormItem>
+                              <FormItem v-if="item.ctl_type === 2">
+                                <FormItem>
+                                  <div class="dau-flex">
+                                    <div class="dau-child">
+                                      <label>0&nbsp;&nbsp;点:</label>
+                                      <Input maxlength="20"  v-model.number="item.qp0hour" type="number"
+                                             style="width: 160px"
+                                             placeholder="请输入00点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>1&nbsp;&nbsp;点:</label>
+                                      <Input maxlength="50" v-model.number="item.qp1hour" type="number"
+                                             style="width: 160px"
+                                             placeholder="请输入01点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>2&nbsp;&nbsp;点:</label>
+                                      <Input maxlength="50" v-model.number="item.qp2hour" type="number"
+                                             style="width: 155px"
+                                             placeholder="请输入02点放量次数(单位:单次)"></Input>
+                                    </div>
+                                  </div>
+                                </FormItem>
+                                <FormItem>
+                                  <div class="dau-flex">
+                                    <div class="dau-child">
+                                      <label>3&nbsp;&nbsp;点:</label>
+                                      <Input maxlength="50" v-model.number="item.qp3hour" type="number"
+                                             style="width: 160px"
+                                             placeholder="请输入03点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>4&nbsp;&nbsp;点:</label>
+                                      <Input maxlength="50" v-model.number="item.qp4hour" type="number"  style="width: 160px"
+                                             placeholder="请输入04点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>5&nbsp;&nbsp;点:</label>
+                                      <Input maxlength="50" v-model.number="item.qp5hour" type="number"  style="width: 155px"
+                                             placeholder="请输入05点放量次数(单位:单次)"></Input>
+                                    </div>
+                                  </div>
+                                </FormItem>
+                                <FormItem>
+                                  <div class="dau-flex">
+                                    <div class="dau-child">
+                                      <label>6&nbsp;&nbsp;点:</label>
+                                      <Input maxlength="50" v-model.number="item.qp6hour" type="number"  style="width: 160px"
+                                             placeholder="请输入06点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>7&nbsp;&nbsp;点:</label>
+                                      <Input maxlength="50" v-model.number="item.qp7hour" type="number"  style="width: 160px"
+                                             placeholder="请输入07点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>8&nbsp;&nbsp;点:</label>
+                                      <Input maxlength="50" v-model.number="item.qp8hour" type="number"  style="width: 155px"
+                                             placeholder="请输入08点放量次数(单位:单次)"></Input>
+                                    </div>
+                                  </div>
+                                </FormItem>
+                                <FormItem>
+                                  <div class="dau-flex">
+                                    <div class="dau-child">
+                                      <label>9&nbsp;&nbsp;点:</label>
+                                      <Input maxlength="50" v-model.number="item.qp9hour" type="number"  style="width: 160px"
+                                             placeholder="请输入09点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>10点:</label>
+                                      <Input maxlength="50" v-model.number="item.qp10hour" type="number"  style="width: 160px"
+                                             placeholder="请输入10点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>11点:</label>
+                                      <Input maxlength="50" v-model.number="item.qp11hour" type="number"  style="width: 155px"
+                                             placeholder="请输入11点放量次数(单位:单次)"></Input>
+                                    </div>
+                                  </div>
+                                </FormItem>
+                                <FormItem>
+                                  <div class="dau-flex">
+                                    <div class="dau-child">
+                                      <label>12点:</label>
+                                      <Input maxlength="50" v-model.number="item.qp12hour" type="number"  style="width: 160px"
+                                             placeholder="请输入12点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>13点:</label>
+                                      <Input maxlength="50" v-model.number="item.qp13hour" type="number"  style="width: 160px"
+                                             placeholder="请输入13点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>14点:</label>
+                                      <Input maxlength="50"  v-model.number="item.qp14hour" type="number"  style="width: 155px"
+                                             placeholder="请输入14点放量次数(单位:单次)"></Input>
+                                    </div>
+                                  </div>
+                                </FormItem>
+                                <FormItem>
+                                  <div class="dau-flex">
+                                    <div class="dau-child">
+                                      <label>15点:</label>
+                                      <Input maxlength="50"  v-model.number="item.qp15hour" type="number"  style="width: 160px"
+                                             placeholder="请输入15点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>16点:</label>
+                                      <Input maxlength="50"  v-model.number="item.qp16hour" type="number"  style="width: 160px"
+                                             placeholder="请输入16点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>17点:</label>
+                                      <Input maxlength="50"  v-model.number="item.qp17hour" type="number"  style="width: 155px"
+                                             placeholder="请输入17点放量次数(单位:单次)"></Input>
+                                    </div>
+                                  </div>
+                                </FormItem>
+                                <FormItem>
+                                  <div class="dau-flex">
+                                    <div class="dau-child">
+                                      <label>18点:</label>
+                                      <Input maxlength="50"  v-model.number="item.qp18hour" type="number"  style="width: 160px"
+                                             placeholder="请输入18点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>19点:</label>
+                                      <Input maxlength="50"  v-model.number="item.qp19hour" type="number"  style="width: 160px"
+                                             placeholder="请输入19点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>20点:</label>
+                                      <Input maxlength="50"  v-model.number="item.qp20hour" type="number"  style="width: 155px"
+                                             placeholder="请输入20点放量次数(单位:单次)"></Input>
+                                    </div>
+                                  </div>
+                                </FormItem>
+                                <FormItem>
+                                  <div class="dau-flex">
+                                    <div class="dau-child">
+                                      <label>21点:</label>
+                                      <Input maxlength="50"  v-model.number="item.qp21hour" type="number"  style="width: 160px"
+                                             placeholder="请输入21点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>22点:</label>
+                                      <Input maxlength="50"  v-model.number="item.qp22hour" type="number"  style="width: 160px"
+                                             placeholder="请输入22点放量次数(单位:单次)"></Input>
+                                    </div>
+                                    <div class="dau-child">
+                                      <label>23点:</label>
+                                      <Input maxlength="50"  v-model.number="item.qp23hour" type="number"  style="width: 155px"
+                                             placeholder="请输入23点放量次数(单位:单次)"></Input>
+                                    </div>
+                                  </div>
+                                </FormItem>
+                              </FormItem>
+                            </Form>
+                          </div>
+                        </div>
 
-											</div>
-											<Form  ref="modalForm">
-												<FormItem>
-													<div class="dau-flex">
-														<div class="dau-child">
-															<el-form>
-																<el-form-item>
-																	<el-date-picker
-																		:key="datePickerKey"
-																		v-model="item.start_at"
-																		type="datetime"
-																		value-format="yyyy-MM-dd HH:mm:ss"
-																		placeholder="选择开始日期时间"
-																		@change='handleDateChangeStart(item)'
-																		default-time="12:00:00">
-																	</el-date-picker>
-																</el-form-item>
-															</el-form>
-														</div>
-														<div class="dau-child" style="margin-left: 15px">
-															<el-form>
-																<el-form-item>
-																	<el-date-picker
-																		:key="datePickerKey"
-																		size="medium"
-																		v-model="item.end_at"
-																		type="datetime"
-																		value-format="yyyy-MM-dd HH:mm:ss"
-																		format="yyyy-MM-dd HH:mm:ss"
-																		placeholder="选择开始日期时间"
-																		@change='handleDateChangeEnd(item)'
-																		default-time="12:00:00">
-																	</el-date-picker>
-																</el-form-item>
-															</el-form>
-														</div>
-														<div class="dau-child">
+                      </div>
+                      <Form  ref="modalForm">
+                        <FormItem>
+                          <div class="dau-flex">
+                            <div class="dau-child">
+                              <el-form>
+                                <el-form-item>
+                                  <el-date-picker
+                                      :key="datePickerKey"
+                                      v-model="item.start_at"
+                                      type="datetime"
+                                      value-format="yyyy-MM-dd HH:mm:ss"
+                                      placeholder="选择开始日期时间"
+                                      @change='handleDateChangeStart(item)'
+                                      default-time="12:00:00">
+                                  </el-date-picker>
+                                </el-form-item>
+                              </el-form>
+                            </div>
+                            <div class="dau-child" style="margin-left: 15px">
+                              <el-form>
+                                <el-form-item>
+                                  <el-date-picker
+                                      :key="datePickerKey"
+                                      size="medium"
+                                      v-model="item.end_at"
+                                      type="datetime"
+                                      value-format="yyyy-MM-dd HH:mm:ss"
+                                      format="yyyy-MM-dd HH:mm:ss"
+                                      placeholder="选择开始日期时间"
+                                      @change='handleDateChangeEnd(item)'
+                                      default-time="12:00:00">
+                                  </el-date-picker>
+                                </el-form-item>
+                              </el-form>
+                            </div>
+                            <div class="dau-child">
 
-															<Button v-if="index !== -1" type="primary" size="mini"
-																	style="margin-left: 30px; height: 36px"
-																	@click="deleteItem(item, index)">删除</Button>
-															<Button v-if="index === ctl_form.length - 1"
-																	type="primary"
-																	style="margin-left: 5px; height: 36px"
-																	@click="addItem(ctl_form.length)">新增</Button>
-														</div>
-													</div>
-												</FormItem>
-											</Form>
+                              <Button v-if="index !== -1" type="primary" size="mini"
+                                      style="margin-left: 30px; height: 36px"
+                                      @click="deleteItem(item, index)">删除</Button>
+                              <Button v-if="index === ctl_form.length - 1"
+                                      type="primary"
+                                      style="margin-left: 5px; height: 36px"
+                                      @click="addItem(ctl_form.length)">新增</Button>
+                            </div>
+                          </div>
+                        </FormItem>
+                      </Form>
 
-										</el-card>
-									</el-timeline-item>
-								</el-timeline>
-							</div>
+                    </el-card>
+                  </el-timeline-item>
+                </el-timeline>
+              </div>
 
-						</FormItem>
+            </FormItem>
+
+
 
 						<FormItem v-if="formBase.app_id" class="edit-save-formItem">
 							<Button size="large" @click="goBack">取消</Button>
-							<Button size="large" type="primary" :loading="submitClock" @click.prevent="submitFormData('formBase')">
+							<Button size="large" type="primary" :loading="submitClock" @click="submitFormData('formBase')">
 								{{!submitClock ? '提交' : '提交中...'}}
-
 							</Button>
 						</FormItem>
 					</Form>
@@ -452,7 +453,6 @@ import { getAdRatio } from '@/api/common'
 import uploadImage from '_c/upload-image'
 import { inPageAccess } from '@/mixin/in-page-access.js'
 import dayjs from "dayjs";
-import {addNewChannel} from "../../../api/monitor";
 
 export default {
 	name: 'ad-edit',
@@ -462,11 +462,9 @@ export default {
 	},
 	data() {
 		return {
-
-			// loading: false,
-			datePickerKey: 0, // 用于强制重新渲染的 key
-			showButton : 1, // 1 显示 0 关闭
-			isShow: 0, // 当有放量规则数据时
+      datePickerKey: 0, // 用于强制重新渲染的 key
+      showButton : 1, // 1 显示 0 关闭
+      isShow: 0, // 当有放量规则数据时
 			appList: [], // 应用列表
 			appBaseData: {}, // app基本信息
 
@@ -495,47 +493,45 @@ export default {
 					name: '否'
 				}
 			],
-			history_list:[],
-			newCtl_list:[
-				{
-					ctl_type: null, // 放量方式
-					qpd: null,   // 每天放量多少
-					qp0hour: null, // 0点
-					qp1hour: null,
-					qp2hour: null,
-					qp3hour: null,
-					qp4hour: null,
-					qp5hour: null,
-					qp6hour: null,
-					qp7hour: null,
-					qp8hour: null,
-					qp9hour: null,
-					qp10hour: null,
-					qp11hour: null,
-					qp12hour: null,
-					qp13hour: null,
-					qp14hour: null,
-					qp15hour: null,
-					qp16hour: null,
-					qp17hour: null,
-					qp18hour: null,
-					qp19hour: null,
-					qp20hour: null,
-					qp21hour: null,
-					qp22hour: null,
-					qp23hour: null,
-					start_at: null,  // 开始时间戳
-					end_at: null,	 // 结束时间戳
-					startTime: '',
-					endTime: '',
-				},
-			],
+      history_list:[],
+      newCtl_list:[
+        {
+          ctl_type: null, // 放量方式
+          qpd: null,   // 每天放量多少
+          qp0hour: null, // 0点
+          qp1hour: null,
+          qp2hour: null,
+          qp3hour: null,
+          qp4hour: null,
+          qp5hour: null,
+          qp6hour: null,
+          qp7hour: null,
+          qp8hour: null,
+          qp9hour: null,
+          qp10hour: null,
+          qp11hour: null,
+          qp12hour: null,
+          qp13hour: null,
+          qp14hour: null,
+          qp15hour: null,
+          qp16hour: null,
+          qp17hour: null,
+          qp18hour: null,
+          qp19hour: null,
+          qp20hour: null,
+          qp21hour: null,
+          qp22hour: null,
+          qp23hour: null,
+          start_at: null,  // 开始时间戳
+          end_at: null,	 // 结束时间戳
+          startTime: '',
+          endTime: '',
+        },
+      ],
 
-
-			// 当前放量规则
-			ctl_form: [],
-			timevalue: null,
-
+      // 当前放量规则
+      ctl_form: [],
+      timevalue: null,
 
 			formBase: {
 				app_id: this.$route.query.appId ? Number(this.$route.query.appId) : '', // 应用ID
@@ -553,47 +549,46 @@ export default {
 				ex_slot_id: '', // 第三方slot_id
 				status_risk: 1,
 
-				ctl_type: null, // 放量方式
-				qpd: null,   // 放量方式
+        ctl_type: null, // 放量方式
+        qpd: null,   // 放量方式
 
-				req_ctl_list:[
-					{
-						ctl_type: null, // 放量方式
-						qpd: null,   // 每天放量多少
-						qp0hour: null, // 0点
-						qp1hour: null,
-						qp2hour: null,
-						qp3hour: null,
-						qp4hour: null,
-						qp5hour: null,
-						qp6hour: null,
-						qp7hour: null,
-						qp8hour: null,
-						qp9hour: null,
-						qp10hour: null,
-						qp11hour: null,
-						qp12hour: null,
-						qp13hour: null,
-						qp14hour: null,
-						qp15hour: null,
-						qp16hour: null,
-						qp17hour: null,
-						qp18hour: null,
-						qp19hour: null,
-						qp20hour: null,
-						qp21hour: null,
-						qp22hour: null,
-						qp23hour: null,
-						start_at: null,  // 开始时间戳
-						end_at: null,	 // 结束时间戳
-						startTime: '',
-						endTime:'',
-					}
-				]
+        req_ctl_list:[
+          {
+            ctl_type: null, // 放量方式
+            qpd: null,   // 每天放量多少
+            qp0hour: null, // 0点
+            qp1hour: null,
+            qp2hour: null,
+            qp3hour: null,
+            qp4hour: null,
+            qp5hour: null,
+            qp6hour: null,
+            qp7hour: null,
+            qp8hour: null,
+            qp9hour: null,
+            qp10hour: null,
+            qp11hour: null,
+            qp12hour: null,
+            qp13hour: null,
+            qp14hour: null,
+            qp15hour: null,
+            qp16hour: null,
+            qp17hour: null,
+            qp18hour: null,
+            qp19hour: null,
+            qp20hour: null,
+            qp21hour: null,
+            qp22hour: null,
+            qp23hour: null,
+            start_at: null,  // 开始时间戳
+            end_at: null,	 // 结束时间戳
+            startTime: '',
+            endTime:'',
+          }
+        ]
 
-			},
-
-			temp_ctl: [],
+      },
+      temp_ctl: [],
 			submitClock: false, // 保存锁
 			demoTitle: '', // 手机框title
 			demoSrc: '', // 手机demo预览图
@@ -602,7 +597,6 @@ export default {
 			catchSelectStyle: '' // 缓存选中广告场景之后默认第一个广告样式
 		}
 	},
-
 	computed: {
 		headTitle() {
 			return showTitle(this.$route, this)
@@ -614,112 +608,109 @@ export default {
 		isShowRender() {
 			// 1. 当前应用sdk模式(2) 并且 2.选择原生信息流(1)
 			return this.formBase.ad_type_id == 1 && this.appBaseData.access_type == 2
-		},
-
+		}
 	},
 	created() {
 		// 判断是否有修改权限
 		let resultArr = this._isPageShow()
 		if (this._isSuperAdmin() || !!resultArr.includes('modify')) {
-
 			this.initData() // 初始化数据
 		} else {
 			this._gotoNoAccess()
 		}
-
 	},
 	methods: {
-		isDecimal(num) {
-			return typeof num === 'number' && !Number.isInteger(num);
-		},
+    isDecimal(num) {
+      return typeof num === 'number' && !Number.isInteger(num);
+    },
 
-		// 刷新时间组件
-		resetDate() {
-			this.$nextTick(()=> {
-				this.datePickerKey +=1
-			})
-		},
+    // 刷新时间组件
+    resetDate() {
+      this.$nextTick(()=> {
+        this.datePickerKey +=1
+      })
+    },
 
-		isShowHandler(){
-			if(this.isShow == 1){
-				this.isShow = 0
-			} else {
-				this.isShow = 1
-			}
-			if(this.ctl_form.length === 0) {
-				this.addItem()
-			}
-			this.showButton = 0
-		},
+    isShowHandler(){
+      if(this.isShow == 1){
+        this.isShow = 0
+      } else {
+        this.isShow = 1
+      }
+      if(this.ctl_form.length === 0) {
+        this.addItem()
+      }
+      this.showButton = 0
+    },
+    handleDateChangeEnd(item,value) {
+      console.log('End date:',item,value)
+      console.log("this.ctl_form",this.ctl_form)
+    },
+    handleDateChangeStart(item,value) {
+      console.log('Start date:',item,value)
+    },
+    formatTimestamp(item) {
+      return `开始时间: ${item.start_at} - 结束时间: ${item.end_at}`;
+    },
+    formatTimestampStart_End(item) {
+      return `开始时间: ${item.start_at} - 结束时间: ${item.end_at}`;
+    },
 
-		handleDateChangeEnd(item,value) {
-			console.log('End date:',item,value)
-			console.log("this.ctl_form",this.ctl_form)
-		},
-		handleDateChangeStart(item,value) {
-			console.log('Start date:',item,value)
-		},
-		formatTimestamp(item) {
-			return `开始时间: ${item.start_at} - 结束时间: ${item.end_at}`;
-		},
-		formatTimestampStart_End(item) {
-			return `开始时间: ${item.start_at} - 结束时间: ${item.end_at}`;
-		},
+    // formatTimestampHistory(item) {
+    // 	return `放量历史 开始时间: ${item.start_at} - 结束时间: ${item.end_at}`;
+    // },
+    // 新增规则
+    addItem(length) {
 
-		// formatTimestampHistory(item) {
-		// 	return `放量历史 开始时间: ${item.start_at} - 结束时间: ${item.end_at}`;
-		// },
-		// 新增规则
-		addItem(length) {
+      this.ctl_form.push({
+        ctl_type: 1, // 放量方式
+        qpd: null,   // 每天放量多少
+        qp0hour: null, // 0点
+        qp1hour: null,
+        qp2hour: null,
+        qp3hour: null,
+        qp4hour: null,
+        qp5hour: null,
+        qp6hour: null,
+        qp7hour: null,
+        qp8hour: null,
+        qp9hour: null,
+        qp10hour: null,
+        qp11hour: null,
+        qp12hour: null,
+        qp13hour: null,
+        qp14hour: null,
+        qp15hour: null,
+        qp16hour: null,
+        qp17hour: null,
+        qp18hour: null,
+        qp19hour: null,
+        qp20hour: null,
+        qp21hour: null,
+        qp22hour: null,
+        qp23hour: null,
+        start_at: dayjs().format('YYYY-MM-DD HH:mm:ss'),  // 开始时间戳
+        end_at: ''	 // 结束时间戳
+      })
+    },
+    //删除方法
+    deleteItem(item, index) {
+      console.log("deleteItem删除：",index,"item:",item)
+      this.ctl_form.splice(index, 1)
 
-			this.ctl_form.push({
-				ctl_type: 1, // 放量方式
-				qpd: null,   // 每天放量多少
-				qp0hour: null, // 0点
-				qp1hour: null,
-				qp2hour: null,
-				qp3hour: null,
-				qp4hour: null,
-				qp5hour: null,
-				qp6hour: null,
-				qp7hour: null,
-				qp8hour: null,
-				qp9hour: null,
-				qp10hour: null,
-				qp11hour: null,
-				qp12hour: null,
-				qp13hour: null,
-				qp14hour: null,
-				qp15hour: null,
-				qp16hour: null,
-				qp17hour: null,
-				qp18hour: null,
-				qp19hour: null,
-				qp20hour: null,
-				qp21hour: null,
-				qp22hour: null,
-				qp23hour: null,
-				start_at: dayjs().format('YYYY-MM-DD HH:mm:ss'),  // 开始时间戳
-				end_at: ''	 // 结束时间戳
-			})
-		},
-		//删除方法
-		deleteItem(item, index) {
-			console.log("deleteItem删除：",index,"item:",item)
-			this.ctl_form.splice(index, 1)
+      if(index === 0 && this.ctl_form.length == 0) {
+        this.addItem()
+        this.isShow = 0
+        this.showButton	= 1
+      }
+    },
+    deleteItemFu(item,index) {
+      console.log("deleteItemFu删除：",index)
+      this.newCtl_list.splice(index, 1)
+    },
 
-			if(index === 0 && this.ctl_form.length == 0) {
-				this.addItem()
-				this.isShow = 0
-				this.showButton	= 1
-			}
-		},
-		deleteItemFu(item,index) {
-			console.log("deleteItemFu删除：",index)
-			this.newCtl_list.splice(index, 1)
-		},
 
-		/**
+    /**
 		 * [initData 初始化加载数据]
 		 * @return {[type]} [description]
 		 */
@@ -739,11 +730,10 @@ export default {
 				if (res[1].code === 200) {
 					this.mediaSceneData = res[1].data.ad_type_select // 广告场景
 				}
-				console.log("res[2]",res[2])
-				if (res[2].code === 200) {
 
+				if (res[2].code === 200) {
 					let _data = res[2].data
-					console.log("res[2]====================================================",res[2])
+
 					// 需要特殊处理
 					// 1. 默认选中图片，2选中视频
 					_data.ssp_slot_id = this.slot_id // 提交数据时使用
@@ -770,224 +760,23 @@ export default {
 					this.hasIdNoEdit = _data.status > 0 // 此处赋值是担心恶意篡改urL中的slo_id导致可再编辑
 
 					this.formBase = _data
+          console.log("==============data:",_data)
+          // 将formBase.ret_ctl_list,放入新的集合中
+          // this.ctl_form = _data.req_ctl_list.map((i,idx)=>{
+          //   return {
+          //     ...i,
+          //     start_at:i.start_at > 0?dayjs.unix(i.start_at).format("YYYY-MM-DD HH:mm:ss"):'',
+          //     end_at:i.end_at > 0?dayjs.unix(i.end_at).format("YYYY-MM-DD HH:mm:ss"):''
+          //   }
+          // })
 
-					console.log("=============data",this.formBase)
-
-					// 将formBase.ret_ctl_list,放入新的集合中
-					this.ctl_form = _data.req_ctl_list.map((i,idx)=>{
-						return {
-							...i,
-							start_at:i.start_at > 0?dayjs.unix(i.start_at).format("YYYY-MM-DD HH:mm:ss"):'',
-							end_at:i.end_at > 0?dayjs.unix(i.end_at).format("YYYY-MM-DD HH:mm:ss"):''
-						}
-					})
-
-
-					// this.ctl_form = []
-					// // 然后判断数据是否是当前规则，是加入到新集合中,加入后退出
-					// for(let element of this.newCtl_list) {
-					// 		this.ctl_form.push(element)
-					// 		break
-					// }
-					console.log("this.ctl_form:::::::::::::::::::::::",this.ctl_form)
-
-					this.ctl_form.map(item=>{
-						if(item.ctl_type === 1 && item.qpd > 0) {
-							item.qpd = item.qpd / 10000
-						}
-						if(item.ctl_type === 2) {
-							if(item.qp0hour > 0) {
-								item.qp0hour = item.qp0hour / 10000
-							}
-							if(item.qp1hour > 0) {
-								item.qp1hour = item.qp1hour / 10000
-							}
-							if(item.qp2hour > 0) {
-								item.qp2hour = item.qp2hour / 10000
-							}
-							if(item.qp3hour > 0) {
-								item.qp3hour = item.qp3hour / 10000
-							}
-							if(item.qp4hour > 0) {
-								item.qp4hour = item.qp4hour / 10000
-							}
-							if(item.qp5hour > 0) {
-								item.qp5hour = item.qp5hour / 10000
-							}
-							if(item.qp6hour > 0) {
-								item.qp6hour = item.qp6hour / 10000
-							}
-							if(item.qp7hour > 0) {
-								item.qp7hour = item.qp7hour / 10000
-							}
-							if(item.qp8hour > 0) {
-								item.qp8hour = item.qp8hour / 10000
-							}
-							if(item.qp9hour > 0) {
-								item.qp9hour = item.qp9hour / 10000
-							}
-							if(item.qp10hour > 0) {
-								item.qp10hour = item.qp10hour / 10000
-							}
-							if(item.qp11hour > 0) {
-								item.qp11hour = item.qp11hour / 10000
-							}
-							if(item.qp12hour > 0) {
-								item.qp12hour = item.qp12hour / 10000
-							}
-							if(item.qp13hour > 0) {
-								item.qp13hour = item.qp13hour / 10000
-							}
-							if(item.qp14hour > 0) {
-								item.qp14hour = item.qp14hour / 10000
-							}
-							if(item.qp15hour > 0) {
-								item.qp15hour = item.qp15hour / 10000
-							}
-							if(item.qp16hour > 0) {
-								item.qp16hour = item.qp16hour / 10000
-							}
-							if(item.qp17hour > 0) {
-								item.qp17hour = item.qp17hour / 10000
-							}
-							if(item.qp18hour > 0) {
-								item.qp18hour = item.qp18hour / 10000
-							}
-							if(item.qp19hour > 0) {
-								item.qp19hour = item.qp19hour / 10000
-							}
-							if(item.qp20hour > 0) {
-								item.qp20hour = item.qp20hour / 10000
-							}
-							if(item.qp21hour > 0) {
-								item.qp21hour = item.qp21hour / 10000
-							}
-							if(item.qp22hour > 0) {
-								item.qp22hour = item.qp22hour / 10000
-							}
-							if(item.qp23hour > 0) {
-								item.qp23hour = item.qp23hour / 10000
-							}
-						}
-					})
-
-
-					console.log("当前放量:============================================",this.ctl_form)
-
-					// 如果新接收的集合不为空，打开规则
-					// if(this.newCtl_list.length > 0) {
-					// 	this.isShow = 1
-					//
-					// }
-					if(this.ctl_form.length > 0) {
-						this.isShow = 1
-						this.showButton = 0
-					}
-
-					console.log("newCtl_list:::::::",this.newCtl_list)
 
 					this.getAppListAndDetail() // 根据广告位详情得到app_id, 反向推算app相关（详情和列表）
 				}
 			}, err=> {
-
 				this.$Spin.hide()
 			})
 		},
-
-		/**
-		 *  天/时间 单选框
-		 */
-		radio_day(item) {
-			item.qp0hour = null
-			item.qp1hour = null
-			item.qp2hour = null
-			item.qp3hour = null
-			item.qp4hour = null
-			item.qp5hour = null
-			item.qp6hour = null
-			item.qp7hour = null
-			item.qp8hour = null
-			item.qp9hour = null
-			item.qp10hour = null
-			item.qp11hour = null
-			item.qp12hour = null
-			item.qp13hour = null
-			item.qp14hour = null
-			item.qp15hour = null
-			item.qp16hour = null
-			item.qp17hour = null
-			item.qp18hour = null
-			item.qp19hour = null
-			item.qp20hour = null
-			item.qp21hour = null
-			item.qp22hour = null
-			item.qp23hour = null
-		},
-		radio_time(item) {
-			item.qpd = null
-		},
-
-		radio_days(item) {
-
-			item.qp0hour = null
-			item.qp1hour = null
-			item.qp2hour = null
-			item.qp3hour = null
-			item.qp4hour = null
-			item.qp5hour = null
-			item.qp6hour = null
-			item.qp7hour = null
-			item.qp8hour = null
-			item.qp9hour = null
-			item.qp10hour = null
-			item.qp11hour = null
-			item.qp12hour = null
-			item.qp13hour = null
-			item.qp14hour = null
-			item.qp15hour = null
-			item.qp16hour = null
-			item.qp17hour = null
-			item.qp18hour = null
-			item.qp19hour = null
-			item.qp20hour = null
-			item.qp21hour = null
-			item.qp22hour = null
-			item.qp23hour = null
-		},
-		radio_times(item) {
-			item.qpd = null
-		},
-
-		radio_dayss(item) {
-			item.qp0hour = null
-			item.qp1hour = null
-			item.qp2hour = null
-			item.qp3hour = null
-			item.qp4hour = null
-			item.qp5hour = null
-			item.qp6hour = null
-			item.qp7hour = null
-			item.qp8hour = null
-			item.qp9hour = null
-			item.qp10hour = null
-			item.qp11hour = null
-			item.qp12hour = null
-			item.qp13hour = null
-			item.qp14hour = null
-			item.qp15hour = null
-			item.qp16hour = null
-			item.qp17hour = null
-			item.qp18hour = null
-			item.qp19hour = null
-			item.qp20hour = null
-			item.qp21hour = null
-			item.qp22hour = null
-			item.qp23hour = null
-		},
-		radio_timess(item) {
-			item.qpd = null
-		},
-
 		/**
 		 * [getAppListAndDetail 获取app详情和app列表]
 		 * @return {[type]} [description]
@@ -1253,8 +1042,9 @@ export default {
 		submitFormData(name) {
 			this.$refs[name].validate((valid) => {
 				if (valid) {
-					this.submitClock = false
+
 					let form = {...this.formBase}
+
 
 					// 处理特殊情况
 					// 1(1), 如果应用为API, 则没有渲染方式
@@ -1293,280 +1083,14 @@ export default {
 					delete form.ad_ratios
 
 					this.submitClock = true
-					this.newCtl_list = []
-					console.log("this.ctl_form:==============================================================================================",this.ctl_form)
-					console.log("this.newCtl_list000:==============================================================================================",this.newCtl_list)
-
-					// 遍历集合将数据放入newCtl_list中
-					this.ctl_form.map(item => {
-						if(item.ctl_type === 1 && item.qpd != null){
-							this.newCtl_list.push(item)
-						} else if(item.ctl_type === 2){
-							this.newCtl_list.push(item)
-						} else if(item.ctl_type === 1 && item.qpd == null) {
-							if(this.isShow === 1) {
-								item.qpd = ""
-								this.newCtl_list.push(item)
-							}
-
-
-						}
-					})
-
-
-					// 遍历current_ctl 表单收集数组，删除空表单
-					let current_ctl = []
-					let end_time_sore = []  // 存放结束时间
-					let current_data_ctl = []
-
-					this.newCtl_list.map(item=>{
-
-						if(item.start_at != null || item.start_at !='') {
-							item.startTime = item.start_at
-							item.start_at = dayjs(item.start_at).unix()
-						}
-
-						if(item.ctl_type > 0 && item.start_at != null) {
-							if(item.end_at == null || item.end_at == '') {
-								item.end_at = 0
-							} else {
-								item.endTime = item.end_at
-								item.end_at = dayjs(item.end_at).unix()
-							}
-							if(item.ctl_type === 1 && item.qpd != null) {
-								current_ctl.push(item)
-								end_time_sore.push(item.end_at)
-							}
-							if(item.ctl_type === 2) {
-								current_ctl.push(item)
-								end_time_sore.push(item.end_at)
-							}
-						}
-					})
-					console.log("this.newCtl_list:==============================================================",this.newCtl_list)
-					end_time_sore.sort((x,y)=> x - y)
-					// 遍历curent_ctl 排序放入 current_new_ctl 中， 排序以创建时间维准
-					end_time_sore.map(item=> {
-						current_ctl.map(items=> {
-							if(items.end_at === item && item != 0) {
-								console.log("item:::start_at:",item.end_at)
-								current_data_ctl.push(items)
-							}
-						})
-					})
-
-					//把end_at 空的放入
-					current_ctl.map(item=> {
-						if (item.end_at === 0) {
-							current_data_ctl.push(item)
-						}
-					})
-					console.log("current_ctl::::::::",current_ctl)
-					console.log("current_data_ctl::::::::",current_data_ctl)
-
-					this.newCtl_list = []
-					current_data_ctl = JSON.parse(JSON.stringify(current_data_ctl))
-
-					current_data_ctl.map(item=> {
-						if(item.ctl_type === 1 && item.qpd > 0) {
-							item.qpd = item.qpd * 10000
-						}
-						if(item.ctl_type === 2) {
-							if(item.qp0hour > 0) {
-								item.qp0hour = item.qp0hour * 10000
-							}
-							if(item.qp1hour > 0) {
-								item.qp1hour = item.qp1hour * 10000
-							}
-							if(item.qp2hour > 0) {
-								item.qp2hour = item.qp2hour * 10000
-							}
-							if(item.qp3hour > 0) {
-								item.qp3hour = item.qp3hour * 10000
-							}
-							if(item.qp4hour > 0) {
-								item.qp4hour = item.qp4hour * 10000
-							}
-							if(item.qp5hour > 0) {
-								item.qp5hour = item.qp5hour * 10000
-							}
-							if(item.qp6hour > 0) {
-								item.qp6hour = item.qp6hour * 10000
-							}
-							if(item.qp7hour > 0) {
-								item.qp7hour = item.qp7hour * 10000
-							}
-							if(item.qp8hour > 0) {
-								item.qp8hour = item.qp8hour * 10000
-							}
-							if(item.qp9hour > 0) {
-								item.qp9hour = item.qp9hour * 10000
-							}
-							if(item.qp10hour > 0) {
-								item.qp10hour = item.qp10hour * 10000
-							}
-							if(item.qp11hour > 0) {
-								item.qp11hour = item.qp11hour * 10000
-							}
-							if(item.qp12hour > 0) {
-								item.qp12hour = item.qp12hour * 10000
-							}
-							if(item.qp13hour > 0) {
-								item.qp13hour = item.qp13hour * 10000
-							}
-							if(item.qp14hour > 0) {
-								item.qp14hour = item.qp14hour * 10000
-							}
-							if(item.qp15hour > 0) {
-								item.qp15hour = item.qp15hour * 10000
-							}
-							if(item.qp16hour > 0) {
-								item.qp16hour = item.qp16hour * 10000
-							}
-							if(item.qp17hour > 0) {
-								item.qp17hour = item.qp17hour * 10000
-							}
-							if(item.qp18hour > 0) {
-								item.qp18hour = item.qp18hour * 10000
-							}
-							if(item.qp19hour > 0) {
-								item.qp19hour = item.qp19hour * 10000
-							}
-							if(item.qp20hour > 0) {
-								item.qp20hour = item.qp20hour * 10000
-							}
-							if(item.qp21hour > 0) {
-								item.qp21hour = item.qp21hour * 10000
-							}
-							if(item.qp22hour > 0) {
-								item.qp22hour = item.qp22hour * 10000
-							}
-							if(item.qp23hour > 0) {
-								item.qp23hour = item.qp23hour * 10000
-							}
-						}
-
-					})
-					// this.loading = false
-					this.history_list = current_data_ctl
-
-					// 解决提交时的弹框问题
-					// this.ctl_form = null
-					form.req_ctl_list = current_data_ctl
-					console.log("打印：formBase::::;;;",this.ctl_form)
 
 					updateSspSlot(form).then(res=> {
 						this.submitClock = false
-						// this.loading = true
 						if(res.code === 200) {
 							this.$Bus.$emit('sspAdvEmitEvent') // ssp-adv
 							this.$Bus.$emit('dspSlotEmitEvent') // dsp-slot
 							this.$Message.success({content: '保存成功', duration: 3})
 							this.goBack()
-						}
-						if(res.code === 500) {
-							this.resetDate()
-
-							this.ctl_form = []
-							console.log("this.History_form::::::::::::::::::",this.history_list)
-							this.history_list.map(item=>{
-								item.end_at = item.endTime
-								item.start_at = item.startTime
-								if(item.ctl_type === 1 && item.qpd > 0) {
-									item.qpd = item.qpd / 10000
-								}
-								if(item.ctl_type === 2) {
-									if (item.qp0hour > 0) {
-										item.qp0hour = item.qp0hour / 10000
-									}
-									if (item.qp1hour > 0) {
-										item.qp1hour = item.qp1hour / 10000
-									}
-									if (item.qp2hour > 0) {
-										item.qp2hour = item.qp2hour / 10000
-									}
-									if (item.qp3hour > 0) {
-										item.qp3hour = item.qp3hour / 10000
-									}
-									if (item.qp4hour > 0) {
-										item.qp4hour = item.qp4hour / 10000
-									}
-									if (item.qp5hour > 0) {
-										item.qp5hour = item.qp5hour / 10000
-									}
-									if (item.qp6hour > 0) {
-										item.qp6hour = item.qp6hour / 10000
-									}
-									if (item.qp7hour > 0) {
-										item.qp7hour = item.qp7hour / 10000
-									}
-									if (item.qp8hour > 0) {
-										item.qp8hour = item.qp8hour / 10000
-									}
-									if (item.qp9hour > 0) {
-										item.qp9hour = item.qp9hour / 10000
-									}
-									if (item.qp10hour > 0) {
-										item.qp10hour = item.qp10hour / 10000
-									}
-									if (item.qp11hour > 0) {
-										item.qp11hour = item.qp11hour / 10000
-									}
-									if (item.qp12hour > 0) {
-										item.qp12hour = item.qp12hour / 10000
-									}
-									if (item.qp13hour > 0) {
-										item.qp13hour = item.qp13hour / 10000
-									}
-									if (item.qp14hour > 0) {
-										item.qp14hour = item.qp14hour / 10000
-									}
-									if (item.qp15hour > 0) {
-										item.qp15hour = item.qp15hour / 10000
-									}
-									if (item.qp16hour > 0) {
-										item.qp16hour = item.qp16hour / 10000
-									}
-									if (item.qp17hour > 0) {
-										item.qp17hour = item.qp17hour / 10000
-									}
-									if (item.qp18hour > 0) {
-										item.qp18hour = item.qp18hour / 10000
-									}
-									if (item.qp19hour > 0) {
-										item.qp19hour = item.qp19hour / 10000
-									}
-									if (item.qp20hour > 0) {
-										item.qp20hour = item.qp20hour / 10000
-									}
-									if (item.qp21hour > 0) {
-										item.qp21hour = item.qp21hour / 10000
-									}
-									if (item.qp22hour > 0) {
-										item.qp22hour = item.qp22hour / 10000
-									}
-									if (item.qp23hour > 0) {
-										item.qp23hour = item.qp23hour / 10000
-									}
-
-								}
-							})
-
-							this.ctl_form = this.history_list
-							console.log("this.ctl_form:000-000::",this.ctl_form)
-						}
-						if(res.code === 400) {
-							this.resetDate()
-
-							this.ctl_form = []
-							console.log("this.History_form::::::::::::::::::",this.history_list)
-							this.history_list.map(item=>{
-								item.end_at = item.endTime
-								item.start_at = item.startTime
-							})
-
-							this.ctl_form = this.history_list
-							console.log("this.ctl_form:000-000::",this.ctl_form)
 						}
 					}, err=> {
 						this.submitClock = false
@@ -1594,8 +1118,6 @@ export default {
 				})
 			})
 		}
-		// 异步
-
 	},
 	watch: {
 		'demoTitle'() {
@@ -1603,8 +1125,196 @@ export default {
 			if(this.demoTitle && !this.slot_id) {
 				this.formBase.ssp_slot_name = `${this.appBaseData.app_name ? this.appBaseData.app_name + '-' : ''}${this.demoTitle}`
 			}
-		},
+		}
 	}
 }
 </script>
 
+<style lang="stylus" rel="stylesheet/stylus" scoped>
+.dau-flex
+	display: flex
+	justify-content: space-between
+	margin-bottom: 14px
+	.dau-child
+		flex: 0 0 214px
+	.dau-child2
+		flex: 0 0 446px
+	.dau-flex-block
+		flex: 1
+	p
+		padding-top: 6px
+		font-size: 14px
+		line-height: 20px
+		margin-bottom: 5px
+	.dau-num-inner
+		position: relative
+		.num-label
+			position: absolute
+			right: 30px
+			top: 0px
+			height: 32px
+			line-height: 32px
+.package-name-text
+	font-size: 14px
+	color: #999999
+.ad-right-content
+	width: 240px
+	display: inline
+	float: left
+	margin-left: 40px
+	h3
+		font-size: 14px
+		line-height: 30px
+		font-weight: 600
+		text-align: center
+		margin-bottom: 28px
+.ad-left-content
+	float: left
+	width: 820px
+.scene-child
+	cursor: pointer
+	display: inline
+	float: left
+	font-size: 0px
+	padding: 10px 15px
+	border-bottom: 1px solid #EFEFEF
+	border-right: 1px solid #EFEFEF
+	position: relative
+	&:hover
+		background-color: #EBF3FF
+	&:nth-child(3n + 1)
+		border-left: 1px solid #EFEFEF
+	&:nth-child(1), &:nth-child(2), &:nth-child(3)
+		border-top: 1px solid #EFEFEF
+	&.active
+		background-color: #EBF3FF
+		border-bottom: 1px solid #3F83F7
+		border-right: 1px solid #3F83F7
+		h4
+			font-weight:bold
+		&:after
+			content:''
+			position: absolute
+			left: -1px
+			top: 0px
+			width: 0px
+			height: 100%
+			border-right: 1px solid #3F83F7
+		&:before
+			content:''
+			position: absolute
+			left: 0px
+			top: -1px
+			width: 100%
+			height: 0px
+			border-bottom: 1px solid #3F83F7
+	.scene-icon
+		display: inline-block
+		width: 35px
+		vertical-align: middle
+		text-align: center
+		img
+			vertical-align: middle
+	.scene-intro
+		width: 150px
+		margin-left: 10px
+		display: inline-block
+		vertical-align: middle
+	h4
+		font-weight: normal
+		height: 20px
+		font-size: 12px
+		line-height: 20px
+	p
+		margin-top: 4px
+		height: 36px
+		font-size: 12px
+		font-weight: 400
+		color: #8D9197
+		line-height: 18px
+.style-child
+	cursor: pointer
+	display: inline
+	float: left
+	width: 170px
+	height: 118px
+	font-size: 0px
+	padding: 8px
+	border-bottom: 1px solid #EFEFEF
+	border-right: 1px solid #EFEFEF
+	position: relative
+	text-align: center
+	&.active
+		background-color: #EBF3FF
+		border-bottom: 1px solid #3F83F7
+		border-right: 1px solid #3F83F7
+		h4
+			font-weight:bold
+		&:after
+			content:''
+			position: absolute
+			left: -1px
+			top: 0px
+			width: 0px
+			height: 100%
+			border-right: 1px solid #3F83F7
+		&:before
+			content:''
+			position: absolute
+			left: 0px
+			top: -1px
+			width: 100%
+			height: 0px
+			border-bottom: 1px solid #3F83F7
+	&:hover
+		background-color: #EBF3FF
+		h4
+			font-weight: bold
+	&:nth-child(4n + 1)
+		border-left: 1px solid #EFEFEF
+	&:nth-child(1), &:nth-child(2), &:nth-child(3), &:nth-child(4)
+		border-top: 1px solid #EFEFEF
+	.style-icon
+		text-align: center
+		width: 108px
+		height: 54px
+		margin:0 auto
+		img
+			max-height: 100%
+			vertical-align: middle
+			max-width:100%
+	.style-intro
+		margin-top: 4px
+	h4
+		font-weight: normal
+		height: 20px
+		font-size: 12px
+		line-height: 20px
+	p
+		margin-top: 4px
+		font-size: 12px
+		font-weight: 400
+		color: #999999
+		height: 18px
+		line-height: 18px
+		overflow: hidden
+.mobile-card
+	width: 242px
+	height: 453px
+	margin: 0 auto
+	border-radius: 14px
+	padding: 33px 14px 40px 14px
+	background-image: url('~@/assets/image/ad/mobile-bg-new.png')
+	.mobile-center
+		font-size: 0px
+		img
+			vertical-align: top
+			width: 100%
+.private-check-card
+	/deep/ .ivu-checkbox-wrapper-disabled.ivu-checkbox-border
+		color: #ccc
+.material-card
+	position: relative
+	display: inline-block
+	vertical-align: top
+</style>

@@ -1,6 +1,6 @@
 <template>
     <div class="clearfix root-header">
-        <div class="header-card"><img src="~@/assets/image/header_logo.png">创汇世纪管理平台</div>
+        <div class="header-card"><img src="~@/assets/image/logo_header1.png">创汇世纪管理平台</div>
         <div class="user-avatar-dropdown">
             <Dropdown trigger="click" placement="bottom-end" @on-click="handleClick">
                 <a href="javascript:void(0)">

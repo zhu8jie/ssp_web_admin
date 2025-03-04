@@ -3,7 +3,7 @@
     <div class="header">
       <div class="left">
         <img src="../../assets/image/logo.png" alt="">
-        <span>数字欢喜</span>
+        <span>创汇世纪</span>
       </div>
       <div class="text">申请开发者账号</div>
       <div class="right">已有账号，直接 <a href="/account/login">登录 ></a></div>

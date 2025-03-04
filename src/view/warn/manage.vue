@@ -2,7 +2,7 @@
 	<div class="page-main">
 		<Card :bordered="false" dis-hover>
 			<div class="page-title clearfix">
-				<h2>{{headTitle}}<span class="small-text">（针对数字欢喜所有资源的数据异常预警设置，设置成功5分钟后生效）</span>
+				<h2>{{headTitle}}<span class="small-text">（针对数字创汇世纪所有资源的数据异常预警设置，设置成功5分钟后生效）</span>
 				</h2>
 				<div class="is-handler">
 					<Button class="host" type="text" @click="doColumns">自定义列</Button>

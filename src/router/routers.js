@@ -502,40 +502,40 @@ export const asyncRouterMap = [
 			}
 		]
 	},*/
-	/*
-	{
-		path: '/warn', // 预警中心
-		name: 'warn-manage',
-		component: Main,
-		redirect: '/warn/manage',
-		meta: {
-			title: '预警中心',
-			redirectTo: 'warn-manage-index',
-			icon: 'left-bar-icon warn-tag'
-		},
-		children: [
-			{
-				path: '/warn/manage',
-				name: 'warn-manage-index',
-				meta: {
-					title: '预警中心',
-					isShowAccess: true,
-					inPageAccess: {'viewIndex': '首页', 'addAndEdit': '新建/编辑预警', 'status': '修改预警状态', 'delete': '删除'} // 页面内权限
-				},
-				component: resolve => require(['@/view/warn/manage'], resolve)
-			},
-			{
-				path: '/warn/edit',
-				name: 'warn-edit',
-				meta: {
-					title: '新建预警规则',
-					hideInMenu: true,
-					targetHighLight: 'warn-manage-index',
-				},
-				component: resolve => require(['@/view/warn/edit'], resolve)
-			}
-		]
-	},*/
+
+	// {
+	// 	path: '/warn', // 预警中心
+	// 	name: 'warn-manage',
+	// 	component: Main,
+	// 	redirect: '/warn/manage',
+	// 	meta: {
+	// 		title: '预警中心',
+	// 		redirectTo: 'warn-manage-index',
+	// 		icon: 'left-bar-icon warn-tag'
+	// 	},
+	// 	children: [
+	// 		{
+	// 			path: '/warn/manage',
+	// 			name: 'warn-manage-index',
+	// 			meta: {
+	// 				title: '预警中心',
+	// 				isShowAccess: true,
+	// 				inPageAccess: {'viewIndex': '首页', 'addAndEdit': '新建/编辑预警', 'status': '修改预警状态', 'delete': '删除'} // 页面内权限
+	// 			},
+	// 			component: resolve => require(['@/view/warn/manage'], resolve)
+	// 		},
+	// 		{
+	// 			path: '/warn/edit',
+	// 			name: 'warn-edit',
+	// 			meta: {
+	// 				title: '新建预警规则',
+	// 				hideInMenu: true,
+	// 				targetHighLight: 'warn-manage-index',
+	// 			},
+	// 			component: resolve => require(['@/view/warn/edit'], resolve)
+	// 		}
+	// 	]
+	// },
 	{
 		path: '/access', // 接入管理
 		name: 'access-manage',

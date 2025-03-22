@@ -111,7 +111,7 @@ export default {
 			state.userInfo = info
 		},
 		setUserRole(state, info) { // 用户权限
-			console.log("state",state)
+
 			console.log("info",info)
 			let role = info.role
 			state.userRoute = !!role && !!role.models && role.models.length ? role.models : [] // 用户路由
@@ -123,6 +123,10 @@ export default {
 
 			state.userRouteKeyObj = getKeyByRouter(state.userRoute)
 			state.catchMenuByRouter = state.userName === config.superName ? adminGetMenuByRouter(asyncRouterMap) : getMenuByRouter(asyncRouterMap, state.userRouteKeyObj) // 左侧导航路由
+			console.log("asyncRouterMap",asyncRouterMap)
+			console.log("state.userRoute",state.userRoute)
+			console.log("state.userRouteKeyObj",state.userRouteKeyObj)
+			console.log("catchMenuByRouter",state.catchMenuByRouter)
 
 			// console.log(state.userAllFields)
 			// console.log('预算表格', state.userDspFields)

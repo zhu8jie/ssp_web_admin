@@ -73,6 +73,29 @@ export const asyncRouterMap = [
 			}
 		]
 	},
+	// {
+	// 	path: '/rule',
+	// 	name: 'rule',
+	// 	component: Rule,
+	// 	meta: {
+	// 		title: '过滤规则',
+	// 		icon: 'left-bar-icon home-tag'
+	// 	},
+	// 	children: [
+	// 		{
+	// 			path: 'budget/rule/manage',
+	// 			name: 'filter-rule',
+	// 			meta: {
+	// 				keepAlive: true,
+	// 				title: '第三方平台账号管理',
+	// 				isShowAccess: true,
+	// 				inPageAccess: {'viewIndex': '首页', 'addNewRule': '新建账号', 'modify': '修改'} // 页面内权限
+	// 			},
+	// 			component: resolve => require(['@/view/dsp/dsp-test-manage'], resolve)
+	// 		}
+	// 	]
+	// },
+
 	{
 		path: '/ssp', // 流量管理
 		name: 'ssp',
@@ -332,9 +355,31 @@ export const asyncRouterMap = [
 			// 	meta: {
 			// 		title: '第三方平台账号管理',
 			// 		isShowAccess: true,
-			// 		inPageAccess: {'viewIndex': '首页', 'addNewAccount': '新建账号', 'modify': '修改'} // 页面内权限
+			// 		inPageAccess: {'viewIndex': '首页', 'addNewRule': '新建账号', 'modify': '修改'} // 页面内权限
 			// 	},
 			// 	component: resolve => require(['@/view/dsp/dsp-test-manage'], resolve)
+			// },
+
+			// {
+			// 	path: '/dsp/third/manage',
+			// 	name: 'ad-budget-rule-manage',
+			// 	meta: {
+			// 		title: '第三方平台账号管理',
+			// 		isShowAccess: true,
+			// 		inPageAccess: {'viewIndex': '首页', 'addNewRule': '新建账号', 'modify': '修改'} // 页面内权限
+			// 	},
+			// 	component: resolve => require(['@/view/rule/ad-budget-rule-manage'], resolve)
+			// },
+
+			// {
+			// 	path: '/dsp/third/manage',
+			// 	name: 'ssp-rule-manage',
+			// 	meta: {
+			// 		title: '第三方平台账号管理',
+			// 		isShowAccess: true,
+			// 		inPageAccess: {'viewIndex': '首页', 'addNewRule': '新建账号', 'modify': '修改'} // 页面内权限
+			// 	},
+			// 	component: resolve => require(['@/view/rule/ad-ssp-rule-manage'], resolve)
 			// },
 			{
 				path: '/dsp/slot/edit',
@@ -359,7 +404,28 @@ export const asyncRouterMap = [
 			}*/
 		]
 	},
-	
+
+	// {
+	// 	path: '/rule',
+	// 	name: 'rule',
+	// 	component: Rule,
+	// 	meta: {
+	// 		title: '规则管理',
+	// 		icon: 'left-bar-icon revenue-tag'
+	// 	},
+	// 	children: [
+	// 		{
+	// 			path: '/data/ssp/index',
+	// 			name: 'ssp-data',
+	// 			meta: {
+	// 				title: '流量数据',
+	// 				isShowAccess: true,
+	// 				inPageAccess: {'viewIndex': '首页', 'download': '下载报表', 'viewSource': '子表查看', 'deleteSource': '删除广告位配置的预算位'} // 页面内权限
+	// 			},
+	// 			component: resolve => require(['@/view/data/ssp-data/index'], resolve)
+	// 		},
+	// 	]
+	// },
 	{
 		path: '/data', // 数据管理
 		name: 'data',
@@ -622,7 +688,83 @@ export const asyncRouterMap = [
 			}
 		]
 	},
-	/*
+	// {
+	// 	path: '/rules',
+	// 	name: 'rules-manage',
+	// 	component: Rules,
+	// 	meta: {
+	// 		title: '过滤规则',
+	// 		icon: 'left-bar-icon revenue-tag'
+	// 	},
+	// 	// children: []
+	// },
+	// 	children: [
+	// 		// {
+	// 		// 	path: '/rule/manage',
+	// 		// 	name: 'filter-rule',
+	// 		// 	meta: {
+	// 		// 		title: '第三方平台账号管理',
+	// 		// 		isShowAccess: true,
+	// 		// 		inPageAccess: {'viewIndex': '首页', 'addNewRule': '新建账号', 'modify': '修改'} // 页面内权限
+	// 		// 	},
+	// 		// 	component: resolve => require(['@/view/dsp/dsp-test-manage'], resolve)
+	// 		// },
+	// 		// {
+	// 		// 	path: 'budget/rule/manage',
+	// 		// 	name: 'filter-rule',
+	// 		// 	meta: {
+	// 		// 		title: '第三方平台账号管理',
+	// 		// 		isShowAccess: true,
+	// 		// 		inPageAccess: {'viewIndex': '首页', 'addNewRule': '新建账号', 'modify': '修改'} // 页面内权限
+	// 		// 	},
+	// 		// 	component: resolve => require(['@/view/dsp/dsp-test-manage'], resolve)
+	// 		// }
+	// 	]
+	// },
+
+	{
+		path: '/rules', // 规则
+		name: 'rules-manage',
+		component: Main,
+		meta: {
+			title: '过滤规则',
+			icon: 'left-bar-icon monitor-tag'
+		},
+		children: [
+			{
+				path: '/rule/info',
+				name: 'filter-rule-list',
+				meta: {
+					isShowAccess: true,
+					title: '规则列表',
+					inPageAccess: {'newAddRule': '新建规则', 'edit': '修改'} // 页面内权限
+				},
+				component: resolve => require(['@/view/rule/dsp-test-manage'], resolve)
+			},
+			{
+				path: '/rule/ssp',
+				name: 'filter-rule-ssp',
+
+				meta: {
+					isShowAccess: true,
+					title: '广告位规则',
+					inPageAccess: {'newAddSspRule': '新建广告位规则', 'edit': '修改'} // 页面内权限
+				},
+				component: resolve => require(['@/view/rule/ad-ssp-rule-manage'], resolve)
+			},
+			{
+				path: '/rule/dsp',
+				name: 'dsp_slot_list',
+				meta: {
+					isShowAccess: true,
+					title: '预算位规则',
+					inPageAccess: {'newAddDspRule': '新建广告位', 'edit': '修改'} // 页面内权限
+				},
+				component: resolve => require(['@/view/rule/ad-budget-rule-manage'], resolve)
+			},
+		]
+	},
+
 	{
 		path: '/monitor', // 数据监测产品
 		name: 'monitor-manage',
@@ -673,7 +815,7 @@ export const asyncRouterMap = [
 				component: resolve => require(['@/view/monitor/task'], resolve)
 			}
 		]
-	}*/
+	}
 ]
 
 /**

@@ -68,7 +68,8 @@ const showThisMenuEle = (item, access) => {
 export const getMenuByRouter = (list, accessObj) => {
     let res = []
     console.log("Util.js中的router list:",accessObj)
-  //  console.log(" accessObj:",laccessObjist)
+
+   console.log(" accessObj list:",list)
     if (!accessObj) return res
 
     try {
@@ -116,7 +117,7 @@ export const getMenuByRouter = (list, accessObj) => {
         let resultArr = res.sort(function(a, b) {
             return b.weight - a.weight
         })
-
+		console.log("resultArr:::::::::::::",resultArr)
         return resultArr
     } catch (e) {
         console.log(e)
@@ -129,6 +130,7 @@ export const getMenuByRouter = (list, accessObj) => {
  */
 export const adminGetMenuByRouter = (list, access) => {
     console.log("admin:",access)
+	console.log("routerList:",list)
     let res = []
     forEach(list, item => {
         if (!item.meta || (item.meta && !item.meta.hideInMenu)) {

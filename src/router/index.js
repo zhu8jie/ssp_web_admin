@@ -40,6 +40,7 @@ router.beforeEach((to, from, next) => {
             if (store.getters.getUserRoute.length === 0) { //判断当前用户是否已拉取完role信息
                 store.dispatch('getSysUserRole').then(res => {
                     if (res.code === 200) {
+						console.log("router res:",res)
                         if (store.getters.getUserRoute.length === 0) {
                             next({path: '/permission/error/log'})
                         } else {

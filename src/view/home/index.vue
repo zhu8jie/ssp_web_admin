@@ -805,9 +805,10 @@
     created() {
       // 从登录页面跳转到首页，此时需要加入路由[length = 0] 的判断，默认去第一条
       let _menu = this.$store.getters.menuList
-
+		console.log("_menu::",_menu)
       if (_menu.length && _menu[0].children.length && _menu[0].name !== 'home') {
         // 此处相当于做了一个中间件跳转
+		  console.log("name: _menu[0].children[0].name", _menu[0].children[0].name)
         this.$router.replace({name: _menu[0].children[0].name})
       } else {
           this.commonData()

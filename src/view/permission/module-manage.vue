@@ -242,6 +242,7 @@ export default {
 		 */
 		routeList() {
 			if (this.modalForm.type === 1) { // 如果选择菜单， 则routeList 为 路由列表
+				console.log("rouleList:",this.catchRouteList)
 				return this.catchRouteList
 			} else if (this.modalForm.type === 2) { // 如果选择普通权限
 				if (!!this.modalForm.parent_id) {
@@ -286,7 +287,7 @@ export default {
 			1.2 普通权限(页面内权限)，必须选择上级code
 				1.2.1 选择上级code-> 选择code[查看，封禁...]
 		*/
-	   
+
 		/**
 		 * [getSysModule 获取列表的信息]
 		 * @return {[type]} [description]
@@ -356,7 +357,7 @@ export default {
 					id: item.id,
 					name: item.name
 				})
-				
+
 				if(!!item.sub_model && item.sub_model.length) {
 					tempIdArr = tempIdArr.concat(this.getAllModuleId(item.sub_model))
 				}
@@ -383,7 +384,7 @@ export default {
 						name: item.children[0].meta.title
 					})
 				}
-
+				console.log("tempArr:",tempArr)
 				// 2. 例如流量管理，需要写入一级下拉
 				if (item.children && item.children.length > 1) {
 
@@ -484,7 +485,7 @@ export default {
 						let _api = []
 						_modalForm.api.map(item=> {
 							if(!!item.value) {
-							   _api.push(item.value) 
+							   _api.push(item.value)
 							}
 						})
 
@@ -500,11 +501,11 @@ export default {
 					} else {
 						proArr.push(addSysModule(params))
 					}
-					
+
 					this.submitClock = true
 
 					Promise.all(proArr).then(res => {
-						
+
 						this.submitClock = false
 
 						if (res[0].code === 200) {
@@ -580,7 +581,7 @@ export default {
 				route: row.route, // route
 				api: _apiArr // api数组
 			}
-
+			console.log("modalForm:",this.modalForm)
 			this.drawerTitle = row.level === 1 ? '修改模块' : '新建子模块'
 			this.setModalFlag = true
 		},

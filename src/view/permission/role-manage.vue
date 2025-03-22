@@ -307,11 +307,13 @@
       menuChange() {
         let data = this.$refs.tree.getCheckedAndIndeterminateNodes()
         let checkDataID = data.filter(item => {
+			console.log("this.moduleCheckout:==================================================",this.moduleCheckout)
           return item.id
         }).map((item, index) => {
           return item.id
         })
         this.moduleCheckout = checkDataID
+
         let checkDataRoute = data.filter(item => {
           return item.route
         }).map((item, index) => {

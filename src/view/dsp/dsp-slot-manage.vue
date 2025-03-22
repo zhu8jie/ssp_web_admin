@@ -580,7 +580,7 @@
     mounted() {
       this.initTableHeight( // search-line的高度
         {
-          'search-line': {isAutoCalc: true, isInclude: true}, 
+          'search-line': {isAutoCalc: true, isInclude: true},
           'nav-handle-group': true,
           'randomNum': -15
         }
@@ -1147,6 +1147,7 @@
        * @return {[type]}    [description]
        */
       searchDspSlot(query) {
+
         this.dspSlotLoad = true
         this._getDspSlotList(query)
       },

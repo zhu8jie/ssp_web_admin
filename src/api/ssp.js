@@ -261,6 +261,7 @@ export const getAppInfo = (data) => {
 export const getSspSlotAdList = (data) => {
 	return axios.request({
 		method: 'get',
+		timeout:5000,
 		url: `/api/v1/ssp_slot/list?${qs.stringify(data, {arrayFormat: 'repeat'})}`
 	})
 }

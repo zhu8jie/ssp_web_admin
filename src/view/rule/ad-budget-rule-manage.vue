@@ -51,6 +51,7 @@
 					<!--操作-->
 					<template slot-scope="{ row, index }" slot="action">
 						<Button type="text"  @click="doCreate(row)">修改</Button>
+						<Button type="text"  @click="deleteCreate(row)">删除</Button>
 					</template>
 				</Table>
 				<div class="page-center">
@@ -68,7 +69,7 @@
 				<!-- 预算位名称 -->
 				<FormItem label="输入预算位名称:" prop="name">
 
-					<Select  @focus="onfocushandle"
+					<Select
 						:disabled = "disabled"
 						class="i-margin-right-11  i-select-remote"
 						v-model="filterSearch.dsp_slot_id_arr_select"
@@ -83,6 +84,7 @@
 						:max-tag-count="1"
 						:max-tag-placeholder="limitText"
 						:placeholder="title_name"
+						v-if="dspSlotList && dspSlotList.length"
 
 					>
 						<Option v-for="item in dspSlotList" :value="item.id" :key="item.id">{{item.dsp_slot_name}} (ID:{{item.id}})
@@ -239,9 +241,7 @@ export default {
 	},
 
 	methods: {
-		onfocushandle() {
-			console.log("============================；啦啦啦啦啦")
-		},
+
 
 
 		cancleBtn(){
@@ -275,6 +275,8 @@ export default {
 					this.tableLoadFlag = false
 				}
 			})
+
+
 		},
 
 		getRuleList() {
@@ -404,13 +406,30 @@ export default {
 			this.getDspRuleBudgetList()
 		},
 
-
+		deleteCreate(row) {
+			this.modalForm.dsp_slot_id = row.dsp_slot_id
+			this.modalForm.rule_ids = []
+			saveDspRule(this.modalForm).then(res => {
+				this.submitClock = false
+				this.rule_id_list= []
+				if (res.code === 200) {
+					this.setModalFlag = false
+					this.getDspRuleBudgetList()
+				}
+			})
+			this.modalForm.dsp_slot_id = ''
+		},
 		submitForm() {
-
+			console.log("this.filterSearch.dsp_slot_id_arr_select.length",this.filterSearch.dsp_slot_id_arr_select)
 			if (this.filterSearch.dsp_slot_id_arr_select.length == 0) {
 				this.$Message.error({content: '预算位名称不能为空' , duration: 3})
 				return
 			}
+			if(this.$refs.tree.getCheckedKeys([]).length === 0) {
+				this.$Message.error({content: '请勾选规则' , duration: 3})
+				return
+			}
+
 			this.submitClock = true
 			this.submitTxt = '提交中...' // 提交按钮的文字
 
@@ -419,18 +438,18 @@ export default {
 			if(this.modalForm.type === 1) {
 				this.modalForm.dsp_slot_id = this.filterSearch.dsp_slot_id_arr_select[0]
 				this.modalForm.rule_ids = [... this.rule_id_list]
-				this.filterSearch.dsp_slot_id_arr_select = []
 			} else {
 				let checkoutList = this.$refs.tree.getCheckedKeys([])
 				this.modalForm.rule_ids = [... checkoutList]
 			}
-
+			this.filterSearch.dsp_slot_id_arr_select = []
 			saveDspRule(this.modalForm).then(res => {
 				this.submitClock = false
 				this.rule_id_list= []
+				this.setModalFlag = false
+				console.log("res code",res.code)
 				if (res.code === 200) {
-					this.setModalFlag = false
-					this.$Message.success({content: this.modalForm.dsp_slot_id ? "修改成功" : "新建成功", duration: 3})
+					console.log("200000000000000000000000")
 					this.getDspRuleBudgetList()
 				}
 			})
@@ -534,6 +553,12 @@ export default {
 			if (arr.length === 0) {
 				this.dspSlotList = [...this.catchDspSlotList]
 			}
+			console.log("this.",this.dspSlotList )
+			if (this.dspSlotList.length == 0) {
+				this.getOnFoust()
+			}
+
+
 		},
 		/**
 		 * [dspSlotQueryChange 预算位-搜索词发生变化时]
@@ -591,14 +616,14 @@ export default {
 		 * @return {[type]}    [description]
 		 */
 		_getDspSlotList: debounce(function (query) {
-			console.log("1111111111111111111111111111")
+
 			let _params = {
 				// product_id_arr: this.filterSearch.product_id_arr,
 				page_size: (!!query || this.filterSearch.product_id_arr.length) ? 10000 : 10,
 				page_num: 1,
 				search_text: query || ''
 			}
-			console.log("1122222222222222222222222222222")
+
 			getDspSlotList(_params).then(res => {
 				this.dspSlotLoad = false
 				if (res.code === 200) {

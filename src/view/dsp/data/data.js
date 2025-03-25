@@ -300,7 +300,7 @@ export const getBudgetColum = (self)=> {
 			title: '操作',
 			slot: 'action',
 			align: 'center',
-			width:  60
+			width:  100
 		}
 	]
 }
@@ -326,7 +326,7 @@ export const getRuleSspColum = (self) => {
 			title: '操作',
 			slot: 'action',
 			align: 'center',
-			width:  60
+			width:  101
 		}
 	]
 }

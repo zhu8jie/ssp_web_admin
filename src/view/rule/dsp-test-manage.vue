@@ -32,8 +32,8 @@
 					</template>
 
 					<template slot-scope="{ row }" slot="status">
-						<span v-if="row.status === -1">无效</span>
-						<span v-if="row.status === 1">有效</span>
+						<span v-if="row.status === -1">已停用</span>
+						<span v-if="row.status === 1">运行中</span>
 					</template>
 					<template slot-scope="{ row }" slot="rule_name">
 						<p class="name-row-ellipsis" :title="row.rule_name">{{row.rule_name}}</p>
@@ -42,8 +42,8 @@
 					<!--操作-->
 					<template slot-scope="{ row, index }" slot="action">
 						<Button type="text"  @click="doCreate(row)">修改</Button>
-						<Button type="text" v-if="row.status === 1"  @click="onData(row)">运行中</Button>
-						<Button type="text" v-if="row.status === -1" @click="onData(row)">已停用</Button>
+						<Button type="text" v-if="row.status === 1"  @click="onData(row)">停用</Button>
+						<Button type="text" v-if="row.status === -1" @click="onData(row)">启用</Button>
 					</template>
 				</Table>
 				<div class="page-center">
@@ -342,12 +342,20 @@
 		  },
 
 			onData(row) {
-			  console.log(row)
-			    // this.modalForm.rule_status = 1 ? -1 : 1
-				if(this.modalForm.rule_status === 1) {
-					this.modalForm.rule_status = -1
+			    console.log("rowrowrow:",row)
+				// if(this.modalForm.rule_status === 1) {
+				// 	this.modalForm.rule_status = -1
+				// 	row.status = -1
+				// } else {
+				// 	this.modalForm.rule_status = 1
+				// 	row.status = 1
+				// }
+				if(row.status === 1) {
+						this.modalForm.rule_status = -1
+						row.status = -1
 				} else {
-					this.modalForm.rule_status = 1
+						this.modalForm.rule_status = 1
+						row.status = 1
 				}
 			    this.modalForm.rule_name = row.rule_name
 				this.modalForm.rule_id = row.id
@@ -363,7 +371,7 @@
 
 						this.filterSearch.rule_id = ''
 						this.filterSearch.rule_name = ''
-						this.getRuleList()
+						// this.getRuleList()
 					}
 				})
 			},

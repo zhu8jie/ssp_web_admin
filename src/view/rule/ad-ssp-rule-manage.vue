@@ -28,33 +28,10 @@
 						:max-tag-placeholder="limitText"
 						placeholder="广告位名称/ID"
 					>
-						<Option v-for="item in sspSlotList" :value="item.ssp_slot_id" :key="item.ssp_slot_id">{{item.ssp_slot_name}}
-							(ID:{{item.ssp_slot_id}})
+						<Option v-for="item in sspSlotList" :value="item.ssp_slot_code" :key="item.ssp_slot_code">{{item.ssp_slot_name}}
+							(ID:{{item.ssp_slot_code}})
 						</Option>
 					</Select>
-
-<!--					<Input class="i-margin-right-11 i-width-select" clearable v-model.trim="filterSearch.search_text" placeholder="输入规则名称"/>-->
-					<!-- 规则名称 -->
-<!--					<Select-->
-<!--						class="i-margin-right-11 i-width-select i-select-remote"-->
-<!--						v-model="filterSearch.ssp_rule_id_arr_select"-->
-<!--						filterable-->
-<!--						clearable-->
-<!--						multiple-->
-<!--						:remote-method="searchSspRule"-->
-<!--						:loading="sspRuleLoad"-->
-<!--						@on-change="clearSearchSspRule"-->
-<!--						:on-query-change="sspRuleQueryChange"-->
-<!--						:transfer="true"-->
-<!--						:max-tag-count="1"-->
-<!--						:max-tag-placeholder="limitText"-->
-<!--						placeholder="广告位名称/ID"-->
-<!--					>-->
-<!--						<Option v-for="item in sspSlotList" :value="item.ssp_slot_id" :key="item.ssp_slot_id">{{item.ssp_slot_name}}-->
-<!--							(ID:{{item.ssp_slot_id}})-->
-<!--						</Option>-->
-<!--					</Select>-->
-
 					<Input :clearable="true"  class="i-margin-right-11 i-width-input" v-model.trim="filterSearch.ssp_slot_id" placeholder="输入广告ID"/>
 					<Button type="primary" @click="doFilterList">查询</Button>
 				</div>
@@ -75,11 +52,12 @@
 					<!--操作-->
 					<template slot-scope="{ row, index }" slot="action">
 						<Button type="text"  @click="doCreate(row)">修改</Button>
+						<Button type="text"  @click="deleteCreate(row)">删除</Button>
 					</template>
 					<!--操作-->
-<!--					<template slot-scope="{ row, index }" slot="action">-->
-<!--						<Button type="text"  @click="doCreate(row)">修改</Button>-->
-<!--					</template>-->
+					<!--					<template slot-scope="{ row, index }" slot="action">-->
+					<!--						<Button type="text"  @click="doCreate(row)">修改</Button>-->
+					<!--					</template>-->
 				</Table>
 				<div class="page-center">
 					<Page show-total show-sizer show-elevator placement="top" :total="total_count" :current.sync='currentPage' :page-size="pageSize" @on-change="changePage" @on-page-size-change="sizeChange"/>
@@ -97,6 +75,7 @@
 				<FormItem label="输入广告位名称:" prop="name">
 
 					<Select
+						:disabled = "disabled"
 						class="i-margin-right-11 i-select-remote"
 						v-model="filterSearch.ssp_slot_id_arr_select"
 						filterable
@@ -111,10 +90,10 @@
 						:max-tag-count="1"
 						:max-tag-placeholder="limitText"
 						:placeholder="ssp_title"
-						@on-focus="handleFocus"
+
 					>
-						<Option v-for="item in sspSlotList" :value="item.ssp_slot_id" :key="item.ssp_slot_id">{{item.ssp_slot_name}}
-							(ID:{{item.ssp_slot_id}})
+						<Option v-for="item in sspSlotList" :value="item.ssp_slot_code" :key="item.ssp_slot_code">{{item.ssp_slot_name}}
+							(ID:{{item.ssp_slot_code}})
 						</Option>
 					</Select>
 				</FormItem>
@@ -132,7 +111,6 @@
 							show-checkbox
 							ref = "tree"
 							node-key="id"
-							highlight-current = ture
 							:default-expand-all = false
 							:default-checked-keys='checkedKeys'
 							@check-change="handleCheckChange">
@@ -194,7 +172,7 @@ export default {
 			sspSlotList: [], // 广告位名称
 			sspSlotLoad: false, // 广告位加载中
 
-
+			disabled: false,
 
 			catchSspRuleList: [],
 			sspRuleLoad: false, //规则名称
@@ -205,7 +183,7 @@ export default {
 				ad_type_id_arr: [], // 广告类型ID数组
 				creative_type_arr: [], // 广告创意ID
 				search_text: '', // 搜索框
-
+				ssp_slot_id_arr_selects:[],
 				ssp_slot_id_arr_select: [], // 广告位名称/ID(单个)
 				ssp_rule_id_arr_select:[], //规则ID
 				ssp_slot_id: ''
@@ -259,11 +237,22 @@ export default {
 	// },
 
 	methods: {
-		handleFocus() {
-			console.log("==点击了============================================================")
+		// handleFocus() {
+		// 	console.log("==点击了============================================================")
+		// },
+
+		deleteCreate(row) {
+			this.modalForm.rule_ids = []
+			this.modalForm.ssp_slot_id = row.ssp_slot_id
+			saveSspRule(this.modalForm).then(res => {
+				if (res.code === 200) {
+					this.setModalFlag = false
+					// this.$Message.success({content: this.modalForm.ssp_slot_id ? "修改成功" : "新建成功", duration: 3})
+					this.getSspRuleList()
+				}
+			})
+			this.modalForm.ssp_slot_id = ''
 		},
-
-
 		cancleBtn(){
 			this.setModalFlag = false
 			this.filterSearch = []
@@ -273,6 +262,7 @@ export default {
 			this.tableLoadFlag = true
 
 			let solt_id = 0
+			console.log("this.filterSearch.ssp_slot_id_arr_select[0]",this.filterSearch.ssp_slot_id_arr_select[0])
 			if(this.filterSearch.ssp_slot_id_arr_select[0]) {
 				solt_id = this.filterSearch.ssp_slot_id_arr_select[0]
 			} else if(this.filterSearch.ssp_slot_id) {
@@ -345,12 +335,14 @@ export default {
 		 * @return {[type]}    [description]
 		 */
 		doCreate(row) {
+
 			this.ssp_title = "预算位名称/ID"
 			this.submitTxt = '提交中...'// 提交按钮的文字
 			this.setModalFlag = true
-
+			console.log("rowrow",row)
 
 			if(row && row.ssp_slot_id) {
+				this.disabled = true
 				console.log("rule_ids",row)
 				this.ssp_title = row.ssp_slot_name
 				if (this.ssp_title == "") {
@@ -364,10 +356,11 @@ export default {
 				this.tree_list_keys = this.$refs.tree.getCheckedKeys([])
 				console.log("this.modalForm.ssp_slot_id",this.modalForm.ssp_slot_id)
 			} else {
-				this.filterSearch.ssp_slot_id_arr_select = null
+				this.disabled = false
+				this.filterSearch.ssp_slot_id_arr_select = []
 				this.modalForm = {
 					search_text : '',
-					rule_ids: '',
+					rule_ids: [],
 					ssp_slot_id:'',
 					type: 1,
 				}
@@ -376,44 +369,53 @@ export default {
 			}
 			// 获取规则列表
 
-				// 数据加载完成后，强制刷新树组件
-				this.treeKey += 1;
-				this.getRuleList()
-				// this.$refs.tree.setCheckedKeys(['每天30点放量 (ID: 3)'])
+			// 数据加载完成后，强制刷新树组件
+			this.treeKey += 1;
+			this.getRuleList()
+			// this.$refs.tree.setCheckedKeys(['每天30点放量 (ID: 3)'])
 		},
 
 		submitForm() {
-			if(!this.filterSearch.ssp_slot_id_arr_select) {
+			console.log("ssp_slot_id_arr_select",this.filterSearch.ssp_slot_id_arr_select)
+			console.log("this.modalForm.type === 2",this.modalForm.type)
+			if (this.modalForm.type === 2) {
+				let checkoutList = this.$refs.tree.getCheckedKeys([])
+				this.modalForm.rule_ids = [...checkoutList]
+			}
+			else if (this.filterSearch.ssp_slot_id_arr_select.length === 0) {
 				this.$Message.error({content: '广告位名称不能为空' , duration: 3})
 				return
+			} else if(this.$refs.tree.getCheckedKeys([]).length === 0) {
+				this.$Message.error({content: '请选择规则',duration: 3})
+				return
 			}
+
 			this.submitClock = true
 			this.submitTxt = '提交中...' // 提交按钮的文字
-			console.log("this.checkedKeys",this.checkedKeys)
-			console.log("this.rule_id_list",this.rule_id_list)
+
 			console.log("this.modalForm",this.modalForm)
 			if (this.modalForm.type === 1) {
-				this.modalForm.ssp_slot_id = this.filterSearch.ssp_slot_id_arr_select[0]
+				this.modalForm.ssp_slot_id = +this.filterSearch.ssp_slot_id_arr_select[0]
 				this.filterSearch.ssp_slot_id_arr_select = []
-				this.modalForm.rule_ids = [... this.rule_id_list]
-				this.checkedKeys=[]
-			} else {
-				// let uniquelist = [...new Set([...this.checkedKeys, ...this.rule_id_list])]
-				// this.checkedKeys = null
-				// this.modalForm.rule_ids = [... uniquelist]
-				let checkoutList = this.$refs.tree.getCheckedKeys([])
-				this.modalForm.rule_ids = [... checkoutList]
-				// this.modalForm.rule_ids = this.
+				this.modalForm.rule_ids = [... this.$refs.tree.getCheckedKeys([])]
+				this.checkedKeys = []
 			}
-			console.log("this.modalForm",this.modalForm)
-			console.log("this.modalForm",this.modalForm)
+			// else {
+			// 	// let uniquelist = [...new Set([...this.checkedKeys, ...this.rule_id_list])]
+			// 	// this.checkedKeys = null
+			// 	// this.modalForm.rule_ids = [... uniquelist]
+			// 	let checkoutList = this.$refs.tree.getCheckedKeys([])
+			// 	this.modalForm.rule_ids = [...checkoutList]
+			// 	// this.modalForm.rule_ids = this.
+			// }
+			console.log("this.modalForm", this.modalForm)
 			console.log("节点", this.$refs.tree.getCheckedKeys([]))
 			saveSspRule(this.modalForm).then(res => {
 				this.submitClock = false
 
-				if(res.code === 200) {
+				if (res.code === 200) {
 					this.setModalFlag = false
-					this.$Message.success({content:this.modalForm.ssp_slot_id ? "修改成功" : "新建成功",duration: 3})
+					// this.$Message.success({content: this.modalForm.ssp_slot_id ? "修改成功" : "新建成功", duration: 3})
 					this.getSspRuleList()
 				}
 			})
@@ -427,14 +429,14 @@ export default {
 		loadNode(node, resolve) {
 			if (node.level === 0) {
 				// 根节点数据模拟，并设置默认名称为"全部"
-			// 	setTimeout(() => {
-			// 		resolve([{ rule_id: 0, rule_name: '全部', leaf: false }]);
-			// 	}, 500);
-			// } else {
+				// 	setTimeout(() => {
+				// 		resolve([{ rule_id: 0, rule_name: '全部', leaf: false }]);
+				// 	}, 500);
+				// } else {
 				// 加载子节点的数据模拟
 				setTimeout(() => {
 					// 示例：根据父节点ID获取对应子节点数据
-					console.log("loadNode:",this.rule_tree_list)
+					console.log("loadNode:", this.rule_tree_list)
 					const nodeData = this.rule_tree_list
 					resolve(nodeData);
 				}, 50);
@@ -444,16 +446,13 @@ export default {
 
 		// 处理复选框状态改变事件
 		handleCheckChange(data, checked, indeterminate) {
-			// if (data.rule_name === '全部') {
-			// 	return
-			// }
 
 			let cutAtColon = data.rule_name.split(':')[1];
 			let curr_id_tirm = cutAtColon.replace(/\)$/, '').trim()
 			let curr_id_num = +curr_id_tirm
-			if(!this.rule_id_list.includes(curr_id_num) ) {
+			if (!this.rule_id_list.includes(curr_id_num)) {
 				this.rule_id_list.push(curr_id_num)
-			} else if(!checked) {
+			} else if (!checked) {
 				this.rule_id_list = this.rule_id_list.filter(item => item !== curr_id_num);
 			}
 
@@ -471,12 +470,12 @@ export default {
 			}
 		},
 
-		SearchSspInput(){
+		SearchSspInput() {
 			getRuleList({
 				rule_name: this.modalForm.search_text,
 				page_num: 1,
 				page_size: 0,
-			}).then(res=> {
+			}).then(res => {
 				if (res.code === 200) {
 					this.rule_tree_list = res.data.list.map(item => ({
 						...item, // 展开原有的item对象
@@ -488,14 +487,14 @@ export default {
 					this.updateTreeData()
 				}
 			}, error => {
-				if(err.code === 403) {
+				if (err.code === 403) {
 
 				}
 			})
 		},
 
 		// 查询广告规则
-		doFilterList(){
+		doFilterList() {
 			this.currentPage = 1
 			this.getSspRuleList()
 		},
@@ -540,17 +539,18 @@ export default {
 		 * @return {[type]}     [description]
 		 */
 		sspSlotQueryChange(query) {
+			console.log("发生变化",this.catchSspSlotList)
 			if (!query) {
 				this.sspSlotList = [...this.catchSspSlotList]
 			}
 		},
 
 
-		sspRuleQueryChange(query) {
-			if (!query) {
-				this.sspRuleList = [...this.catchSspRuleList]
-			}
-		},
+		// sspRuleQueryChange(query) {
+		// 	if (!query) {
+		// 		this.sspRuleList = [...this.catchSspRuleList]
+		// 	}
+		// },
 
 		/**
 		 *  清空规则
@@ -579,14 +579,20 @@ export default {
 		searchSspSlot(query) {
 			this.sspSlotLoad = true
 			this.getSspSlotList(query)
+
 		},
 		/**
 		 * [clearSearchSspSlot 清空广告位]
 		 * @return {[type]} [description]
 		 */
 		clearSearchSspSlot(arr) {
+			console.log("arr",arr)
 			if (arr.length === 0) {
 				this.sspSlotList = [...this.catchSspSlotList]
+			}
+			console.log("this.sspSlotList:",this.sspSlotList)
+			if (this.sspSlotList.length === 0) {
+				this.getOnfours()
 			}
 		},
 
@@ -602,14 +608,16 @@ export default {
 		},
 
 		getOnfours() {
-			console.log("sss")
+			console.log("sssssssssss")
 			let params = {
-				page_size: 20,
+				page_size: 10,
 				page_num: 1
 			}
 			getSspSlotAdList_v2(params).then(res => {
 				if (res.code === 200) {
+
 					this.sspSlotList = res.data.list
+					console.log("this.sspSlotList",this.sspSlotList)
 				}
 			})
 		},
@@ -621,24 +629,25 @@ export default {
 		 * @return {[type]}     [description]
 		 */
 		getSspSlotList: debounce(function (query) {
-
-			let filter = this.filterSearch
-
+			this.modalForm.rule_ids = []
 			let _params = {
-				ud_id_arr: filter.ud_id_arr,
-				app_id_arr: filter.app_id_arr,
-				page_size: (!!query || filter.ud_id_arr.length || filter.app_id_arr.length) ? 10000 : 10,
+				// ud_id_arr: filter.ud_id_arr,
+				// app_id_arr: filter.app_id_arr,
+
+				page_size: 0,
 				page_num: 1,
 				search_text: query || ''
 			}
+			getSspSlotAdList_v2(_params).then(res => {
 
-			getSspSlotAdList(_params).then(res => {
 				this.sspSlotLoad = false
 				if (res.code === 200) {
+					console.log("res:",res.data.list)
 					this.sspSlotList = res.data.list
-
+					console.log("query",query,this.sspSlotList)
 					if (!query) {
 						this.catchSspSlotList = res.data.list
+						console.log("query:",query,this.catchSspSlotList )
 					}
 				}
 			})

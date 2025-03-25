@@ -763,14 +763,16 @@ export default {
           console.log("==============data:",_data)
 
           // 将formBase.ret_ctl_list,放入新的集合中
-          this.ctl_form = _data.req_ctl_list.map((i,idx)=>{
-            return {
-              ...i,
-              start_at:i.start_at > 0?dayjs.unix(i.start_at).format("YYYY-MM-DD HH:mm:ss"):'',
-              end_at:i.end_at > 0?dayjs.unix(i.end_at).format("YYYY-MM-DD HH:mm:ss"):''
-            }
-          })
 
+		 if (_data.req_ctl_list) {
+			 this.ctl_form = _data.req_ctl_list.map((i,idx)=>{
+				 return {
+					 ...i,
+					 start_at:i.start_at > 0?dayjs.unix(i.start_at).format("YYYY-MM-DD HH:mm:ss"):'',
+					 end_at:i.end_at > 0?dayjs.unix(i.end_at).format("YYYY-MM-DD HH:mm:ss"):''
+				 }
+			 })
+		 }
 					this.ctl_form.map(item=>{
 						if(item.ctl_type === 1 && item.qpd > 0) {
 							item.qpd = item.qpd / 10000

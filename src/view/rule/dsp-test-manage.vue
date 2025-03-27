@@ -342,20 +342,13 @@
 		  },
 
 			onData(row) {
-			    console.log("rowrowrow:",row)
-				// if(this.modalForm.rule_status === 1) {
-				// 	this.modalForm.rule_status = -1
-				// 	row.status = -1
-				// } else {
-				// 	this.modalForm.rule_status = 1
-				// 	row.status = 1
-				// }
+			    // console.log("rowrowrow:",row)
 				if(row.status === 1) {
 						this.modalForm.rule_status = -1
-						row.status = -1
+						// row.status = -1
 				} else {
 						this.modalForm.rule_status = 1
-						row.status = 1
+						// row.status = 1
 				}
 			    this.modalForm.rule_name = row.rule_name
 				this.modalForm.rule_id = row.id
@@ -372,6 +365,14 @@
 						this.filterSearch.rule_id = ''
 						this.filterSearch.rule_name = ''
 						// this.getRuleList()
+						if (this.modalForm.rule_status == -1) {
+							row.status = -1
+						} else {
+							row.status = 1
+						}
+					} else if(res.code ===500) {
+						row.status = 1
+						this.modalForm.rule_status = 1
 					}
 				})
 			},

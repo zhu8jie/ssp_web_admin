@@ -91,6 +91,11 @@
 <!--				</Button>-->
 			</div>
 		</Drawer>
+
+
+		<div>
+			<el-button type="text" @click="open">点击打开 Message Box</el-button>
+		</div>
 	</div>
 </template>
 
@@ -116,6 +121,7 @@
       data() {
         return {
 
+			deleteButton: false,
 			onoffButton: 1, // 停用开启这条规则
 			// _isShow_ : true,  // 添加按钮
 			pageSize: 10,
@@ -251,6 +257,8 @@
 		  doCreate(row) {
 			  this.submitTxt = '提交中...'// 提交按钮的文字
 			  this.setModalFlag = true
+
+
 
 			  if(row && row.id) {
 

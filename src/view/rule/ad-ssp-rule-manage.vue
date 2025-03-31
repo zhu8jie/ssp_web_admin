@@ -244,6 +244,20 @@ export default {
 		deleteCreate(row) {
 			this.modalForm.rule_ids = []
 			this.modalForm.ssp_slot_id = row.ssp_slot_id
+
+			this.$confirm(`删除数据广告位ID: ${this.modalForm.ssp_slot_id}`, {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			}).then(() => {
+				this.$Message.success({content: "删除成功", duration: 3})
+				this.deleteData()
+			}).catch(() => {
+				this.$Message.success({content: "取消删除", duration: 3})
+			});
+		},
+
+		deleteData() {
 			saveSspRule(this.modalForm).then(res => {
 				if (res.code === 200) {
 					this.setModalFlag = false
@@ -253,6 +267,7 @@ export default {
 			})
 			this.modalForm.ssp_slot_id = ''
 		},
+
 		cancleBtn(){
 			this.setModalFlag = false
 			this.filterSearch = []

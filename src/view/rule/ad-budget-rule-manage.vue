@@ -409,6 +409,19 @@ export default {
 		deleteCreate(row) {
 			this.modalForm.dsp_slot_id = row.dsp_slot_id
 			this.modalForm.rule_ids = []
+			this.$confirm(`删除数据媒体位ID: ${this.modalForm.dsp_slot_id}`, {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			}).then(() => {
+				this.$Message.success({content: "删除成功", duration: 3})
+				this.deleteData()
+			}).catch(() => {
+				this.$Message.success({content: "取消删除", duration: 3})
+			});
+		},
+
+		deleteData() {
 			saveDspRule(this.modalForm).then(res => {
 				this.submitClock = false
 				this.rule_id_list= []

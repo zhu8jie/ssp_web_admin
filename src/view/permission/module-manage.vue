@@ -372,9 +372,9 @@ export default {
 		 */
 		formatRouteList() {
 			let tempArr = []
-
+			console.log("asyncRouterMap:",asyncRouterMap)
 			asyncRouterMap.map(item => {
-
+				console.log("item==============",item)
 				// 当前路由下只有一个
 				if (item.children && item.children.length === 1 && !!item.children[0].meta.isShowAccess) {
 					tempArr.push({

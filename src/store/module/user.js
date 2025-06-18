@@ -113,6 +113,7 @@ export default {
 		setUserRole(state, info) { // 用户权限
 
 			console.log("info",info)
+			console.log("state",state)
 			let role = info.role
 			state.userRoute = !!role && !!role.models && role.models.length ? role.models : [] // 用户路由
 			state.userDspFields = !!role && !!role.dsp_fields && role.dsp_fields.length ? role.dsp_fields : [] // 用户dsp自定义权限 - 预算表格
@@ -120,7 +121,7 @@ export default {
 
 			state.userAllFields = state.userName === config.superName ? true : (!!role && !!role.all_fields) // 用户报表的全选
 			state.userAllModels = state.userName === config.superName ? true : (!!role && !!role.all_models) // 用户菜单的全选
-
+			console.log("state.UserRoute:",state.userRoute)
 			state.userRouteKeyObj = getKeyByRouter(state.userRoute)
 			state.catchMenuByRouter = state.userName === config.superName ? adminGetMenuByRouter(asyncRouterMap) : getMenuByRouter(asyncRouterMap, state.userRouteKeyObj) // 左侧导航路由
 			console.log("asyncRouterMap",asyncRouterMap)

@@ -158,7 +158,7 @@ export const getKeyByRouter = (routeArr) => {
     if (routeArr.length === 0) {
         return
     }
-
+	// console.log("根据服务器返回的路由，得到所有的key值::",routeArr)
     let tempIdArr = {}
     routeArr.map(item => {
         if (!!item.route && item.type === 1) {

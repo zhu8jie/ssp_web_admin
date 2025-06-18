@@ -486,16 +486,16 @@ export const asyncRouterMap = [
 				},
 				component: resolve => require(['@/view/data/dsp-detail-data/index'], resolve)
 			},
-			/*{
-				path: '/data/dsp/gap',
-				name: 'budget-gap',
-				meta: {
-					title: '平台与预算方gap数据',
-					isShowAccess: true,
-					inPageAccess: {'viewIndex': '首页'} // 页面内权限
-				},
-				component: resolve => require(['@/view/data/gap-data/index'], resolve)
-			},*/
+			// {
+			// 	path: '/data/dsp/gap',
+			// 	name: 'budget-gap',
+			// 	meta: {
+			// 		title: '平台与预算方gap数据',
+			// 		isShowAccess: true,
+			// 		inPageAccess: {'viewIndex': '首页'} // 页面内权限
+			// 	},
+			// 	component: resolve => require(['@/view/data/gap-data/index'], resolve)
+			// },
 			{
 				path: '/data/export/index',
 				name: 'export-data',
@@ -518,7 +518,7 @@ export const asyncRouterMap = [
 			}
 		]
 	},
-	/*
+
 	{
 		path: '/finance', // 财务中心
 		name: 'finance',
@@ -541,7 +541,7 @@ export const asyncRouterMap = [
 				component: resolve => require(['@/view/finance/manage/index'], resolve)
 			}
 		]
-	},*/
+	},
 	/*
 	{
 		path: '/tag', // 人群标签

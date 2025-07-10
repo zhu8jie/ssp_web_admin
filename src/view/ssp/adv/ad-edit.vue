@@ -162,7 +162,7 @@
 							<Input maxlength="30" show-word-limit placeholder="广告位名称" v-model.trim="formBase.ssp_slot_name"></Input>
 						</FormItem>
 						<FormItem label="外部广告位ID">
-							<Input maxlength="100" show-word-limit :disabled="auditStatus" placeholder="媒体按需填写" v-model.trim="formBase.ex_slot_id"></Input>
+							<Input maxlength="100" show-word-limit placeholder="单个数表示点击率，也可以加下划线填2个数控制点击率和吊起率 例如:15_50" v-model.trim="formBase.ex_slot_id"></Input>
 						</FormItem>
 
 						<FormItem label="是否打开风控">

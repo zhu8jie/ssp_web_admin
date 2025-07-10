@@ -96,7 +96,9 @@
         </Select> -->
 
         <!-- 采买类型 -->
-        <Select class="i-margin-right-11 i-width-status mar-bot-10" v-model="filterSearch.pickup_status" clearable
+        <Select class="i-margin-right-11 i-width-status mar-bot-10"
+				v-model="filterSearch.pickup_status"
+				clearable
                 placeholder="采买类型">
           <Option :value="1">联调</Option>
           <Option :value="2">测试</Option>
@@ -122,6 +124,9 @@
           <Option v-for="item in dspSlotList" :value="item.id" :key="item.id">{{item.dsp_slot_name}} (ID:{{item.id}})
           </Option>
         </Select>
+
+
+
 
         <Input type="textarea" class="i-margin-right-11 i-width-textarea mar-bot-10" clearable
                v-model.trim="filterSearch.dsp_slot_id_arr_textarea" :rows="1" :autosize="{maxRows:1, minRows: 1}"
@@ -580,7 +585,7 @@
     mounted() {
       this.initTableHeight( // search-line的高度
         {
-          'search-line': {isAutoCalc: true, isInclude: true}, 
+          'search-line': {isAutoCalc: true, isInclude: true},
           'nav-handle-group': true,
           'randomNum': -15
         }

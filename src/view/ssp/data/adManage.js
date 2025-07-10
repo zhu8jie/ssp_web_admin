@@ -169,3 +169,10 @@ export const adPayType = (self) => {
   	{value: 3, label: 'RTB'}
   ]
 }
+
+export const appOsType = (self) => {
+	return [
+		{value: 1 ,lable: 'android'},
+		{value: 2, lable: 'ios'}
+	]
+}

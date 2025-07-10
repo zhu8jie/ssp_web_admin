@@ -67,7 +67,10 @@
                   class="editSelect"
                   v-model="modalForm.dsp_product_id"
                   placeholder="请选择"
+				  filterable
+
                   @on-change="productChange"
+
                 >
                   <Option
                     v-for="item in productList"
@@ -1040,7 +1043,7 @@
                             >
                           </div>
                         </div> -->
-                        
+
                         <div class="deploy_box deploy_line">
                           <div class="xuan_title">投放时段:</div>
                           <div class="xuan_content">
@@ -1674,7 +1677,7 @@ export default {
       if (dateItem.ratio_is_ok === -1 || dateItem.ratio_is_ok === "-1") {
         showTxt = "尺寸比例检验不通过";
       }
-      
+
       // if (
       //   dateItem.price_float <= 0 ||
       //   dateItem.price_float > 200 ||

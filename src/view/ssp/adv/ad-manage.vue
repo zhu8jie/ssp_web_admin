@@ -188,6 +188,15 @@
         <Input type="text" class="i-margin-right-11 i-width-input mar-bot-10"
                v-model.trim="filterSearch.dsp_product_remark" placeholder="按照备注查询"/>
 
+		  <Select class="i-margin-right-11 i-width-select mar-bot-10"
+				  v-model="filterSearch.app_os_type"
+				  clearable
+				  placeholder="应用平台">
+			  <Option :value='1'>Android</Option>
+			  <Option :value='2'>IOS</Option>
+
+		  </Select>
+
         <Button class="i-margin-right-11 mar-bot-10" type="primary" @click="doFilterList">查询</Button>
       </div>
       <div class="batch-line" v-show="batchStatus">
@@ -707,11 +716,17 @@
     mixins: [commonMixin, tableHeight, inPageAccess, commonConfig],
     data() {
       return {
-        logModal: false, // 操作日志的弹框
+		  appOsType: [
+			  {value: 1 ,lable: 'android'},
+			  {value: 2, lable: 'ios'}
+		  ],
+		  logModal: false, // 操作日志的弹框
         log_id: 0, // 操作日志的id
         batchForm: {
           reason: '' // 批量的原因
         },
+
+
         batchFormRules: {
           reason: [{required: true, message: '请输入原因'}]
         },
@@ -763,6 +778,7 @@
           ssp_slot_name_arr_textarea: null, // 广告位名称数组textarea
           ratio_arr_textarea: null, // 素材尺寸比例textarea
 
+		  app_os_type: null, // 1 = android 2 = ios
           pay_type: '', // 结算方式 1=固价 2=分成 3=RTB
 
           // 备用数组
@@ -1017,6 +1033,7 @@
           { label: '关联预算位', prop: 'configNumber', minWidth: 100 },
           { label: '广告展现保留比', prop: 'show_rate', minWidth: 120 },
           { label: '广告点击保留比', prop: 'click_rate', minWidth: 120 },
+
 
           { label: '结算方式', prop: 'settlement', minWidth: 120 },
           { label: '结算价格', prop: 'settlement_money', minWidth: 120 },
@@ -1484,6 +1501,7 @@
 
         // 结算方式
         params.pay_type = _filter.pay_type > 0 ? _filter.pay_type : 0
+		params.app_os_type = _filter.app_os_type > 0 ? _filter.app_os_type : ''    // 应用系统
 
 
         _filter.created_since ? params.created_since = Date.parse(new Date(_filter.created_since)) / 1000 : '' // 创建时间的开始
@@ -1505,7 +1523,7 @@
        */
       doFilterList() {
         this.currentPage = 1
-
+		console.log("this.filterSearch",this.filterSearch)
         let _filter = this.filterSearch
 
 
@@ -1828,6 +1846,7 @@
         let filter = this.filterSearch
 
         let _params = {
+
           ud_id_arr: filter.ud_id_arr,
           app_id_arr: filter.app_id_arr,
           page_size: (!!query || filter.ud_id_arr.length || filter.app_id_arr.length) ? 10000 : 10,

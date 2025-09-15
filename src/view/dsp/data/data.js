@@ -235,6 +235,106 @@ export const getCompanyColumn = (self) => {
 		}
 	]
 }
+
+
+export const getBudgetColum = (self)=> {
+	return [
+		{
+			type: 'index',
+			width: 36,
+			align: 'center',
+		},
+		{
+			title: '预算位名称/ID',
+			width: 250,
+			slot: 'dsp_slot_name',
+		},
+		{
+			title: '规则名称',
+			slot: 'rule_names',
+			// width: 250,
+		},
+		{
+			title: '操作',
+			slot: 'action',
+			align: 'center',
+			width:  100
+		}
+	]
+}
+
+export const getRuleSspColum = (self) => {
+	return [
+		{
+			type: 'index',
+			width: 36,
+			align: 'center',
+		},
+		{
+			title: '广告名称',
+			slot: 'ssp_slot_name',
+			width: 300
+		},
+		{
+			title: '规则列表',
+			slot: 'rule_names',
+			// width: 250
+		},
+		{
+			title: '操作',
+			slot: 'action',
+			align: 'center',
+			width:  101
+		}
+	]
+}
+
+export const getRuleColum = (self)=> {
+	return [
+		{
+			title: 'ID',
+			slot: 'id',
+			width: 36,
+			align: 'center',
+		},
+		{
+			title: '规则名称',
+			key: 'rule_name',
+
+
+		},
+
+		{
+			title: '风控类型',
+			slot: 'rule_type',
+			align: 'center',
+			width: 150
+
+		},
+		{
+			title: '过滤阀值',
+			key: 'rule_val',
+			align: 'center',
+			width: 150
+		},
+
+		{
+			title: '规则状态',
+			slot: 'status',
+			align: 'center',
+			width: 150
+		},
+
+		{
+			title: '操作',
+			slot: 'action',
+			align: 'center',
+			width:  101
+		}
+	]
+}
+
+
 /**
  * [选择广告位Column]
  * @param  {[type]} self [description]

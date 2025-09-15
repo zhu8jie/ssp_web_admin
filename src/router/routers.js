@@ -600,6 +600,50 @@ export const asyncRouterMap = [
 			}
 		]
 	},
+
+	{
+		path: '/rules', // 规则
+		name: 'rules-manage',
+		component: Main,
+		meta: {
+			title: '过滤规则',
+			icon: 'left-bar-icon monitor-tag'
+		},
+		children: [
+			{
+				path: '/rule/info',
+				name: 'filter-rule-list',
+				meta: {
+					isShowAccess: true,
+					title: '规则列表',
+					inPageAccess: {'newAddRule': '新建规则', 'edit': '修改'} // 页面内权限
+				},
+				component: resolve => require(['@/view/rule/dsp-test-manage'], resolve)
+			},
+			{
+				path: '/rule/ssp',
+				name: 'filter-rule-ssp',
+
+				meta: {
+					isShowAccess: true,
+					title: '广告位规则',
+					inPageAccess: {'newAddSspRule': '新建广告位规则', 'edit': '修改'} // 页面内权限
+				},
+				component: resolve => require(['@/view/rule/ad-ssp-rule-manage'], resolve)
+			},
+			{
+				path: '/rule/dsp',
+				name: 'dsp_slot_list',
+				meta: {
+					isShowAccess: true,
+					title: '预算位规则',
+					inPageAccess: {'newAddDspRule': '新建广告位', 'edit': '修改'} // 页面内权限
+				},
+				component: resolve => require(['@/view/rule/ad-budget-rule-manage'], resolve)
+			},
+		]
+	},
+
 	/*
 	{
 		path: '/monitor', // 数据监测产品

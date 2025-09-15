@@ -263,6 +263,15 @@ export const getSspSlotAdList = (data) => {
 		url: `/api/v1/ssp_slot/list?${qs.stringify(data, {arrayFormat: 'repeat'})}`
 	})
 }
+
+
+export const getSspSlotAdList_v2 = (data) => {
+	return axios.request({
+		method: 'get',
+		url: `/api/v1/ssp_slot/list_v2?${qs.stringify(data, {arrayFormat: 'repeat'})}`
+	})
+}
+
 /**
  * 管理平台  广告位管理
  * 获取广告位列表

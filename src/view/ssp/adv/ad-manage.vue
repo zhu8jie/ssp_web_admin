@@ -1773,7 +1773,7 @@
       getSspAppList: debounce(function (query) {
         let _params = {
           ud_id: this.filterSearch.ud_id_arr,
-          page_size: (!!query || this.filterSearch.ud_id_arr.length) ? 10000 : 10,
+          page_size: (!!query || this.filterSearch.ud_id_arr.length) ? 100 : 10,
           page_num: 1,
           search_text: query || ''
         }
@@ -1788,7 +1788,7 @@
             }
           }
         })
-      }, 1000),
+      }, 100),
 
       /**
        * [searchSspSlot 广告位搜索]
@@ -1830,7 +1830,7 @@
         let _params = {
           ud_id_arr: filter.ud_id_arr,
           app_id_arr: filter.app_id_arr,
-          page_size: (!!query || filter.ud_id_arr.length || filter.app_id_arr.length) ? 10000 : 10,
+          page_size: (!!query || filter.ud_id_arr.length || filter.app_id_arr.length) ? 100 : 10,
           page_num: 1,
           search_text: query || ''
         }
@@ -1845,7 +1845,7 @@
             }
           }
         })
-      }, 1000)
+      }, 100)
       /********************************************
        *↑↑↑↑↑↑↑↑↑ 以上部分为搜索联动 end *↑↑↑↑↑↑
        ********************************************/
